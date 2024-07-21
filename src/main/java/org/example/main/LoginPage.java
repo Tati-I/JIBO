@@ -44,7 +44,7 @@ public class LoginPage extends Application {
         rectangle.setEffect(shadow);
 
         // إنشاء رسالة الترحيب
-        Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBO");
+        Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBOO");
         WelcomeMsg.setLayoutX(207);
         WelcomeMsg.setLayoutY(161);
         WelcomeMsg.setStyle("-fx-text-fill: #000000; -fx-font-weight: bold; -fx-font-size: 22; ");
