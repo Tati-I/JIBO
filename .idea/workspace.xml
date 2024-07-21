@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50ac0e94-5bf7-45f8-b35a-954fe69908da" name="Changes" comment="تعديل واجهة">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/main/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/main/PersonalHomePage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/main/SignUpPersonal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/main/SignUpWorker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/main/WorkerHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/main/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/main/LoginPage.java" afterDir="false" />
-    </list>
+    <list default="true" id="50ac0e94-5bf7-45f8-b35a-954fe69908da" name="Changes" comment="re-design" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +14,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -57,6 +50,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
+    "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -151,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721565515261</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="re-design">
+      <option name="closed" value="true" />
+      <created>1721566141017</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721566141017</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +164,7 @@
     <MESSAGE value="test" />
     <MESSAGE value="te" />
     <MESSAGE value="تعديل واجهة" />
-    <option name="LAST_COMMIT_MESSAGE" value="تعديل واجهة" />
+    <MESSAGE value="re-design" />
+    <option name="LAST_COMMIT_MESSAGE" value="re-design" />
   </component>
 </project>
