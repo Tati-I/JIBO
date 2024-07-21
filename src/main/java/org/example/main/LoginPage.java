@@ -2,6 +2,7 @@ package org.example.main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -52,8 +53,9 @@ public class LoginPage extends Application {
         Label bioMsg = new Label("حِرفيُّكَ الخاص في جيبك ");
         bioMsg.setLayoutX(240);
         bioMsg.setLayoutY(193);
-        bioMsg.setStyle("-fx-text-fill: #565454;");
-        bioMsg.setFont(new Font("Cambria",16));
+        bioMsg.setStyle("-fx-text-fill: #565454; -fx-font-size: 16");
+
+        Button loginBu
 
         // إضافة العناصر إلى الجذر
         root.getChildren().addAll(imageView, rectangle, WelcomeMsg,bioMsg);
