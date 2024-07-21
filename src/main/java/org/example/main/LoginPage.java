@@ -55,10 +55,33 @@ public class LoginPage extends Application {
         bioMsg.setLayoutY(193);
         bioMsg.setStyle("-fx-text-fill: #565454; -fx-font-size: 16");
 
-        Button loginBu
+        Rectangle loginRect = new Rectangle();
+        loginRect.setHeight(40);
+        loginRect.setWidth(429);
+        loginRect.setX(110);
+        loginRect.setY(236);
+        loginRect.setFill(Color.web("DEDEDE"));
+        loginRect.setArcHeight(25);
+        loginRect.setArcWidth(25);
+        loginRect.setStyle("-fx-border-color: #646262;");
+
+        Button loginButton = new Button("تسجي3ل الدخول");
+        loginButton.setLayoutX(117);
+        loginButton.setLayoutY(241);
+        loginButton.setPrefSize(206,26);
+        loginButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 14; -fx-background-color: white; -fx-background-radius: 10");
+
+
+        Button signUpButton = new Button("إنشاء حساب");
+        signUpButton.setLayoutX(326);
+        signUpButton.setLayoutY(241);
+        signUpButton.setPrefSize(206,26);
+        signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 14; -fx-background-color: #b2b2b2; -fx-background-radius: 10");
+
+
 
         // إضافة العناصر إلى الجذر
-        root.getChildren().addAll(imageView, rectangle, WelcomeMsg,bioMsg);
+        root.getChildren().addAll(imageView, rectangle, WelcomeMsg,bioMsg,loginRect,loginButton,signUpButton);
 
 
         // إعداد المشهد
