@@ -20,71 +20,68 @@ public class LoginPage extends Application {
         AnchorPane root = new AnchorPane();
 
         // تحميل الصورة
-        Image background = new Image("file:/C:/Users/hp/Downloads/background.png");
+        Image background = new Image(getClass().getResource("/Pictures/background.png").toExternalForm());
         ImageView imageView = new ImageView(background);
-        imageView.setFitWidth(655);
-        imageView.setFitHeight(700);
+        imageView.setFitWidth(700);
+        imageView.setFitHeight(720);
 
         // إنشاء المستطيل
         Rectangle rectangle = new Rectangle();
-        rectangle.setHeight(435);
-        rectangle.setWidth(485);
-        rectangle.setX(82);
-        rectangle.setY(133);
+        rectangle.setHeight(470);
+        rectangle.setWidth(525);
+        rectangle.setX(88);
+        rectangle.setY(144);
         rectangle.setFill(Color.WHITE);
-        rectangle.setArcHeight(25);
-        rectangle.setArcWidth(25);
-        rectangle.setStyle("-fx-border-color: #646262;");
-
-        // إضافة ظل للمستطيل
-        DropShadow shadow = new DropShadow();
-        shadow.setOffsetX(5);
-        shadow.setOffsetY(5);
-        shadow.setColor(Color.web("646262"));
-        rectangle.setEffect(shadow);
+        rectangle.setArcHeight(27);
+        rectangle.setArcWidth(27);
 
         // إنشاء رسالة الترحيب
         Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBOO");
-        WelcomeMsg.setLayoutX(207);
-        WelcomeMsg.setLayoutY(161);
-        WelcomeMsg.setStyle("-fx-text-fill: #000000; -fx-font-weight: bold; -fx-font-size: 22; ");
+        WelcomeMsg.setLayoutX(223);
+        WelcomeMsg.setLayoutY(174);
+        WelcomeMsg.setStyle("-fx-text-fill: #000000; -fx-font-weight: bold; -fx-font-size: 24; ");
 
-        Label bioMsg = new Label("حِرفيُّكَ الخاص في جيبك ");
-        bioMsg.setLayoutX(240);
-        bioMsg.setLayoutY(193);
-        bioMsg.setStyle("-fx-text-fill: #565454; -fx-font-size: 16");
+        Label bioMsg = new Label("حِرفيُّكَ الخاص في جيبك ");
+        bioMsg.setLayoutX(260);
+        bioMsg.setLayoutY(209);
+        bioMsg.setStyle("-fx-text-fill: #565454; -fx-font-size: 17");
 
         Rectangle loginRect = new Rectangle();
-        loginRect.setHeight(40);
-        loginRect.setWidth(429);
-        loginRect.setX(110);
-        loginRect.setY(236);
-        loginRect.setFill(Color.web("DEDEDE"));
-        loginRect.setArcHeight(25);
-        loginRect.setArcWidth(25);
-        loginRect.setStyle("-fx-border-color: #646262;");
+        loginRect.setHeight(43);
+        loginRect.setWidth(464);
+        loginRect.setX(119);
+        loginRect.setY(255);
+        loginRect.setFill(Color.web("F1F2F4FF"));
+        loginRect.setArcHeight(13);
+        loginRect.setArcWidth(13);
 
         Button loginButton = new Button("تسجيل الدخول");
-        loginButton.setLayoutX(117);
-        loginButton.setLayoutY(241);
-        loginButton.setPrefSize(206,26);
-        loginButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 14; -fx-background-color: white; -fx-background-radius: 10");
-
+        loginButton.setLayoutX(126);
+        loginButton.setLayoutY(258);
+        loginButton.setPrefSize(225,36);
+        loginButton.setStyle("-fx-border-color: #e3e3e3;-fx-border-radius:5px;-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: white; -fx-background-radius: 5px;-fx-cursor: hand");
 
         Button signUpButton = new Button("إنشاء حساب");
-        signUpButton.setLayoutX(326);
-        signUpButton.setLayoutY(241);
-        signUpButton.setPrefSize(206,26);
-        signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 14; -fx-background-color: #b2b2b2; -fx-background-radius: 10");
+        signUpButton.setLayoutX(352);
+        signUpButton.setLayoutY(258);
+        signUpButton.setPrefSize(225,36);
+        signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 5px;-fx-cursor: hand;");
 
+        signUpButton.setOnAction(event -> {
+            signUpButton.setStyle("-fx-border-color: #e3e3e3;-fx-border-radius:5px;-fx-background-color: white; -fx-background-radius: 5px;-fx-cursor: hand;fx-text-fill: #000000; -fx-font-size: 15;");
+            loginButton.setStyle("-fx-background-color: #f1f2f4; -fx-background-radius: 5px;-fx-cursor: hand;fx-text-fill: #000000; -fx-font-size: 15;");
+        });
 
+        loginButton.setOnAction(event -> {
+            loginButton.setStyle("-fx-border-color: #e3e3e3;-fx-border-radius:5px;-fx-background-color: #fdfdfd; -fx-background-radius: 5px;-fx-cursor: hand;fx-text-fill: #000000; -fx-font-size: 15;");
+            signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 5px;-fx-cursor: hand;");
+        });
 
         // إضافة العناصر إلى الجذر
         root.getChildren().addAll(imageView, rectangle, WelcomeMsg,bioMsg,loginRect,loginButton,signUpButton);
 
-
         // إعداد المشهد
-        Scene scene = new Scene(root, 650, 700);
+        Scene scene = new Scene(root, 700, 720);
 
         // إعداد المرحلة
         stage.setTitle("Jibo");
