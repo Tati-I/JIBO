@@ -1,5 +1,4 @@
 package org.example.main;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -65,7 +64,7 @@ public class LoginPage extends Application {
         loginRect.setArcWidth(25);
         loginRect.setStyle("-fx-border-color: #646262;");
 
-        Button loginButton = new Button("تسجي3ل الدخول");
+        Button loginButton = new Button("تسجيل الدخول");
         loginButton.setLayoutX(117);
         loginButton.setLayoutY(241);
         loginButton.setPrefSize(206,26);
