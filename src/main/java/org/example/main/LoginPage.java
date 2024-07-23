@@ -67,6 +67,8 @@ public class LoginPage extends Application {
         signUpButton.setOnAction(event -> {
             signUpButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
             loginButton.setStyle("-fx-background-color: #f1f2f4; -fx-background-radius: 5px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
+            SignUpPage signUpPage = new SignUpPage();
+            signUpPage.display(pane);
         });
 
         loginButton.setOnAction(event -> {
