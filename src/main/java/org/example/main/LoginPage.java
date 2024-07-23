@@ -10,6 +10,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -42,7 +44,7 @@ public class LoginPage extends Application {
         bioMsg.setLayoutY(60);
         bioMsg.setStyle("-fx-text-fill: #565454; -fx-font-size: 17");
 
-        // إنشاء مستطيل تسجيل الدخول
+
         Rectangle loginRect = new Rectangle();
         loginRect.setHeight(43);
         loginRect.setWidth(464);
@@ -64,26 +66,38 @@ public class LoginPage extends Application {
         signUpButton.setPrefSize(225, 36);
         signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 5px; -fx-cursor: hand;");
 
+        TranslateTransition loginTransition = new TranslateTransition(Duration.millis(300), loginButton);
+        TranslateTransition signUpTransition = new TranslateTransition(Duration.millis(300), signUpButton);
+
         signUpButton.setOnAction(event -> {
+            signUpTransition.setToX(-228);
+            signUpTransition.play();
+            loginTransition.setToX(225);
+            loginTransition.play();
+
             signUpButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
             loginButton.setStyle("-fx-background-color: #f1f2f4; -fx-background-radius: 5px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
         });
 
         loginButton.setOnAction(event -> {
+            loginTransition.setToX(0);
+            loginTransition.play();
+            signUpTransition.setToX(0);
+            signUpTransition.play();
+
             loginButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 5px; -fx-background-color: #fdfdfd; -fx-background-radius: 5px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
             signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 5px; -fx-cursor: hand;");
         });
 
-        // إضافة العناصر إلى اللوحة
+
         pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton);
 
-        // إضافة اللوحة إلى الجذر
+
         root.getChildren().addAll(imageView, pane);
 
-        // إعداد المشهد
         Scene scene = new Scene(root, 700, 720);
 
-        // إعداد المرحلة
+
         stage.setTitle("Jibo");
         stage.setResizable(false);
         stage.setScene(scene);
