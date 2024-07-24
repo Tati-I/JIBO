@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.util.Objects;
 
 public class LoginPage extends Application {
     private Pane pane;
@@ -28,10 +28,10 @@ public class LoginPage extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         AnchorPane root = new AnchorPane();
 
-        Image background = new Image(getClass().getResource("/Pictures/background.png").toExternalForm());
+        Image background = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/background.png")).toExternalForm());
         ImageView imageView = new ImageView(background);
         imageView.setFitWidth(700);
         imageView.setFitHeight(720);
@@ -45,7 +45,7 @@ public class LoginPage extends Application {
         root.getChildren().addAll(imageView, pane);
 
         Scene scene = new Scene(root, 700, 720);
-        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
 
         stage.setTitle("Jibo");
         stage.setResizable(false);
@@ -92,7 +92,7 @@ public class LoginPage extends Application {
         TranslateTransition loginTransition = new TranslateTransition(Duration.millis(300), loginButton);
         TranslateTransition signUpTransition = new TranslateTransition(Duration.millis(300), signUpButton);
 
-        signUpButton.setOnAction(event -> {
+        signUpButton.setOnAction(_ -> {
             signUpTransition.setToX(-228);
             signUpTransition.play();
             loginTransition.setToX(225);
@@ -104,7 +104,7 @@ public class LoginPage extends Application {
             signUpPage.display(pane, loginButton, signUpButton, this, loginRect, WelcomeMsg, bioMsg);
         });
 
-        loginButton.setOnAction(event -> {
+        loginButton.setOnAction(_ -> {
             loginTransition.setToX(0);
             loginTransition.play();
             signUpTransition.setToX(0);
@@ -150,13 +150,9 @@ public class LoginPage extends Application {
         privacy.setLayoutX(60);
         privacy.setLayoutY(410);
 
-        Login.setOnMouseEntered(event -> {
-            Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;");
-        });
+        Login.setOnMouseEntered(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
 
-        Login.setOnMouseExited(event -> {
-            Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;");
-        });
+        Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
         pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, Login, privacy);
     }
