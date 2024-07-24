@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -124,19 +125,19 @@ public class LoginPage extends Application {
         emailField.setPrefSize(495, 40);
         emailField.setLayoutX(15);
         emailField.setLayoutY(210);
-        emailField.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d0caca;");
+        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d0caca;");
 
         Label passwordWord = new Label("كلمة المرور");
         passwordWord.setLayoutX(425);
         passwordWord.setLayoutY(255);
         passwordWord.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
 
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("كلمة المرور");
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(290);
-        passwordField.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #D0CACAFF;");
+        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #D0CACAFF;");
 
         Button Login = new Button("تسجيل الدخول");
         Login.setLayoutX(15);
@@ -148,16 +149,6 @@ public class LoginPage extends Application {
         privacy.setStyle("-fx-text-fill: #6e6d6d; -fx-font-size: 16");
         privacy.setLayoutX(60);
         privacy.setLayoutY(410);
-
-        emailField.setOnMousePressed(event -> {
-            passwordField.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d0caca; -fx-cursor: hand;");
-            emailField.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #000000; -fx-cursor: hand;");
-        });
-
-        passwordField.setOnMousePressed(event -> {
-            emailField.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d0caca;");
-            passwordField.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #000000; -fx-cursor: hand;");
-        });
 
         Login.setOnMouseEntered(event -> {
             Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;");
