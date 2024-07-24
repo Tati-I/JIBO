@@ -29,6 +29,9 @@ public class SignUpPage {
 
     }
     private void fieldsPackage(Pane pane) {
+        // css colors and settings
+        String personStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #8e2cc8; -fx-background-radius: 10; -fx-border-radius: 10;";
+        String workerStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #61d0e3; -fx-background-radius: 10; -fx-border-radius: 10;";
         // Account Type Label
         Label accountType = new Label("نوع الحساب");
         accountType.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
@@ -64,7 +67,7 @@ public class SignUpPage {
         nameField.setPrefSize(495, 40);
         nameField.setLayoutX(15);
         nameField.setLayoutY(270);
-        nameField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d0caca;");
+        nameField.setStyle(personStyle);
 
         // Password Label
         Label emailLabel = new Label("البريد الألكتروني");
@@ -78,7 +81,7 @@ public class SignUpPage {
         emailField.setPrefSize(495, 40);
         emailField.setLayoutX(15);
         emailField.setLayoutY(350);
-        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #D0CACAFF;");
+        emailField.setStyle(personStyle);
 
         Label passwordLabel = new Label("كلمة المرور");
         passwordLabel.setLayoutX(425);
@@ -90,7 +93,7 @@ public class SignUpPage {
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(430);
-        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #D0CACAFF;");
+        passwordField.setStyle(personStyle);
 
         Label phoneNumLabel = new Label("رقم الهاتف");
         phoneNumLabel.setLayoutX(424);
@@ -102,7 +105,7 @@ public class SignUpPage {
         phoneNumField.setPrefSize(495, 40);
         phoneNumField.setLayoutX(15);
         phoneNumField.setLayoutY(510);
-        phoneNumField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #D0CACAFF;");
+        phoneNumField.setStyle(personStyle);
 
         Button signUpButton = new Button("انشاء حساب");
         signUpButton.setLayoutX(15);
@@ -119,6 +122,19 @@ public class SignUpPage {
         privacy.setLayoutX(46);
         privacy.setLayoutY(630);
 
+        personType.setOnAction(_ -> {
+            nameField.setStyle(personStyle);
+            emailField.setStyle(personStyle);
+            passwordField.setStyle(personStyle);
+            phoneNumField.setStyle(personStyle);
+        });
+
+        workerType.setOnAction(_ -> {
+            nameField.setStyle(workerStyle);
+            emailField.setStyle(workerStyle);
+            passwordField.setStyle(workerStyle);
+            phoneNumField.setStyle(workerStyle);
+        });
         // Add components to the pane
         pane.getChildren().addAll(accountType, workerType, personType, nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,signUpButton,privacy);
     }
