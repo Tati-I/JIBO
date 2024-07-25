@@ -40,6 +40,7 @@ public class LoginPage extends Application {
         pane.setStyle("-fx-background-color: white; -fx-background-radius: 27px;");
         pane.setPrefSize(525, 470);
         pane.setLayoutX(88);
+
         createLoginView();
 
         root.getChildren().addAll(imageView, pane);
@@ -125,7 +126,14 @@ public class LoginPage extends Application {
         emailField.setPrefSize(495, 40);
         emailField.setLayoutX(15);
         emailField.setLayoutY(210);
-        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #d0caca;");
+        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #61d0e3;");
+
+        Image emailIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/email.png")).toExternalForm());
+        ImageView emailIconView = new ImageView(emailIcon);
+        emailIconView.setFitWidth(20);
+        emailIconView.setFitHeight(20);
+        emailIconView.setLayoutX(480);
+        emailIconView.setLayoutY(220);
 
         Label passwordWord = new Label("كلمة المرور");
         passwordWord.setLayoutX(425);
@@ -137,7 +145,14 @@ public class LoginPage extends Application {
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(290);
-        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #D0CACAFF;");
+        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #61d0e3;");
+
+        Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+        ImageView passwordIconView = new ImageView(passwordIcon);
+        passwordIconView.setFitWidth(20);
+        passwordIconView.setFitHeight(20);
+        passwordIconView.setLayoutX(480);
+        passwordIconView.setLayoutY(300);
 
         Button Login = new Button("تسجيل الدخول");
         Login.setLayoutX(15);
@@ -154,6 +169,6 @@ public class LoginPage extends Application {
 
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
-        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, Login, privacy);
+        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, Login, privacy,emailIconView,passwordIconView);
     }
 }

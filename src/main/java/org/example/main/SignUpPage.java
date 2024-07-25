@@ -1,10 +1,14 @@
 package org.example.main;
 
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+
+import java.util.Objects;
 
 public class SignUpPage {
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
@@ -26,6 +30,7 @@ public class SignUpPage {
             signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 5px; -fx-cursor: hand;");
             loginPage.createLoginView();
         });
+
 
     }
     private void fieldsPackage(Pane pane) {
@@ -69,6 +74,14 @@ public class SignUpPage {
         nameField.setLayoutY(270);
         nameField.setStyle(personStyle);
 
+        Image nameIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/user.png")).toExternalForm());
+        ImageView nameIconView = new ImageView(nameIcon);
+        nameIconView.setFitWidth(20);
+        nameIconView.setFitHeight(20);
+        nameIconView.setLayoutX(480);
+        nameIconView.setLayoutY(280);
+
+
         // Password Label
         Label emailLabel = new Label("البريد الألكتروني");
         emailLabel.setLayoutX(390);
@@ -83,6 +96,13 @@ public class SignUpPage {
         emailField.setLayoutY(350);
         emailField.setStyle(personStyle);
 
+        Image emailIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/email.png")).toExternalForm());
+        ImageView emailIconView = new ImageView(emailIcon);
+        emailIconView.setFitWidth(20);
+        emailIconView.setFitHeight(20);
+        emailIconView.setLayoutX(480);
+        emailIconView.setLayoutY(360);
+
         Label passwordLabel = new Label("كلمة المرور");
         passwordLabel.setLayoutX(425);
         passwordLabel.setLayoutY(395);
@@ -95,6 +115,13 @@ public class SignUpPage {
         passwordField.setLayoutY(430);
         passwordField.setStyle(personStyle);
 
+        Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+        ImageView passwordIconView = new ImageView(passwordIcon);
+        passwordIconView.setFitWidth(20);
+        passwordIconView.setFitHeight(20);
+        passwordIconView.setLayoutX(480);
+        passwordIconView.setLayoutY(440);
+
         Label phoneNumLabel = new Label("رقم الهاتف");
         phoneNumLabel.setLayoutX(424);
         phoneNumLabel.setLayoutY(475);
@@ -106,6 +133,13 @@ public class SignUpPage {
         phoneNumField.setLayoutX(15);
         phoneNumField.setLayoutY(510);
         phoneNumField.setStyle(personStyle);
+
+        Image phoneNumIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/phone.png")).toExternalForm());
+        ImageView phoneNumIconView = new ImageView(phoneNumIcon);
+        phoneNumIconView.setFitWidth(20);
+        phoneNumIconView.setFitHeight(20);
+        phoneNumIconView.setLayoutX(480);
+        phoneNumIconView.setLayoutY(520);
 
         Button signUpButton = new Button("انشاء حساب");
         signUpButton.setLayoutX(15);
@@ -136,7 +170,7 @@ public class SignUpPage {
             phoneNumField.setStyle(workerStyle);
         });
         // Add components to the pane
-        pane.getChildren().addAll(accountType, workerType, personType, nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,signUpButton,privacy);
+        pane.getChildren().addAll(accountType, workerType, personType, nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,signUpButton,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
     }
 
 }
