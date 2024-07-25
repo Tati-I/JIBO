@@ -126,7 +126,7 @@ public class LoginPage extends Application {
         emailField.setPrefSize(495, 40);
         emailField.setLayoutX(15);
         emailField.setLayoutY(210);
-        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #61d0e3;");
+        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
 
         Image emailIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/email.png")).toExternalForm());
         ImageView emailIconView = new ImageView(emailIcon);
@@ -145,7 +145,7 @@ public class LoginPage extends Application {
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(290);
-        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #61d0e3;");
+        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
 
         Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
         ImageView passwordIconView = new ImageView(passwordIcon);
