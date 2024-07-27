@@ -11,6 +11,10 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class SignUpPage {
+    // to use in all methods+
+    private TextField emailField;
+    private Label errorLabel;
+
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
         pane.getChildren().clear();
         pane.getChildren().addAll(loginRectangle,msg,loginButton,signUpButton,welcome);
@@ -60,13 +64,13 @@ public class SignUpPage {
         workerType.setToggleGroup(accountTypeGroup);
         personType.setToggleGroup(accountTypeGroup);
 
-        // Email Label
+        // Name Label
         Label nameLabel = new Label("الأسم");
         nameLabel.setLayoutX(464);
         nameLabel.setLayoutY(230);
         nameLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
 
-        // Email TextField
+        // Name TextField
         TextField nameField = new TextField();
         nameField.setPromptText("الأسم");
         nameField.setPrefSize(495, 40);
@@ -74,6 +78,7 @@ public class SignUpPage {
         nameField.setLayoutY(270);
         nameField.setStyle(personStyle);
 
+        // Name icon
         Image nameIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/user.png")).toExternalForm());
         ImageView nameIconView = new ImageView(nameIcon);
         nameIconView.setFitWidth(20);
@@ -82,20 +87,28 @@ public class SignUpPage {
         nameIconView.setLayoutY(280);
 
 
-        // Password Label
+        // email Label
         Label emailLabel = new Label("البريد الألكتروني");
         emailLabel.setLayoutX(390);
         emailLabel.setLayoutY(315);
         emailLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
 
-        // Password TextField
-        TextField emailField = new TextField();
+        // email TextField
+        emailField = new TextField();
         emailField.setPromptText("البريد الألكتروني");
         emailField.setPrefSize(495, 40);
         emailField.setLayoutX(15);
         emailField.setLayoutY(350);
         emailField.setStyle(personStyle);
 
+        // email Error Label
+        errorLabel = new Label();
+        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14;");
+        errorLabel.setLayoutX(15);
+        errorLabel.setLayoutY(390);
+        errorLabel.setVisible(false);
+
+        // email icon
         Image emailIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/email.png")).toExternalForm());
         ImageView emailIconView = new ImageView(emailIcon);
         emailIconView.setFitWidth(20);
@@ -103,11 +116,13 @@ public class SignUpPage {
         emailIconView.setLayoutX(480);
         emailIconView.setLayoutY(360);
 
+        // password label
         Label passwordLabel = new Label("كلمة المرور");
         passwordLabel.setLayoutX(425);
         passwordLabel.setLayoutY(395);
         passwordLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
 
+        // password field
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("كلمة المرور");
         passwordField.setPrefSize(495, 40);
@@ -115,6 +130,7 @@ public class SignUpPage {
         passwordField.setLayoutY(430);
         passwordField.setStyle(personStyle);
 
+        // password icon
         Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
         ImageView passwordIconView = new ImageView(passwordIcon);
         passwordIconView.setFitWidth(20);
@@ -122,11 +138,13 @@ public class SignUpPage {
         passwordIconView.setLayoutX(480);
         passwordIconView.setLayoutY(440);
 
+        // Phone number label
         Label phoneNumLabel = new Label("رقم الهاتف");
         phoneNumLabel.setLayoutX(424);
         phoneNumLabel.setLayoutY(475);
         phoneNumLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
 
+        // Phone number field
         TextField phoneNumField = new TextField();
         phoneNumField.setPromptText("رقم الهاتف");
         phoneNumField.setPrefSize(495, 40);
@@ -134,6 +152,7 @@ public class SignUpPage {
         phoneNumField.setLayoutY(510);
         phoneNumField.setStyle(personStyle);
 
+        // Phone number icon
         Image phoneNumIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/phone.png")).toExternalForm());
         ImageView phoneNumIconView = new ImageView(phoneNumIcon);
         phoneNumIconView.setFitWidth(20);
@@ -141,16 +160,10 @@ public class SignUpPage {
         phoneNumIconView.setLayoutX(480);
         phoneNumIconView.setLayoutY(520);
 
-        Button signUpButton = new Button("انشاء حساب");
-        signUpButton.setLayoutX(15);
-        signUpButton.setLayoutY(570);
-        signUpButton.setPrefSize(495, 40);
-        signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;");
+        // Sign Up Button
+        signUpButton(pane);
 
-        signUpButton.setOnMouseEntered(_ -> signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
-
-        signUpButton.setOnMouseExited(_ -> signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
-
+        // Privacy Label
         Label privacy = new Label("بانشاء الحساب، أنت توافق على الشروط والأحكام وسياسة الخصوصية");
         privacy.setStyle("-fx-text-fill: #6e6d6d; -fx-font-size: 16");
         privacy.setLayoutX(46);
@@ -170,7 +183,32 @@ public class SignUpPage {
             phoneNumField.setStyle(workerStyle);
         });
         // Add components to the pane
-        pane.getChildren().addAll(accountType, workerType, personType, nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,signUpButton,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
+        pane.getChildren().addAll(errorLabel,accountType, workerType, personType, nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
+    }
+    private void signUpButton(Pane pane) {
+        Button signUpButton = new Button("أنشاء حساب");
+        signUpButton.setLayoutX(15);
+        signUpButton.setLayoutY(570);
+        signUpButton.setPrefSize(495, 40);
+        signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;");
+
+        signUpButton.setOnMouseEntered(_ -> signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
+
+        signUpButton.setOnMouseExited(_ -> signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
+
+        signUpButton.setOnAction(_ -> {
+            String email = emailField.getText();
+            if (EmailCheck.isValidEmail(email)) {
+                errorLabel.setVisible(false);
+                // Proceed with sign up process
+                System.out.println("Valid email, proceeding with sign up");
+            } else {
+                errorLabel.setText("البريد الإلكتروني غير صالح");
+                errorLabel.setVisible(true);
+            }
+        });
+
+        pane.getChildren().add(signUpButton);
     }
 
 }
