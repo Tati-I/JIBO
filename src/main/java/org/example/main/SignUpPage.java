@@ -14,6 +14,12 @@ public class SignUpPage {
     // to use in all methods+
     private TextField emailField;
     private Label errorLabel;
+    private RadioButton personType,workerType;
+    // css colors and settings
+    private final String personUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #8e2cc8; -fx-background-radius: 10; -fx-border-radius: 10;";
+    private final String workerUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #61d0e3; -fx-background-radius: 10; -fx-border-radius: 10;";
+    private final String textStyle = "-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;";
+    private final String errorTextStyle = "-fx-text-fill: red; -fx-font-size: 14;";
 
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
         pane.getChildren().clear();
@@ -38,37 +44,18 @@ public class SignUpPage {
 
     }
     private void fieldsPackage(Pane pane) {
-        // css colors and settings
-        String personStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #8e2cc8; -fx-background-radius: 10; -fx-border-radius: 10;";
-        String workerStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #61d0e3; -fx-background-radius: 10; -fx-border-radius: 10;";
+
         // Account Type Label
         Label accountType = new Label("نوع الحساب");
-        accountType.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
+        accountType.setStyle(textStyle);
         accountType.setLayoutY(145);
         accountType.setLayoutX(419);
-
-        // RadioButtons for Account Type
-        RadioButton personType = new RadioButton("شخصي");
-        personType.setLayoutX(130);
-        personType.setLayoutY(160);
-        personType.setSelected(true);
-        personType.setStyle("-fx-font-size: 16; -fx-padding: 10; -fx-text-fill: #000000;");
-        // Adjusted Y position to avoid overlap
-        RadioButton workerType = new RadioButton("عامل");
-        workerType.setLayoutX(210);
-        workerType.setLayoutY(190);
-        workerType.setStyle("-fx-font-size: 16; -fx-padding: 10; -fx-text-fill: #000000;");
-
-        // Group RadioButtons to ensure only one is selected at a time
-        ToggleGroup accountTypeGroup = new ToggleGroup();
-        workerType.setToggleGroup(accountTypeGroup);
-        personType.setToggleGroup(accountTypeGroup);
 
         // Name Label
         Label nameLabel = new Label("الأسم");
         nameLabel.setLayoutX(464);
         nameLabel.setLayoutY(230);
-        nameLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
+        nameLabel.setStyle(textStyle);
 
         // Name TextField
         TextField nameField = new TextField();
@@ -76,7 +63,7 @@ public class SignUpPage {
         nameField.setPrefSize(495, 40);
         nameField.setLayoutX(15);
         nameField.setLayoutY(270);
-        nameField.setStyle(personStyle);
+        nameField.setStyle(personUiStyle);
 
         // Name icon
         Image nameIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/user.png")).toExternalForm());
@@ -91,7 +78,7 @@ public class SignUpPage {
         Label emailLabel = new Label("البريد الألكتروني");
         emailLabel.setLayoutX(390);
         emailLabel.setLayoutY(315);
-        emailLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
+        emailLabel.setStyle(textStyle);
 
         // email TextField
         emailField = new TextField();
@@ -99,11 +86,11 @@ public class SignUpPage {
         emailField.setPrefSize(495, 40);
         emailField.setLayoutX(15);
         emailField.setLayoutY(350);
-        emailField.setStyle(personStyle);
+        emailField.setStyle(personUiStyle);
 
         // email Error Label
         errorLabel = new Label();
-        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14;");
+        errorLabel.setStyle(errorTextStyle);
         errorLabel.setLayoutX(15);
         errorLabel.setLayoutY(390);
         errorLabel.setVisible(false);
@@ -120,7 +107,7 @@ public class SignUpPage {
         Label passwordLabel = new Label("كلمة المرور");
         passwordLabel.setLayoutX(425);
         passwordLabel.setLayoutY(395);
-        passwordLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
+        passwordLabel.setStyle(textStyle);
 
         // password field
         PasswordField passwordField = new PasswordField();
@@ -128,7 +115,7 @@ public class SignUpPage {
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(430);
-        passwordField.setStyle(personStyle);
+        passwordField.setStyle(personUiStyle);
 
         // password icon
         Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
@@ -142,7 +129,7 @@ public class SignUpPage {
         Label phoneNumLabel = new Label("رقم الهاتف");
         phoneNumLabel.setLayoutX(424);
         phoneNumLabel.setLayoutY(475);
-        phoneNumLabel.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
+        phoneNumLabel.setStyle(textStyle);
 
         // Phone number field
         TextField phoneNumField = new TextField();
@@ -150,7 +137,7 @@ public class SignUpPage {
         phoneNumField.setPrefSize(495, 40);
         phoneNumField.setLayoutX(15);
         phoneNumField.setLayoutY(510);
-        phoneNumField.setStyle(personStyle);
+        phoneNumField.setStyle(personUiStyle);
 
         // Phone number icon
         Image phoneNumIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/phone.png")).toExternalForm());
@@ -162,28 +149,49 @@ public class SignUpPage {
 
         // Sign Up Button
         signUpButton(pane);
+        setupAccountTypeSelection(pane);
 
         // Privacy Label
         Label privacy = new Label("بانشاء الحساب، أنت توافق على الشروط والأحكام وسياسة الخصوصية");
-        privacy.setStyle("-fx-text-fill: #6e6d6d; -fx-font-size: 16");
+        String privacyStyle = "-fx-text-fill: #6e6d6d; -fx-font-size: 16";
+        privacy.setStyle(privacyStyle);
         privacy.setLayoutX(46);
         privacy.setLayoutY(630);
 
         personType.setOnAction(_ -> {
-            nameField.setStyle(personStyle);
-            emailField.setStyle(personStyle);
-            passwordField.setStyle(personStyle);
-            phoneNumField.setStyle(personStyle);
+            nameField.setStyle(personUiStyle);
+            emailField.setStyle(personUiStyle);
+            passwordField.setStyle(personUiStyle);
+            phoneNumField.setStyle(personUiStyle);
         });
 
         workerType.setOnAction(_ -> {
-            nameField.setStyle(workerStyle);
-            emailField.setStyle(workerStyle);
-            passwordField.setStyle(workerStyle);
-            phoneNumField.setStyle(workerStyle);
+            nameField.setStyle(workerUiStyle);
+            emailField.setStyle(workerUiStyle);
+            passwordField.setStyle(workerUiStyle);
+            phoneNumField.setStyle(workerUiStyle);
         });
         // Add components to the pane
-        pane.getChildren().addAll(errorLabel,accountType, workerType, personType, nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
+        pane.getChildren().addAll(errorLabel,accountType,nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
+    }
+    private void setupAccountTypeSelection(Pane pane) {
+
+        personType = new RadioButton("شخصي");
+        personType.setLayoutX(130);
+        personType.setLayoutY(160);
+        personType.setSelected(true);
+        personType.setStyle("-fx-font-size: 16; -fx-padding: 10; -fx-text-fill: #000000;");
+
+        workerType = new RadioButton("عامل");
+        workerType.setLayoutX(210);
+        workerType.setLayoutY(190);
+        workerType.setStyle("-fx-font-size: 16; -fx-padding: 10; -fx-text-fill: #000000;");
+
+        ToggleGroup accountTypeGroup = new ToggleGroup();
+        workerType.setToggleGroup(accountTypeGroup);
+        personType.setToggleGroup(accountTypeGroup);
+
+        pane.getChildren().addAll(workerType, personType);
     }
     private void signUpButton(Pane pane) {
         Button signUpButton = new Button("أنشاء حساب");
