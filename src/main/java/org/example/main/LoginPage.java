@@ -165,12 +165,29 @@ public class LoginPage extends Application {
         privacy.setLayoutX(60);
         privacy.setLayoutY(410);
 
+
+        Label errorLabel = new Label("البريد الإلكتروني غير صالح");
+        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14;");
+        errorLabel.setLayoutX(15);
+        errorLabel.setLayoutY(255);
+        errorLabel.setVisible(false);
+
         Login.setOnMouseEntered(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
 
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
+        Login.setOnMouseClicked(e -> {
+            String email = emailField.getText();
+            if (EmailCheck.isValidEmail(email)){
+                errorLabel.setVisible(false);
+                System.out.println("right");
+            }
+            else {
+                errorLabel.setVisible(true);
 
+            }
+        });
 
-        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, Login, privacy,emailIconView,passwordIconView);
+        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, Login, privacy,emailIconView,passwordIconView,errorLabel);
     }
 }
