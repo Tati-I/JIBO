@@ -173,6 +173,10 @@ public class LoginPage extends Application {
         passwordIconView.setLayoutX(480);
         passwordIconView.setLayoutY(300);
 
+        passwordIconView.setOnMouseEntered(e->{
+            passwordIconView.setStyle("-fx-cursor: hand;");
+        });
+
         passwordIconView.setOnMouseClicked(e -> {
             if (isPasswordVisible) {
                 passwordField.setText(visiblePasswordField.getText());
