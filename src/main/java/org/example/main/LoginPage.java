@@ -22,6 +22,12 @@ public class LoginPage extends Application {
     private Pane pane;
     private Button loginButton;
     private Button signUpButton;
+    private ImageView passwordIconView;
+    private Image visibleIcon;
+    private Image hiddenIcon;
+    private boolean isPasswordVisible = false;
+    private TextField visiblePasswordField;
+    private PasswordField passwordField;
 
     public static void main(String[] args) {
         launch();
@@ -29,12 +35,18 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
         AnchorPane root = new AnchorPane();
 
-        Image background = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/background.png")).toExternalForm());
+        visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
+        hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+
+        Image background = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/logo.png")).toExternalForm());
         ImageView imageView = new ImageView(background);
         imageView.setFitWidth(700);
         imageView.setFitHeight(720);
+
 
         pane = new Pane();
         pane.setStyle("-fx-background-color: white; -fx-background-radius: 27px;");
@@ -57,7 +69,7 @@ public class LoginPage extends Application {
     public void createLoginView() {
         pane.getChildren().clear();
         pane.setPrefSize(525, 470);
-        pane.setLayoutY(144);
+        pane.setLayoutY(130);
 
         Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBO");
         WelcomeMsg.setLayoutX(140);
@@ -140,19 +152,42 @@ public class LoginPage extends Application {
         passwordWord.setLayoutY(255);
         passwordWord.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
 
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setPromptText("كلمة المرور");
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(290);
         passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
 
-        Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
-        ImageView passwordIconView = new ImageView(passwordIcon);
+        visiblePasswordField = new TextField();
+        visiblePasswordField.setPromptText("كلمة المرور");
+        visiblePasswordField.setPrefSize(495, 40);
+        visiblePasswordField.setLayoutX(15);
+        visiblePasswordField.setLayoutY(290);
+        visiblePasswordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
+        visiblePasswordField.setVisible(false);
+
+        passwordIconView = new ImageView(hiddenIcon);
         passwordIconView.setFitWidth(20);
         passwordIconView.setFitHeight(20);
         passwordIconView.setLayoutX(480);
         passwordIconView.setLayoutY(300);
+
+        passwordIconView.setOnMouseClicked(e -> {
+            if (isPasswordVisible) {
+                passwordField.setText(visiblePasswordField.getText());
+                visiblePasswordField.setVisible(false);
+                passwordField.setVisible(true);
+                passwordIconView.setImage(hiddenIcon);
+                isPasswordVisible = false;
+            } else {
+                visiblePasswordField.setText(passwordField.getText());
+                passwordField.setVisible(false);
+                visiblePasswordField.setVisible(true);
+                passwordIconView.setImage(visibleIcon);
+                isPasswordVisible = true;
+            }
+        });
 
         Button Login = new Button("تسجيل الدخول");
         Login.setLayoutX(15);
@@ -165,12 +200,17 @@ public class LoginPage extends Application {
         privacy.setLayoutX(60);
         privacy.setLayoutY(410);
 
+        Label errorLabelEmail = new Label("البريد الإلكتروني غير صالح");
+        errorLabelEmail.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
+        errorLabelEmail.setLayoutX(15);
+        errorLabelEmail.setLayoutY(250);
+        errorLabelEmail.setVisible(false);
 
-        Label errorLabel = new Label("البريد الإلكتروني غير صالح");
-        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 14;");
-        errorLabel.setLayoutX(15);
-        errorLabel.setLayoutY(255);
-        errorLabel.setVisible(false);
+        Label errorLabelPassword = new Label("تحقق من كلمة المرور");
+        errorLabelPassword.setLayoutX(15);
+        errorLabelPassword.setLayoutY(330);
+        errorLabelPassword.setVisible(false);
+        errorLabelPassword.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
 
         Login.setOnMouseEntered(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
 
@@ -178,16 +218,22 @@ public class LoginPage extends Application {
 
         Login.setOnMouseClicked(e -> {
             String email = emailField.getText();
-            if (EmailCheck.isValidEmail(email)){
-                errorLabel.setVisible(false);
+            if (EmailCheck.isValidEmail(email)) {
+                errorLabelEmail.setVisible(false);
                 System.out.println("right");
+            } else {
+                errorLabelEmail.setVisible(true);
             }
-            else {
-                errorLabel.setVisible(true);
 
+            String password = isPasswordVisible ? visiblePasswordField.getText() : passwordField.getText();
+            if (PasswordCheck.isValidPassword(password)) {
+                errorLabelPassword.setVisible(false);
+                System.out.println("right");
+            } else {
+                errorLabelPassword.setVisible(true);
             }
         });
 
-        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, Login, privacy,emailIconView,passwordIconView,errorLabel);
+        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, visiblePasswordField, Login, privacy, emailIconView, passwordIconView, errorLabelEmail, errorLabelPassword);
     }
 }

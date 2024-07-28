@@ -13,13 +13,15 @@ import java.util.Objects;
 public class SignUpPage {
     // to use in all methods+
     private TextField emailField;
-    private Label errorLabel;
+    private PasswordField passwordField;
+    private Label errorLabelEmail;
+    private Label errorLabelPassword;
     private RadioButton personType,workerType;
     // css colors and settings
     private final String personUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #8e2cc8; -fx-background-radius: 10; -fx-border-radius: 10;";
     private final String workerUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #61d0e3; -fx-background-radius: 10; -fx-border-radius: 10;";
     private final String textStyle = "-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;";
-    private final String errorTextStyle = "-fx-text-fill: red; -fx-font-size: 14;";
+    private final String errorTextStyle = "-fx-text-fill: red; -fx-font-size: 12;";
 
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
         pane.getChildren().clear();
@@ -91,11 +93,11 @@ public class SignUpPage {
         emailField.setStyle(personUiStyle);
 
         // email Error Label
-        errorLabel = new Label();
-        errorLabel.setStyle(errorTextStyle);
-        errorLabel.setLayoutX(15);
-        errorLabel.setLayoutY(395);
-        errorLabel.setVisible(false);
+        errorLabelEmail = new Label("البريد الإلكتروني غير صالح");
+        errorLabelEmail.setStyle(errorTextStyle);
+        errorLabelEmail.setLayoutX(15);
+        errorLabelEmail.setLayoutY(390);
+        errorLabelEmail.setVisible(false);
 
         // email icon
         Image emailIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/email.png")).toExternalForm());
@@ -112,12 +114,18 @@ public class SignUpPage {
         passwordLabel.setStyle(textStyle);
 
         // password field
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setPromptText("كلمة المرور");
         passwordField.setPrefSize(495, 40);
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(430);
         passwordField.setStyle(personUiStyle);
+        
+        errorLabelPassword = new Label("تحقق من كلمة المرور");
+        errorLabelPassword.setStyle(errorTextStyle);
+        errorLabelPassword.setLayoutX(15);
+        errorLabelPassword.setLayoutY(470);
+        errorLabelPassword.setVisible(false);
 
         // password icon
         Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
@@ -174,7 +182,7 @@ public class SignUpPage {
             phoneNumField.setStyle(workerUiStyle);
         });
         // Add components to the pane
-        pane.getChildren().addAll(errorLabel,accountType,nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
+        pane.getChildren().addAll(errorLabelEmail,errorLabelPassword,accountType,nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
     }
     private void setupAccountTypeSelection(Pane pane) {
 
@@ -208,13 +216,19 @@ public class SignUpPage {
 
         signUpButton.setOnAction(_ -> {
             String email = emailField.getText();
+            String password = passwordField.getText();
             if (EmailCheck.isValidEmail(email)) {
-                errorLabel.setVisible(false);
+                errorLabelEmail.setVisible(false);
                 // Proceed with sign up process
                 System.out.println("Valid email, proceeding with sign up");
             } else {
-                errorLabel.setText("البريد الإلكتروني غير صالح");
-                errorLabel.setVisible(true);
+                errorLabelEmail.setVisible(true);
+            }
+            if (PasswordCheck.isValidPassword(password)){
+                errorLabelPassword.setVisible(false);
+            }
+            else {
+                errorLabelPassword.setVisible(true);
             }
         });
 
