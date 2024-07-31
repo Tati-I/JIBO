@@ -12,6 +12,10 @@ import java.util.Objects;
 
 public class SignUpPage {
     // to use in all methods+
+    private static Image visibleIcon;
+    private static Image hiddenIcon;
+    private static ImageView passwordIconView;
+    private static TextField visiblePasswordField;
     private TextField emailField;
     private PasswordField passwordField;
     private Label errorLabelEmail;
@@ -23,12 +27,18 @@ public class SignUpPage {
     private final String textStyle = "-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;";
     private final String errorTextStyle = "-fx-text-fill: red; -fx-font-size: 12;";
 
+
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
         pane.getChildren().clear();
         pane.getChildren().addAll(loginRectangle,msg,loginButton,signUpButton,welcome);
         fieldsPackage(pane);
         pane.setPrefSize(525, 700);
         pane.setLayoutY(10);
+
+
+            visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
+            hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+
 
         TranslateTransition loginTransition = new TranslateTransition(Duration.millis(300), loginButton);
         TranslateTransition signUpTransition = new TranslateTransition(Duration.millis(300), signUpButton);
@@ -48,6 +58,8 @@ public class SignUpPage {
 
     }
     private void fieldsPackage(Pane pane) {
+
+
 
         // Account Type Label
         Label accountType = new Label("نوع الحساب");
@@ -120,6 +132,14 @@ public class SignUpPage {
         passwordField.setLayoutX(15);
         passwordField.setLayoutY(430);
         passwordField.setStyle(personUiStyle);
+
+        visiblePasswordField = new TextField();
+        visiblePasswordField.setPromptText("كلمة المرور");
+        visiblePasswordField.setPrefSize(495, 40);
+        visiblePasswordField.setLayoutX(15);
+        visiblePasswordField.setLayoutY(430);
+        visiblePasswordField.setStyle(personUiStyle);
+        visiblePasswordField.setVisible(false);
         
         errorLabelPassword = new Label("تحقق من كلمة المرور");
         errorLabelPassword.setStyle(errorTextStyle);
@@ -127,13 +147,18 @@ public class SignUpPage {
         errorLabelPassword.setLayoutY(470);
         errorLabelPassword.setVisible(false);
 
-        // password icon
-        Image passwordIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
-        ImageView passwordIconView = new ImageView(passwordIcon);
+        passwordIconView = new ImageView(hiddenIcon);
         passwordIconView.setFitWidth(20);
         passwordIconView.setFitHeight(20);
         passwordIconView.setLayoutX(480);
         passwordIconView.setLayoutY(440);
+
+        passwordIconView.setOnMouseEntered(e->{
+            passwordIconView.setStyle("-fx-cursor: hand;");
+        });
+
+        passwordIconView.setOnMouseClicked(e -> LoginPage.showPassword());
+
 
         // Phone number label
         Label phoneNumLabel = new Label("رقم الهاتف");
@@ -182,7 +207,7 @@ public class SignUpPage {
             phoneNumField.setStyle(workerUiStyle);
         });
         // Add components to the pane
-        pane.getChildren().addAll(errorLabelEmail,errorLabelPassword,accountType,nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,passwordIconView,phoneNumIconView,emailIconView,nameIconView);
+        pane.getChildren().addAll(passwordIconView,visiblePasswordField,errorLabelEmail,errorLabelPassword,accountType,nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,phoneNumIconView,emailIconView,nameIconView);
     }
     private void setupAccountTypeSelection(Pane pane) {
 

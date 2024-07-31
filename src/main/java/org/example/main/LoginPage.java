@@ -19,15 +19,15 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class LoginPage extends Application {
-    private Pane pane;
-    private Button loginButton;
-    private Button signUpButton;
-    private ImageView passwordIconView;
-    private Image visibleIcon;
-    private Image hiddenIcon;
-    private boolean isPasswordVisible = false;
-    private TextField visiblePasswordField;
-    private PasswordField passwordField;
+    private static Pane pane;
+    private static Button loginButton;
+    private static Button signUpButton;
+    private static ImageView passwordIconView;
+    private static Image visibleIcon;
+    private static Image hiddenIcon;
+    private static  boolean isPasswordVisible = false;
+    private static TextField visiblePasswordField;
+    private static PasswordField passwordField;
 
     public static void main(String[] args) {
         launch();
@@ -177,21 +177,7 @@ public class LoginPage extends Application {
             passwordIconView.setStyle("-fx-cursor: hand;");
         });
 
-        passwordIconView.setOnMouseClicked(e -> {
-            if (isPasswordVisible) {
-                passwordField.setText(visiblePasswordField.getText());
-                visiblePasswordField.setVisible(false);
-                passwordField.setVisible(true);
-                passwordIconView.setImage(hiddenIcon);
-                isPasswordVisible = false;
-            } else {
-                visiblePasswordField.setText(passwordField.getText());
-                passwordField.setVisible(false);
-                visiblePasswordField.setVisible(true);
-                passwordIconView.setImage(visibleIcon);
-                isPasswordVisible = true;
-            }
-        });
+        passwordIconView.setOnMouseClicked(e -> showPassword());
 
         Button Login = new Button("تسجيل الدخول");
         Login.setLayoutX(15);
@@ -239,5 +225,22 @@ public class LoginPage extends Application {
         });
 
         pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, visiblePasswordField, Login, privacy, emailIconView, passwordIconView, errorLabelEmail, errorLabelPassword);
+    }
+
+    public static void showPassword(){
+        if (isPasswordVisible) {
+            passwordField.setText(visiblePasswordField.getText());
+            visiblePasswordField.setVisible(false);
+            passwordField.setVisible(true);
+            passwordIconView.setImage(hiddenIcon);
+            isPasswordVisible = false;
+        } else {
+            visiblePasswordField.setText(passwordField.getText());
+            passwordField.setVisible(false);
+            visiblePasswordField.setVisible(true);
+            passwordIconView.setImage(visibleIcon);
+            isPasswordVisible = true;
+        }
+
     }
 }
