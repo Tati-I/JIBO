@@ -227,7 +227,7 @@ public class LoginPage extends Application {
 
             if (EmailCheck.isValidEmail(email)) {
                 errorLabelEmail.setVisible(false);
-                System.out.println("valid email");
+                System.out.println("valid email go");
             } else {
                 errorLabelEmail.setVisible(true);
             }
