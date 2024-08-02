@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class SignUpPage {
     // to use in all methods+
-    private TextField emailField;
+    private TextField emailField,nameField;
     private PasswordField passwordField;
     private Label errorLabelEmail;
     private Label errorLabelPassword;
@@ -27,7 +27,7 @@ public class SignUpPage {
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
         pane.getChildren().clear();
         pane.getChildren().addAll(loginRectangle,msg,loginButton,signUpButton,welcome);
-        fieldsPackage(pane);
+        fieldsPackage(pane,loginPage);
         pane.setPrefSize(525, 700);
         pane.setLayoutY(10);
 
@@ -46,7 +46,7 @@ public class SignUpPage {
         });
 
     }
-    private void fieldsPackage(Pane pane) {
+    private void fieldsPackage(Pane pane,LoginPage loginPage) {
         // Account Type Label
         Label accountType = new Label("نوع الحساب");
         accountType.setStyle(textStyle);
@@ -60,7 +60,7 @@ public class SignUpPage {
         nameLabel.setStyle(textStyle);
 
         // Name TextField
-        TextField nameField = new TextField();
+        nameField = new TextField();
         nameField.setPromptText("الأسم");
         nameField.setPrefSize(495, 40);
         nameField.setLayoutX(15);
@@ -130,7 +130,7 @@ public class SignUpPage {
         phoneNumIconView.setLayoutY(520);
 
         // Sign Up Button
-        signUpButton(pane);
+        signUpButton(pane,loginPage);
         setupAccountTypeSelection(pane);
 
         // Privacy Label
@@ -175,7 +175,7 @@ public class SignUpPage {
 
         pane.getChildren().addAll(workerType, personType);
     }
-    private void signUpButton(Pane pane) {
+    private void signUpButton(Pane pane,LoginPage loginPage) {
         Button signUpButton = new Button("أنشاء حساب");
         signUpButton.setLayoutX(15);
         signUpButton.setLayoutY(570);
@@ -187,21 +187,26 @@ public class SignUpPage {
         signUpButton.setOnMouseExited(_ -> signUpButton.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
         signUpButton.setOnAction(_ -> {
+            String username = nameField.getText();
             String email = emailField.getText();
             String password = passwordField.getText();
-            if (EmailCheck.isValidEmail(email)) {
-                errorLabelEmail.setVisible(false);
-                // Proceed with sign up process
-                System.out.println("Valid email, proceeding with sign up");
+            String userType = personType.isSelected() ? "personal" : "worker";
+
+            if (EmailCheck.isValidEmail(email) && PasswordCheck.isValidPassword(password)) {
+                if (FileBasedAuthenticationSystem.registerUser(username, password, email, userType) &&EmailCheck.isValidEmail(email) && PasswordCheck.isValidPassword(password) ) {
+                    errorLabelEmail.setVisible(false);
+                    // إظهار رسالة نجاح وربما الانتقال إلى صفحة تسجيل الدخول
+                    System.out.println("تم تسجيل المستخدم بنجاح");
+                    loginPage.createLoginView();
+                } else {
+                    // إظهار رسالة خطأ
+                    errorLabelEmail.setText("فشل التسجيل. ربما البريد الإلكتروني مستخدم بالفعل أو كلمة المرور ضعيفة");
+                    errorLabelEmail.setVisible(true);
+                    System.out.println("فشل التسجيل. ربما البريد الإلكتروني مستخدم بالفعل");
+                }
             } else {
-                errorLabelEmail.setVisible(true);
-            }
-            if (PasswordCheck.isValidPassword(password)){
-                errorLabelPassword.setVisible(false);
-                System.out.println("valid password, proceeding with sign up");
-            }
-            else {
-                errorLabelPassword.setVisible(true);
+                errorLabelEmail.setVisible(!EmailCheck.isValidEmail(email));
+                errorLabelPassword.setVisible(!PasswordCheck.isValidPassword(password));
             }
         });
 

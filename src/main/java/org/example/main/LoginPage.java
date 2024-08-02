@@ -214,29 +214,16 @@ public class LoginPage extends Application {
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
         Login.setOnMouseClicked(_ -> {
-            String adminEmail = "admin";
-            String adminPassword = "admin";
             String email = emailField.getText();
             String password = passwordField.getText();
 
-            if (email.equals(adminEmail) && password.equals(adminPassword)) {
+            if (FileBasedAuthenticationSystem.authenticateUser(email, password)) {
                 primaryStage.close();
                 PersonalHomePage homePage = new PersonalHomePage();
                 homePage.start(new Stage());
-            }
-
-            if (EmailCheck.isValidEmail(email)) {
-                errorLabelEmail.setVisible(false);
-                System.out.println("valid email go");
             } else {
-                errorLabelEmail.setVisible(true);
-            }
-
-            if (PasswordCheck.isValidPassword(password)) {
-                errorLabelPassword.setVisible(false);
-                System.out.println("valid password");
-            } else {
-                errorLabelPassword.setVisible(true);
+                // إظهار رسالة خطأ
+                System.out.println("بريد إلكتروني أو كلمة مرور غير صحيحة");
             }
         });
 
