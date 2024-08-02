@@ -12,21 +12,17 @@ import java.util.Objects;
 
 public class SignUpPage {
     // to use in all methods+
-    private static Image visibleIcon;
-    private static Image hiddenIcon;
-    private static ImageView passwordIconView;
-    private static TextField visiblePasswordField;
     private TextField emailField;
     private PasswordField passwordField;
     private Label errorLabelEmail;
     private Label errorLabelPassword;
     private RadioButton personType,workerType;
+    private boolean isPasswordVisible = false;
     // css colors and settings
     private final String personUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #8e2cc8; -fx-background-radius: 10; -fx-border-radius: 10;";
     private final String workerUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #61d0e3; -fx-background-radius: 10; -fx-border-radius: 10;";
     private final String textStyle = "-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;";
     private final String errorTextStyle = "-fx-text-fill: red; -fx-font-size: 12;";
-
 
     public void display(Pane pane, Button loginButton, Button signUpButton, LoginPage loginPage, Rectangle loginRectangle, Label welcome, Label msg) {
         pane.getChildren().clear();
@@ -35,17 +31,10 @@ public class SignUpPage {
         pane.setPrefSize(525, 700);
         pane.setLayoutY(10);
 
-
-
-            visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
-            hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
-
-
         TranslateTransition loginTransition = new TranslateTransition(Duration.millis(300), loginButton);
         TranslateTransition signUpTransition = new TranslateTransition(Duration.millis(300), signUpButton);
 
         loginButton.setOnAction(_ -> {
-
             loginTransition.setToX(5);
             loginTransition.play();
             signUpTransition.setToX(225);
@@ -56,12 +45,8 @@ public class SignUpPage {
 
         });
 
-
     }
     private void fieldsPackage(Pane pane) {
-
-
-
         // Account Type Label
         Label accountType = new Label("نوع الحساب");
         accountType.setStyle(textStyle);
@@ -120,46 +105,7 @@ public class SignUpPage {
         emailIconView.setLayoutX(480);
         emailIconView.setLayoutY(360);
 
-        // password label
-        Label passwordLabel = new Label("كلمة المرور");
-        passwordLabel.setLayoutX(425);
-        passwordLabel.setLayoutY(395);
-        passwordLabel.setStyle(textStyle);
-
-        // password field
-        passwordField = new PasswordField();
-        passwordField.setPromptText("كلمة المرور");
-        passwordField.setPrefSize(495, 40);
-        passwordField.setLayoutX(15);
-        passwordField.setLayoutY(430);
-        passwordField.setStyle(personUiStyle);
-
-        visiblePasswordField = new TextField();
-        visiblePasswordField.setPromptText("كلمة المرور");
-        visiblePasswordField.setPrefSize(495, 40);
-        visiblePasswordField.setLayoutX(15);
-        visiblePasswordField.setLayoutY(430);
-        visiblePasswordField.setStyle(personUiStyle);
-        visiblePasswordField.setVisible(false);
-        
-        errorLabelPassword = new Label("تحقق من كلمة المرور");
-        errorLabelPassword.setStyle(errorTextStyle);
-        errorLabelPassword.setLayoutX(15);
-        errorLabelPassword.setLayoutY(470);
-        errorLabelPassword.setVisible(false);
-
-        passwordIconView = new ImageView(hiddenIcon);
-        passwordIconView.setFitWidth(20);
-        passwordIconView.setFitHeight(20);
-        passwordIconView.setLayoutX(480);
-        passwordIconView.setLayoutY(440);
-
-        passwordIconView.setOnMouseEntered(e->{
-            passwordIconView.setStyle("-fx-cursor: hand;");
-        });
-
-        passwordIconView.setOnMouseClicked(e -> LoginPage.showPassword());
-
+        passwordActions(pane);
 
         // Phone number label
         Label phoneNumLabel = new Label("رقم الهاتف");
@@ -208,7 +154,7 @@ public class SignUpPage {
             phoneNumField.setStyle(workerUiStyle);
         });
         // Add components to the pane
-        pane.getChildren().addAll(passwordIconView,visiblePasswordField,errorLabelEmail,errorLabelPassword,accountType,nameLabel, nameField, emailField, emailLabel,passwordLabel, passwordField,phoneNumLabel,phoneNumField,privacy,phoneNumIconView,emailIconView,nameIconView);
+        pane.getChildren().addAll(errorLabelEmail,accountType,nameLabel, nameField, emailField, emailLabel,phoneNumLabel,phoneNumField,privacy,phoneNumIconView,emailIconView,nameIconView);
     }
     private void setupAccountTypeSelection(Pane pane) {
 
@@ -252,6 +198,7 @@ public class SignUpPage {
             }
             if (PasswordCheck.isValidPassword(password)){
                 errorLabelPassword.setVisible(false);
+                System.out.println("valid password, proceeding with sign up");
             }
             else {
                 errorLabelPassword.setVisible(true);
@@ -259,6 +206,62 @@ public class SignUpPage {
         });
 
         pane.getChildren().add(signUpButton);
+    }
+
+    private void passwordActions(Pane pane){
+        Label passwordLabel = new Label("كلمة المرور");
+        passwordLabel.setLayoutX(425);
+        passwordLabel.setLayoutY(395);
+        passwordLabel.setStyle(textStyle);
+
+        // password field
+        passwordField = new PasswordField();
+        passwordField.setPromptText("كلمة المرور");
+        passwordField.setPrefSize(495, 40);
+        passwordField.setLayoutX(15);
+        passwordField.setLayoutY(430);
+        passwordField.setStyle(personUiStyle);
+
+        TextField passwordTextField = new TextField();
+        passwordTextField.setPromptText("كلمة المرور");
+        passwordTextField.setPrefSize(495, 40);
+        passwordTextField.setLayoutX(15);
+        passwordTextField.setLayoutY(430);
+        passwordTextField.setStyle(personUiStyle);
+        passwordTextField.setVisible(false);
+
+        errorLabelPassword = new Label("تحقق من كلمة المرور");
+        errorLabelPassword.setStyle(errorTextStyle);
+        errorLabelPassword.setLayoutX(15);
+        errorLabelPassword.setLayoutY(470);
+        errorLabelPassword.setVisible(false);
+
+        Image passwordUn_LockIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
+        Image passwordLockIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+
+        ImageView passwordIconView = new ImageView(passwordLockIcon);
+        passwordIconView.setFitWidth(20);
+        passwordIconView.setFitHeight(20);
+        passwordIconView.setLayoutX(480);
+        passwordIconView.setLayoutY(440);
+
+        passwordIconView.setOnMouseEntered(_ -> passwordIconView.setStyle("-fx-cursor: hand;"));
+
+        passwordIconView.setOnMouseClicked(_ -> {
+            isPasswordVisible = !isPasswordVisible;
+            if (isPasswordVisible) {
+                passwordIconView.setImage(passwordUn_LockIcon);
+                passwordField.setVisible(false);
+                passwordTextField.setVisible(true);
+                passwordTextField.setText(passwordField.getText());
+            } else {
+                passwordIconView.setImage(passwordLockIcon);
+                passwordField.setVisible(true);
+                passwordTextField.setVisible(false);
+                passwordField.setText(passwordTextField.getText());
+            }
+        });
+        pane.getChildren().addAll(passwordLabel,passwordTextField,passwordField,passwordIconView,errorLabelPassword);
     }
 
 }
