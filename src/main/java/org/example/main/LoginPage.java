@@ -20,6 +20,8 @@ import java.util.Objects;
 
 public class LoginPage extends Application {
     private static Pane pane;
+    private Stage primaryStage;
+
     private static Button loginButton;
     private static Button signUpButton;
     private static ImageView passwordIconView;
@@ -35,6 +37,10 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage stage) {
+
+        this.primaryStage = stage;
+
+
 
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
         AnchorPane root = new AnchorPane();
@@ -64,9 +70,12 @@ public class LoginPage extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+
     }
 
     public void createLoginView() {
+
+
         pane.getChildren().clear();
         pane.setPrefSize(525, 470);
         pane.setLayoutY(130);
@@ -207,22 +216,33 @@ public class LoginPage extends Application {
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
         Login.setOnMouseClicked(e -> {
+            String adminEmail = "admin";
+            String adminPassword = "admin";
             String email = emailField.getText();
+            String password = passwordField.getText();
+
+            if (email.equals(adminEmail) && password.equals(adminPassword)) {
+                primaryStage.close();
+                PersonalHomePage homePage = new PersonalHomePage();
+                homePage.start(new Stage());
+            }
+
             if (EmailCheck.isValidEmail(email)) {
                 errorLabelEmail.setVisible(false);
-                System.out.println("right");
             } else {
                 errorLabelEmail.setVisible(true);
             }
 
-            String password = isPasswordVisible ? visiblePasswordField.getText() : passwordField.getText();
             if (PasswordCheck.isValidPassword(password)) {
                 errorLabelPassword.setVisible(false);
-                System.out.println("right");
             } else {
                 errorLabelPassword.setVisible(true);
             }
         });
+
+
+
+
 
         pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, visiblePasswordField, Login, privacy, emailIconView, passwordIconView, errorLabelEmail, errorLabelPassword);
     }

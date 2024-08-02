@@ -36,6 +36,7 @@ public class SignUpPage {
         pane.setLayoutY(10);
 
 
+
             visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
             hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
 
