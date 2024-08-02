@@ -182,11 +182,9 @@ public class LoginPage extends Application {
         passwordIconView.setLayoutX(480);
         passwordIconView.setLayoutY(300);
 
-        passwordIconView.setOnMouseEntered(e->{
-            passwordIconView.setStyle("-fx-cursor: hand;");
-        });
+        passwordIconView.setOnMouseEntered(_ -> passwordIconView.setStyle("-fx-cursor: hand;"));
 
-        passwordIconView.setOnMouseClicked(e -> showPassword());
+        passwordIconView.setOnMouseClicked(_ -> showPassword());
 
         Button Login = new Button("تسجيل الدخول");
         Login.setLayoutX(15);
@@ -215,7 +213,7 @@ public class LoginPage extends Application {
 
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
-        Login.setOnMouseClicked(e -> {
+        Login.setOnMouseClicked(_ -> {
             String adminEmail = "admin";
             String adminPassword = "admin";
             String email = emailField.getText();
@@ -229,12 +227,14 @@ public class LoginPage extends Application {
 
             if (EmailCheck.isValidEmail(email)) {
                 errorLabelEmail.setVisible(false);
+                System.out.println("valid email");
             } else {
                 errorLabelEmail.setVisible(true);
             }
 
             if (PasswordCheck.isValidPassword(password)) {
                 errorLabelPassword.setVisible(false);
+                System.out.println("valid password");
             } else {
                 errorLabelPassword.setVisible(true);
             }
