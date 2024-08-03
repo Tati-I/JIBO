@@ -213,21 +213,35 @@ public class LoginPage extends Application {
 
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
-        Login.setOnMouseClicked(_ -> {
+        Login.setOnMouseClicked(e -> {
+            String adminEmail = "admin";
+            String adminPassword = "admin";
             String email = emailField.getText();
             String password = passwordField.getText();
 
-            if (FileBasedAuthenticationSystem.authenticateUser(email, password)) {
+            if (email.equals(adminEmail) && password.equals(adminPassword)) {
                 primaryStage.close();
                 PersonalHomePage homePage = new PersonalHomePage();
                 homePage.start(new Stage());
-            } else {
-                // إظهار رسالة خطأ
-                System.out.println("بريد إلكتروني أو كلمة مرور غير صحيحة");
             }
+
+
+                if (EmailCheck.isValidEmail(email)) {
+                    errorLabelEmail.setVisible(false);
+                    System.out.println("right");
+                } else {
+                    errorLabelEmail.setVisible(true);
+                }
+
+                if (PasswordCheck.isValidPassword(password)) {
+                    errorLabelPassword.setVisible(false);
+                    System.out.println("right");
+                } else {
+                    errorLabelPassword.setVisible(true);
+                }
+
+
         });
-
-
 
 
 
