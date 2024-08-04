@@ -4,3 +4,33 @@
     -fx-border-color: #000000;
     -fx-background-color: white;
 }
+.left-menu {
+    background-color: #f8f9fa;
+    padding: 20px;
+    spacing: 10px;
+    border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 2, 2);
+}
+
+.left-menu .button {
+    -fx-background-color: rgba(153, 0, 255, 0.46);
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: baseline-left;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0.5, 0, 0);
+    -fx-cursor: hand;
+    -fx-pref-width: 200px;
+}
+
+.left-menu .button:hover {
+    -fx-background-color: #a100ff;
+}
+
+.left-menu .button:pressed {
+    -fx-background-color: #aa00ff;
+}
+
