@@ -12,14 +12,22 @@ import javafx.stage.Stage;
 
 public class PersonalHomePage extends Application {
 
-    public void start(Stage primaryStage) {
+    private static Pane rightSideBar;
 
-        Pane rightSideBar = new Pane();
+    public static void rightSideBar() {
+        rightSideBar = new Pane();
         rightSideBar.setPrefWidth(275);
         rightSideBar.setPrefHeight(784);
         rightSideBar.setLayoutX(927);
         rightSideBar.setLayoutY(-1);
         rightSideBar.setStyle("-fx-background-color: #4e79de; -fx-border-color: #ffffff; -fx-border-width: 1px;");
+
+    }
+
+    public void start(Stage primaryStage) {
+        rightSideBar();
+
+
 
 
         Label logo = new Label("LOGO");
