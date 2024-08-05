@@ -31,6 +31,6 @@
 }
 
 .left-menu .button:pressed {
-    -fx-background-color: #aa00ff;
+    -fx-background-color: #ff0000;
 }
 
