@@ -25,12 +25,7 @@
     -fx-cursor: hand;
     -fx-pref-width: 200px;
 }
-
-.left-menu .button:hover {
-    -fx-background-color: #a100ff;
-}
-
-.left-menu .button:pressed {
-    -fx-background-color: #ff0000;
+#rightSideBar {
+    -fx-background-color: #cc060d;
 }
 
