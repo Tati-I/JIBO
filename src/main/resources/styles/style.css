@@ -18,3 +18,17 @@
 #rightSideBarButton{
     -fx-background-color: rgba(0, 255, 187, 0.46);
 }
+#requestButton {
+    -fx-background-color: linear-gradient( #1fd1f9 0%, #b621fe 74%);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,.5), 4, 0.5, 4, 4);
+    -fx-transition: all 0.3s ease;
+}

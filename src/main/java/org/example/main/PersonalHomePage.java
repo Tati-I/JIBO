@@ -1,16 +1,20 @@
 package org.example.main;
 
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Objects;
 
@@ -33,6 +37,38 @@ public class PersonalHomePage extends Application {
         requestButton.setPrefSize(130,110);
         requestButton.setLayoutX(x);
         requestButton.setLayoutY(y);
+        DropShadow shadow = new DropShadow();
+        shadow.setRadius(4.0);
+        shadow.setOffsetX(4.0);
+        shadow.setOffsetY(4.0);
+        shadow.setColor(Color.rgb(255, 255, 255, 0.5));
+
+        requestButton.setEffect(shadow);
+
+        // تأثير التكبير والدوران عند التمرير
+        requestButton.setOnMouseEntered(event -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(30), requestButton);
+            scaleUp.setToX(2);
+            scaleUp.setToY(2);
+
+
+
+            scaleUp.play();
+
+        });
+
+        // إعادة الزر إلى حالته الطبيعية عند مغادرة الفأرة
+        requestButton.setOnMouseExited(event -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(30), requestButton);
+            scaleDown.setToX(1);
+            scaleDown.setToY(1);
+
+            RotateTransition rotate = new RotateTransition(Duration.millis(3000), requestButton);
+            rotate.setByAngle(-1800000);
+
+            scaleDown.play();
+            rotate.play();
+        });
         return requestButton;
     }
     public static Button rightSideBarButton(String name,double x, double y) {
@@ -53,12 +89,12 @@ public class PersonalHomePage extends Application {
 
         Label titleLabel = new Label(title);
         titleLabel.setStyle("-fx-text-fill: #000000;");
-        titleLabel.setLayoutX(20);  // Adjusted positions
+        titleLabel.setLayoutX(200);  // Adjusted positions
         titleLabel.setLayoutY(20);
 
         Label priceLabel = new Label(price);
         priceLabel.setStyle("-fx-text-fill: #000000;");
-        priceLabel.setLayoutX(20);  // Adjusted positions
+        priceLabel.setLayoutX(200);  // Adjusted positions
         priceLabel.setLayoutY(50);
 
 
@@ -76,38 +112,38 @@ public class PersonalHomePage extends Application {
     public void start(Stage primaryStage) {
         rightSideBar();
 
-        Image electric = new Image(getClass().getResource("/Pictures/Electric.jpeg").toExternalForm());
-        Image ironmen = new Image(getClass().getResource("/Pictures/ironmen.jpeg").toExternalForm());
-        Image water = new Image(getClass().getResource("/Pictures/watermen.jpeg").toExternalForm());
+        Image electric = new Image(getClass().getResource("/Pictures/electricmen.png").toExternalForm());
+        Image tailor = new Image(getClass().getResource("/Pictures/tailor.png").toExternalForm());
+        Image water = new Image(getClass().getResource("/Pictures/watermen.png").toExternalForm());
         Image woodmen  = new Image(getClass().getResource("/Pictures/wood.png").toExternalForm());
         Image logo1 = new Image(getClass().getResource("/Pictures/logo1.png").toExternalForm());
         Image logo2 = new Image(getClass().getResource("/Pictures/logo2.png").toExternalForm());
-        Image accountPhoto = new Image(getClass().getResource("/Pictures/accountPhoto.png").toExternalForm());
+        Image accountPhoto = new Image(getClass().getResource("/Pictures/me.png").toExternalForm());
 
 
 
         ImageView electricImageView = new ImageView(electric);
         electricImageView.setFitHeight(110);
         electricImageView.setFitWidth(110);
-        electricImageView.setLayoutX(651);
+        electricImageView.setLayoutX(650);
         electricImageView.setLayoutY(200);
 
-        ImageView ironmenImageView = new ImageView(ironmen);
-        ironmenImageView.setFitHeight(110);
-        ironmenImageView.setFitWidth(110);
-        ironmenImageView.setLayoutX(651);
-        ironmenImageView.setLayoutY(330);
+        ImageView tailorImageView = new ImageView(tailor);
+        tailorImageView.setFitHeight(110);
+        tailorImageView.setFitWidth(110);
+        tailorImageView.setLayoutX(650);
+        tailorImageView.setLayoutY(330);
 
         ImageView waterImageView = new ImageView(water);
         waterImageView.setFitHeight(110);
         waterImageView.setFitWidth(110);
-        waterImageView.setLayoutX(651);
+        waterImageView.setLayoutX(650);
         waterImageView.setLayoutY(470);
 
         ImageView woodmenImageView = new ImageView(woodmen);
         woodmenImageView.setFitHeight(110);
         woodmenImageView.setFitWidth(110);
-        woodmenImageView.setLayoutX(645);
+        woodmenImageView.setLayoutX(650);
         woodmenImageView.setLayoutY(610);
 
         ImageView logoImageView = new ImageView(logo1);
@@ -123,14 +159,16 @@ public class PersonalHomePage extends Application {
         logoImageView2.setLayoutY(-60);
 
         ImageView accountPhotoImageView = new ImageView(accountPhoto);
-        accountPhotoImageView.setFitHeight(32);
-        accountPhotoImageView.setFitWidth(32);
+        accountPhotoImageView.setFitHeight(40);
+        accountPhotoImageView.setFitWidth(40);
+        accountPhotoImageView.setStyle("-fx-arc-height: 10;-fx-arc-width: 10");
+
 
 
 
         Pane electricmenService = servicesPane("Electric Service", "123", 250, 200);
-        Pane woodmenService = servicesPane("Watermen Service", "123", 250, 330);
-        Pane ironmenService = servicesPane("Ironmen Service", "123", 250, 470);
+        Pane woodmenService = servicesPane("Watermen Service", "123", 250, 470);
+        Pane tailormenService = servicesPane("Tailormen Service", "123", 250, 330);
         Pane watermenService = servicesPane("Woodmen Service", "123", 250, 610);
 
         Line line = new Line();
@@ -152,7 +190,7 @@ public class PersonalHomePage extends Application {
         serviceSearch.setPrefSize(200,30);
 
         Button goToProfile = new Button("",accountPhotoImageView);
-        goToProfile.setStyle("-fx-background-color: #ffffff");
+        goToProfile.setStyle("-fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px;");
         goToProfile.setPrefSize(70,70);
         goToProfile.setLayoutX(120);
         goToProfile.setLayoutY(15);
@@ -199,13 +237,15 @@ public class PersonalHomePage extends Application {
 
         rightSideBar.getChildren().addAll(logoImageView, homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn, logoutBtn);
 
-        Pane mainLayout = new Pane(rightSideBar,electricmenService,myRate,previosService,nowService,goToProfile,logoImageView2,serviceSearch,trendService,woodmenService,watermenService,ironmenService,electricImageView,woodmenImageView,waterImageView,ironmenImageView,requestButton(140,200),requestButton(120,330),requestButton(120,470),requestButton(120,610),line);
+        Pane mainLayout = new Pane(rightSideBar,electricmenService,myRate,previosService,nowService,goToProfile,logoImageView2,serviceSearch,trendService,woodmenService,watermenService,tailormenService,electricImageView,woodmenImageView,waterImageView,tailorImageView,requestButton(120,200),requestButton(120,330),requestButton(120,470),requestButton(120,610),line);
 
         mainLayout.setStyle("-fx-background-color: #ffffff;");
         Scene scene = new Scene(mainLayout, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
 
         primaryStage.setTitle("Jibo");
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
+
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
