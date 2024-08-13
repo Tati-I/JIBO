@@ -3,6 +3,8 @@ package org.example.main;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -48,26 +51,18 @@ public class PersonalHomePage extends Application {
         // تأثير التكبير والدوران عند التمرير
         requestButton.setOnMouseEntered(event -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(30), requestButton);
-            scaleUp.setToX(2);
-            scaleUp.setToY(2);
-
-
+            scaleUp.setToX(0.9);
+            scaleUp.setToY(0.9);
 
             scaleUp.play();
 
         });
-
-        // إعادة الزر إلى حالته الطبيعية عند مغادرة الفأرة
         requestButton.setOnMouseExited(event -> {
             ScaleTransition scaleDown = new ScaleTransition(Duration.millis(30), requestButton);
             scaleDown.setToX(1);
             scaleDown.setToY(1);
-
-            RotateTransition rotate = new RotateTransition(Duration.millis(3000), requestButton);
-            rotate.setByAngle(-1800000);
-
             scaleDown.play();
-            rotate.play();
+
         });
         return requestButton;
     }
@@ -88,14 +83,19 @@ public class PersonalHomePage extends Application {
         pane.setStyle("-fx-background-color: #ffffff; -fx-border-color: #d2d2d2;  -fx-border-radius: 10px; -fx-background-radius: 10");
 
         Label titleLabel = new Label(title);
-        titleLabel.setStyle("-fx-text-fill: #000000;");
-        titleLabel.setLayoutX(200);  // Adjusted positions
-        titleLabel.setLayoutY(20);
+        titleLabel.setId("titleLabel");
+        titleLabel.setTextAlignment(TextAlignment.RIGHT);
+
+
+
+        titleLabel.setLayoutX(340);
+        titleLabel.setLayoutY(10);
 
         Label priceLabel = new Label(price);
-        priceLabel.setStyle("-fx-text-fill: #000000;");
-        priceLabel.setLayoutX(200);  // Adjusted positions
-        priceLabel.setLayoutY(50);
+        priceLabel.setId("priceLabel");
+
+        priceLabel.setLayoutX(360);
+        priceLabel.setLayoutY(40);
 
 
 
@@ -166,25 +166,26 @@ public class PersonalHomePage extends Application {
 
 
 
-        Pane electricmenService = servicesPane("Electric Service", "123", 250, 200);
-        Pane woodmenService = servicesPane("Watermen Service", "123", 250, 470);
-        Pane tailormenService = servicesPane("Tailormen Service", "123", 250, 330);
-        Pane watermenService = servicesPane("Woodmen Service", "123", 250, 610);
+        Pane electricmenService = servicesPane("كهربائي", "15$", 250, 200);
+        Pane woodmenService = servicesPane("سبّاك", "15$", 250, 470);
+        Pane tailormenService = servicesPane("خياط", "15$", 250, 330);
+        Pane watermenService = servicesPane("نجار", "15$", 250, 610);
 
         Line line = new Line();
         line.setStartX(100);
         line.setEndX(780);
         line.setStartY(180);
         line.setEndY(180);
-        line.setStroke(Color.BLACK);
+        line.setStroke(Color.web("d2d2d2"));
 
         Label trendService = new Label("الخدمات الشائعة");
-        trendService.setStyle("-fx-text-fill: #000000;-fx-font-size: 44;");
-        trendService.setLayoutX(485);
-        trendService.setLayoutY(120);
+        trendService.setId("trendService");
+        trendService.setLayoutX(505);
+        trendService.setLayoutY(115);
 
         TextField serviceSearch = new TextField("البحث عن خدمة...");
-        serviceSearch.setStyle("-fx-text-fill: #000000;");
+        serviceSearch.setId("serviceSearch");
+
         serviceSearch.setLayoutX(120);
         serviceSearch.setLayoutY(140);
         serviceSearch.setPrefSize(200,30);
@@ -222,7 +223,12 @@ public class PersonalHomePage extends Application {
 
         Button homeBtn = rightSideBarButton("الصفحة الرئيسية",37.5,200);
 
-        Button requestServiceBtn = rightSideBarButton("طلب خدمة",37.5,250);
+        Button requestServiceBtn = new Button("طلب خدمة");
+        requestServiceBtn.setId("requestServiceBtn");
+        requestServiceBtn.setPrefSize(200,30);
+        requestServiceBtn.setLayoutX(37.5);
+        requestServiceBtn.setLayoutY(250);
+
 
         Button myServicesBtn = rightSideBarButton("خدماتي",37.5,300);
 

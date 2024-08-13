@@ -13,22 +13,70 @@
 }
 
 #rightSideBar {
-    -fx-background-color: rgba(153, 0, 255, 0.46);
+    -fx-background-color: linear-gradient( #1fd1f9 0%, #2188fe 74%);
 }
 #rightSideBarButton{
-    -fx-background-color: rgba(0, 255, 187, 0.46);
+    -fx-background-color: rgb(255, 255, 255);
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-font-family: Dubai;
+}
+#trendService{
+    -fx-font-size: 44px;
+    -fx-font-family: Dubai;
+    -fx-text-fill: #000000;
+}
+#requestServiceBtn{
+    -fx-background-color:#2188fe;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-font-family: Dubai;
+
+}
+#serviceSearch{
+    -fx-background-color: white;
+    -fx-border-color: #d2d2d2;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+
 }
 #requestButton {
-    -fx-background-color: linear-gradient( #1fd1f9 0%, #b621fe 74%);
+    -fx-background-color: linear-gradient(#1fd1f9 0%, #2188fe 74%);
     -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-padding: 10 20;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-border-color: transparent;
     -fx-border-width: 2;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,.5), 4, 0.5, 4, 4);
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, .5), 4, 0.5, 4, 4);
     -fx-transition: all 0.3s ease;
+    -fx-alignment: center;
+
 }
+#titleLabel{
+    -fx-text-fill: #000000;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-alignment: top-right;
+
+
+
+}
+#priceLabel{
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+
+
+}
+
