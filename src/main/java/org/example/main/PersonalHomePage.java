@@ -1,7 +1,6 @@
 package org.example.main;
 
 import javafx.animation.ScaleTransition;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,7 +19,7 @@ import javafx.util.Duration;
 
 import java.util.Objects;
 
-public class PersonalHomePage extends Application {
+public class PersonalHomePage {
 
     private static final String RESOURCES_PATH = "/Pictures/";
     private static final String CSS_PATH = "/styles/style.css";
@@ -126,8 +125,8 @@ public class PersonalHomePage extends Application {
         pane.getChildren().addAll(titleLabel, priceLabel, imageView, requestButton);
         return pane;
     }
-    @Override
-    public void start(Stage primaryStage) {
+    public void start() {
+        Stage primaryStage = new Stage();
         Pane rightSideBar = createRightSideBar();
 
         Image electric = loadImage("worker.png");
@@ -205,9 +204,5 @@ public class PersonalHomePage extends Application {
 
     private Image loadImage(String imageName) {
         return new Image(Objects.requireNonNull(getClass().getResource(RESOURCES_PATH + imageName)).toExternalForm());
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

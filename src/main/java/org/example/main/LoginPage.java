@@ -213,12 +213,14 @@ public class LoginPage extends Application {
 
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
 
-        Login.setOnMouseClicked(e -> {
+        Login.setOnMouseClicked(_ -> {
+
             String adminEmail = "admin";
             String adminPassword = "admin";
             String email = emailField.getText();
             String password = passwordField.getText();
 
+            /*
             if (email.equals(adminEmail) && password.equals(adminPassword)) {
                 primaryStage.close();
                 PersonalHomePage homePage = new PersonalHomePage();
@@ -240,6 +242,10 @@ public class LoginPage extends Application {
                     errorLabelPassword.setVisible(true);
                 }
 
+             */
+            PersonalHomePage personalHomePage = new PersonalHomePage();
+            personalHomePage.start();
+            primaryStage.close();
 
         });
 
