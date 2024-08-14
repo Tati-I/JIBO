@@ -5,7 +5,7 @@
     -fx-background-color: white;
 }
 .left-menu {
-    background-color: #f8f9fa;
+    background-color: #f0f1ed;
     padding: 20px;
     spacing: 10px;
     border-radius: 10px;
@@ -13,11 +13,11 @@
 }
 
 #rightSideBar {
-    -fx-background-color: linear-gradient( #39d0d0 0%, #742bf1 74%);
+    -fx-background-color: #7296ee;
 }
 #rightSideBarButton{
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-text-fill: #000000;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-background-radius: 10;
@@ -44,15 +44,15 @@
 }
 #serviceSearch{
     -fx-background-color: white;
-    -fx-border-color: #c0c0c0;
-    -fx-text-fill: black;
+    -fx-border-color: #e1e1e1;
+    -fx-prompt-text-fill: #272727;
     -fx-font-weight: bold;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
 
 }
 #requestButton {
-    -fx-background-color: linear-gradient(#6bd245 0%, #6bd245 74%);
+    -fx-background-color: #7398f0;
     -fx-text-fill: white;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
@@ -79,12 +79,12 @@
 
 }
 #servicesButton{
-    -fx-background-color: linear-gradient( #39d0d0 10%, #2bc3f1 84%);
+    -fx-background-color: linear-gradient( #6daaee 10%, #7986f4 84%);
     -fx-text-fill: white;
-    -fx-font-size: 14px;
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
     -fx-font-family: Dubai;
     -fx-cursor: hand;
 
@@ -92,7 +92,7 @@
 }
 #logoutBtn{
     -fx-background-color: #ffffff;
-    -fx-text-fill: red;
+    -fx-text-fill: #c11515;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-background-radius: 10;
@@ -102,28 +102,28 @@
 
 }
 #electricPane{
-    -fx-background-color: #f7f8f3;
-    -fx-border-color: #c0c0c0;
+    -fx-background-color: rgba(0, 187, 255, 0.05);
+    -fx-border-color: #e1e1e1;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 
 }
 #waterPane{
-    -fx-background-color:  #f7f8f3;
-    -fx-border-color: #c0c0c0;
+    -fx-background-color:  rgba(0, 34, 255, 0.05);
+    -fx-border-color: #e1e1e1;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 }
 #tailorPane{
-    -fx-background-color:#f7f8f3;
-    -fx-border-color: #c0c0c0;
+    -fx-background-color: rgba(255, 192, 203, 0.1);
+    -fx-border-color: #e1e1e1;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 
 }
 #woodmenPane{
-    -fx-background-color: #f7f8f3;
-    -fx-border-color: #c0c0c0;
+    -fx-background-color: rgba(255, 255, 0, 0.05);
+    -fx-border-color: #e1e1e1;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
 

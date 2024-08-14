@@ -247,10 +247,9 @@ public class LoginPage extends Application {
                 }
 
              */
-            PersonalHomePage personalHomePage = new PersonalHomePage();
-            personalHomePage.start();
+            RootScreen rootScreen = new RootScreen();
+            rootScreen.start();
             primaryStage.close();
-
         });
 
 
