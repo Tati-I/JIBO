@@ -13,15 +13,18 @@
 }
 
 #rightSideBar {
-    -fx-background-color: linear-gradient( #1fd1f9 0%, #2188fe 74%);
+    -fx-background-color: linear-gradient( #39d0d0 0%, #742bf1 74%);
 }
 #rightSideBarButton{
-    -fx-background-color: rgb(255, 255, 255);
-    -fx-font-size: 16px;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
 }
 #trendService{
     -fx-font-size: 44px;
@@ -29,18 +32,19 @@
     -fx-text-fill: #000000;
 }
 #requestServiceBtn{
-    -fx-background-color:#2188fe;
-    -fx-text-fill: white;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-font-family: Dubai;
+    -fx-cursor: hand;
 
 }
 #serviceSearch{
     -fx-background-color: white;
-    -fx-border-color: #d2d2d2;
+    -fx-border-color: #c0c0c0;
     -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-background-radius: 30;
@@ -48,18 +52,13 @@
 
 }
 #requestButton {
-    -fx-background-color: linear-gradient(#1fd1f9 0%, #2188fe 74%);
+    -fx-background-color: linear-gradient(#6bd245 0%, #6bd245 74%);
     -fx-text-fill: white;
-    -fx-font-size: 16px;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-padding: 10 20;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-border-color: transparent;
-    -fx-border-width: 2;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, .5), 4, 0.5, 4, 4);
-    -fx-transition: all 0.3s ease;
     -fx-alignment: center;
 
 }
@@ -77,6 +76,56 @@
     -fx-font-size: 16px;
     -fx-font-weight: bold;
 
+
+}
+#servicesButton{
+    -fx-background-color: linear-gradient( #39d0d0 10%, #2bc3f1 84%);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+
+}
+#logoutBtn{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+#electricPane{
+    -fx-background-color: #f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+}
+#waterPane{
+    -fx-background-color:  #f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+#tailorPane{
+    -fx-background-color:#f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+}
+#woodmenPane{
+    -fx-background-color: #f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 
 }
 

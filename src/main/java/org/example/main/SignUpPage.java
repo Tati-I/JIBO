@@ -35,15 +35,16 @@ public class SignUpPage {
         TranslateTransition signUpTransition = new TranslateTransition(Duration.millis(300), signUpButton);
 
         loginButton.setOnAction(_ -> {
-            loginTransition.setToX(5);
+            loginTransition.setToX(0);
             loginTransition.play();
-            signUpTransition.setToX(225);
+            signUpTransition.setToX(0);
             signUpTransition.play();
-            loginButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 5px; -fx-background-color: #fdfdfd; -fx-background-radius: 5px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
-            signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 5px; -fx-cursor: hand;");
+            loginButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 10px; -fx-background-color: #fdfdfd; -fx-background-radius:10px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
+            signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-border-radius: 10; -fx-background-color: #f1f2f4; -fx-background-radius: 10px; -fx-cursor: hand;");
             loginPage.createLoginView();
 
         });
+
 
     }
     private void fieldsPackage(Pane pane,LoginPage loginPage) {

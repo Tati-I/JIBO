@@ -126,7 +126,7 @@ public class LoginPage extends Application {
             signUpPage.display(pane, loginButton, signUpButton, this, loginRect, WelcomeMsg, bioMsg);
         });
 
-        loginButton.setOnAction(_ -> {
+       loginButton.setOnAction(_ -> {
             loginTransition.setToX(0);
             loginTransition.play();
             signUpTransition.setToX(0);
@@ -136,6 +136,8 @@ public class LoginPage extends Application {
             signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 10px;-fx-border-radius: 10px; -fx-cursor: hand;");
             createLoginView();
         });
+
+
 
         Label emailWord = new Label("البريد الإلكتروني");
         emailWord.setLayoutX(390);
@@ -208,6 +210,8 @@ public class LoginPage extends Application {
         errorLabelPassword.setLayoutY(330);
         errorLabelPassword.setVisible(false);
         errorLabelPassword.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
+
+
 
         Login.setOnMouseEntered(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
 
