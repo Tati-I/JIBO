@@ -1,12 +1,12 @@
 package org.example.main;
 
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -15,7 +15,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -24,6 +26,7 @@ public class PersonalHomePage  {
 
     private static final String RESOURCES_PATH = "/Pictures/";
     private static final String CSS_PATH = "/styles/style.css";
+    private Window primaryStage;
 
 
     private void createUpAnimateButton(Button button){
@@ -32,6 +35,56 @@ public class PersonalHomePage  {
         scaleUp.setToY(0.9);
         scaleUp.play();
     }
+
+    public void logoutSure() {
+        Stage logoutStage = new Stage();
+        logoutStage.initModality(Modality.APPLICATION_MODAL);
+        logoutStage.initOwner(primaryStage);
+
+        Pane logoutPane = new Pane();
+        logoutPane.setStyle("-fx-background-color: linear-gradient(#39d0d0 10%, #8723f1 84%);");
+        logoutPane.setPrefSize(400, 200);
+
+        Label sureLabel = new Label("هل أنت متأكد؟");
+        sureLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: Dubai; -fx-font-size: 18;");
+        sureLabel.setLayoutX(150);
+        sureLabel.setLayoutY(50);
+
+        Button yesButton = new Button("Yes");
+        yesButton.setStyle("-fx-background-color: green; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;");
+        yesButton.setPrefSize(80, 30);
+        yesButton.setLayoutX(100);
+        yesButton.setLayoutY(120);
+
+        Button noButton = new Button("No");
+        noButton.setStyle("-fx-background-color: red; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 10; -fx-background-radius: 10;");
+        noButton.setPrefSize(80, 30);
+        noButton.setLayoutX(220);
+        noButton.setLayoutY(120);
+
+        yesButton.setOnMouseEntered(_ -> createUpAnimateButton(yesButton));
+        yesButton.setOnMouseExited(_ -> createDownAnimateButton(yesButton));
+        noButton.setOnMouseEntered(_ -> createUpAnimateButton(noButton));
+        noButton.setOnMouseExited(_ -> createDownAnimateButton(noButton));
+
+        yesButton.setOnAction(_ -> {
+            logoutStage.close();
+            Platform.exit();
+
+        });
+
+        noButton.setOnAction(_ -> logoutStage.close());
+
+        logoutPane.getChildren().addAll(sureLabel, yesButton, noButton);
+
+        Scene logoutScene = new Scene(logoutPane);
+        logoutStage.setScene(logoutScene);
+        logoutStage.setTitle("تأكيد تسجيل الخروج");
+        logoutStage.setResizable(false);
+        logoutStage.show();
+    }
+
+
 
     private void createDownAnimateButton(Button button){
         ScaleTransition scaleDown = new ScaleTransition(Duration.millis(250), button);
@@ -69,6 +122,8 @@ public class PersonalHomePage  {
         logoutBtn.setLayoutY(690);
         logoutBtn.setOnMouseEntered(_->createUpAnimateButton(logoutBtn));
         logoutBtn.setOnMouseExited(_->createDownAnimateButton(logoutBtn));
+
+        logoutBtn.setOnAction(_-> logoutSure());
 
         Image logo1 = loadImage("logo1.png");
 
