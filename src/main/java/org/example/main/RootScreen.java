@@ -5,32 +5,33 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class RootScreen {
-    private final RightSideBar rightSideBar;
-    private final Pane mainLayout;
-
-    public RootScreen() {
-        this.rightSideBar = new RightSideBar();
-        this.mainLayout = new AnchorPane();
-        setupLayout();
-    }
-
-    private void setupLayout() {
-        mainLayout.setPrefSize(1200, 780);
-        mainLayout.setStyle("-fx-background-color: #ffffff;");
-    }
-
+    // الدالة الرئيسية لبدء تشغيل الواجهة
     public void start() {
-        RequestServicesPane requestServicesPane = new RequestServicesPane();
+        // إنشاء لوحة الجانب الأيسر
+        Pane leftSidePane = new Pane();
+        // إنشاء شريط الجانب الأيمن وربطه بلوحة الجانب الأيسر
+        RightSideBar rightSideBar = new RightSideBar(leftSidePane);
+
+        // إنشاء اللوحة الرئيسية للتطبيق
+        AnchorPane root = new AnchorPane();
+        root.setPrefSize(1200, 780);
+        root.setStyle("-fx-background-color: #ffffff;");
+
+        // إنشاء كائن من الشاشة الرئيسية
         HomeScreen homeScreen = new HomeScreen();
+
+        // إضافة شريط الجانب الأيمن والشاشة الرئيسية إلى اللوحة الرئيسية
+        root.getChildren().addAll(rightSideBar.getRightSideBar(), homeScreen.RequestHomePane(leftSidePane));
+
+        // إنشاء المشهد وإضافة ملف الأنماط
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
+
+        // إعداد النافذة الرئيسية وعرضها
         Stage primaryStage = new Stage();
-
-        // Add both the right sidebar and the request services pane to the main layout
-        mainLayout.getChildren().addAll(rightSideBar.getRightSideBar(),requestServicesPane.getContentPane());
-
-        Scene scene = new Scene(mainLayout);
-        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
-
         primaryStage.setTitle("Jibo");
         primaryStage.getIcons().add(rightSideBar.loadImage("icon.png"));
         primaryStage.setScene(scene);

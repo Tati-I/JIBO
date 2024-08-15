@@ -4,35 +4,43 @@ import javafx.animation.ScaleTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class RequestServicesPane {
-    private static final String CSS_PATH = "/styles/style.css";
-    private final Pane contentPane;
 
-    public RequestServicesPane() {
-        this.contentPane = new Pane();
-        contentPane.setPrefSize(925, 780);
-        showServicesPage();
-    }
+    // دالة لإنشاء وعرض صفحة الخدمات
+    public Pane showServicesPage(Pane leftSidePane) {
 
-    private void showServicesPage() {
+        // إنشاء لوحة المحتوى الرئيسية
+        Pane contentPane = new Pane();
+        contentPane.setStyle("-fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0);"
+                + "-fx-background-radius: 15px; -fx-border-radius: 15px;"
+                + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 0);");
+
+        leftSidePane.getChildren().clear();
+
+        contentPane.setPrefSize(925, 784);
+
+        // إنشاء خط فاصل
         Line line = new Line(100, 180, 840, 180);
         line.setStroke(Color.web("c0c0c0"));
 
+        // إنشاء عنوان "الخدمات الشائعة"
         Label trendService = new Label("الخدمات الشائعة");
         trendService.setId("trendService");
-        trendService.setLayoutX(537);
-        trendService.setLayoutY(115);
+        trendService.setLayoutX(620);
+        trendService.setLayoutY(130);
 
+        // إنشاء حقل البحث عن الخدمات
         TextField serviceSearch = new TextField();
         serviceSearch.setPromptText("البحث عن خدمة...");
         serviceSearch.setAlignment(Pos.CENTER_RIGHT);
@@ -41,51 +49,79 @@ public class RequestServicesPane {
         serviceSearch.setPrefSize(230, 30);
         serviceSearch.setId("serviceSearch");
 
-        Circle clip = new Circle(20, 20, 20);
-
+        // إنشاء زر الانتقال إلى الملف الشخصي
         Button goToProfile = new Button("");
-        goToProfile.setStyle("-fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-cursor: hand;");
+        goToProfile.setStyle("-fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-cursor: hand;"
+                + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);");
         goToProfile.setPrefSize(50, 50);
         goToProfile.setLayoutX(120);
-        goToProfile.setLayoutY(15);
+        goToProfile.setLayoutY(25);
 
-        Button nowService = createServicesButton("خدماتي الحالية", 750);
-        Button previousService = createServicesButton("خدماتي السابقة", 640);
-        Button myRate = createServicesButton("تقييماتي", 530);
+        // إنشاء أزرار الخدمات
+        Button nowService = createServicesButton("خدماتي الحالية", 735);
+        Button previousService = createServicesButton("خدماتي السابقة", 610);
+        Button myRate = createServicesButton("تقييماتي", 485);
 
-        RightSideBar rightSideBar = new RightSideBar();
+        RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
-        Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("worker.png"), 200);
+        // إنشاء لوحات الخدمات المختلفة
+        VBox servicesBox = new VBox(10); // استخدام VBox مع مسافة بين العناصر
+        servicesBox.setLayoutX(120);
+        servicesBox.setLayoutY(200);
+        servicesBox.setStyle("-fx-background-color: #f8f8f8");
+
+        Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("worker.png"), 0);
         electricPane.setId("electricPane");
-        Pane waterPane = createServicesPane("سبّاك", "30$", rightSideBar.loadImage("worker.png"), 470);
+        Pane waterPane = createServicesPane("سبّاك", "30$", rightSideBar.loadImage("worker.png"), 0);
         waterPane.setId("waterPane");
-        Pane tailorPane = createServicesPane("خياط", "45$", rightSideBar.loadImage("worker.png"), 330);
+        Pane tailorPane = createServicesPane("خياط", "45$", rightSideBar.loadImage("worker.png"), 0);
         tailorPane.setId("tailorPane");
-        Pane woodmenPane = createServicesPane("نجار", "28$", rightSideBar.loadImage("worker.png"), 610);
+        Pane woodmenPane = createServicesPane("نجار", "28$", rightSideBar.loadImage("worker.png"), 0);
         woodmenPane.setId("woodmenPane");
 
-        contentPane.getChildren().addAll(line, trendService, serviceSearch, goToProfile, nowService, previousService, myRate,
-                electricPane, waterPane, tailorPane, woodmenPane);
+        // إضافة الخدمات الجديدة
+        Pane cleaningPane = createServicesPane("تنظيف", "20$", rightSideBar.loadImage("worker.png"), 0);
+        cleaningPane.setId("cleaningPane");
+        Pane securityPane = createServicesPane("تركيب أنظمة أمان", "50$", rightSideBar.loadImage("worker.png"), 0);
+        securityPane.setId("securityPane");
+        Pane applianceRepairPane = createServicesPane("صيانة أجهزة كهربائية", "40$", rightSideBar.loadImage("worker.png"), 0);
+        applianceRepairPane.setId("applianceRepairPane");
+
+        servicesBox.getChildren().addAll(electricPane, waterPane, tailorPane, woodmenPane, cleaningPane, securityPane, applianceRepairPane);
+
+        // إنشاء ScrollPane لتغليف لوحات الخدمات
+        ScrollPane scrollPane = new ScrollPane(servicesBox);
+        scrollPane.setPrefSize(700, 550);
+        scrollPane.setLayoutX(120);
+        scrollPane.setLayoutY(200);
+        scrollPane.setStyle("-fx-background-color: transparent;");
+
+        // إضافة جميع العناصر إلى لوحة المحتوى
+        contentPane.getChildren().addAll(line, trendService, serviceSearch, goToProfile, nowService, previousService, myRate, scrollPane);
+
+        leftSidePane.getChildren().add(contentPane);
+        return leftSidePane;
     }
 
+    // دالة لإنشاء أزرار الخدمات
     private Button createServicesButton(String name, double x) {
         Button servicesButton = new Button(name);
         servicesButton.setId("servicesButton");
-        servicesButton.setPrefSize(90, 30);
+        servicesButton.setPrefSize(120, 40);
         servicesButton.setLayoutX(x);
-        servicesButton.setLayoutY(15);
-        servicesButton.setOnMouseEntered(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient( #9db4dc 10%, #7986f4 84%);"));
-        servicesButton.setOnMouseExited(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient( #6daaee 10%, #7986f4 84%);"));
+        servicesButton.setLayoutY(25);
 
+        servicesButton.setOnMouseEntered(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient(to right, #2c3e50, #4ca1af);-fx-cursor: hand"));
+        servicesButton.setOnMouseExited(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient(to right, #4ca1af, #2c3e50);"));
         return servicesButton;
     }
 
+    // دالة لإنشاء لوحة خدمة معينة
     private Pane createServicesPane(String title, String price, Image image, double y) {
         Pane pane = new Pane();
         pane.setPrefSize(680, 110);
-        pane.setLayoutX(120);
-        pane.setLayoutY(y);
 
+        // تحسين عنوان الخدمة
         Label titleLabel = new Label(title);
         titleLabel.setId("titleLabel");
         titleLabel.setPrefWidth(300);
@@ -94,23 +130,36 @@ public class RequestServicesPane {
         titleLabel.setAlignment(Pos.CENTER_RIGHT);
         titleLabel.setTextAlignment(TextAlignment.RIGHT);
 
+        // تحسين سعر الخدمة
         Label priceLabel = new Label(price);
         priceLabel.setId("priceLabel");
         priceLabel.setLayoutX(520);
         priceLabel.setLayoutY(40);
 
+        // تحسين صورة الخدمة
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
         imageView.setLayoutX(578);
         imageView.setLayoutY(5);
+        imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0, 0, 0);");
 
+        // تحسين زر الطلب
         Button requestButton = createRequestButton();
+        requestButton.setLayoutX(50); // تعديل موضع زر الطلب ليكون متناسقًا
 
-        pane.getChildren().addAll(titleLabel, priceLabel, imageView, requestButton);
+        // إضافة نص توضيحي بجانب زر الطلب
+        Label additionalInfo = new Label("استفسارات؟ اتصل بنا");
+        additionalInfo.setId("additionalInfo");
+        additionalInfo.setLayoutX(200); // تعديل موضع النص حسب الحاجة
+        additionalInfo.setLayoutY(70);
+        additionalInfo.setTextFill(Color.DARKGRAY);
+
+        pane.getChildren().addAll(titleLabel, priceLabel, imageView, requestButton, additionalInfo);
         return pane;
     }
 
+    // دالة لإنشاء زر الطلب
     private Button createRequestButton() {
         Button requestButton = new Button("أطلب الاَن");
         requestButton.setId("requestButton");
@@ -122,21 +171,19 @@ public class RequestServicesPane {
         return requestButton;
     }
 
+    // دالة لإنشاء حركة تكبير الزر عند تمرير الماوس
     private void createUpAnimateButton(Button button) {
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(250), button);
-        scaleUp.setToX(0.9);
-        scaleUp.setToY(0.9);
+        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), button);
+        scaleUp.setToX(1.05);
+        scaleUp.setToY(1.05);
         scaleUp.play();
     }
 
+    // دالة لإنشاء حركة تصغير الزر عند إزالة الماوس
     private void createDownAnimateButton(Button button) {
-        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(250), button);
+        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), button);
         scaleDown.setToX(1);
         scaleDown.setToY(1);
         scaleDown.play();
-    }
-
-    public Pane getContentPane() {
-        return contentPane;
     }
 }
