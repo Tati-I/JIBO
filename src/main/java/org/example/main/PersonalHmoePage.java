@@ -283,6 +283,7 @@ public class PersonalHomePage  {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
+
     }
 
     private Image loadImage(String imageName) {
