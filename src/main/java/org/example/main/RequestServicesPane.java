@@ -22,8 +22,8 @@ public class RequestServicesPane {
 
         // إنشاء لوحة المحتوى الرئيسية
         Pane contentPane = new Pane();
-        contentPane.setStyle("-fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0);"
-                + "-fx-background-radius: 15px; -fx-border-radius: 15px;"
+        contentPane.setStyle("-fx-background-color: #fdfdfd;"
+                + "-fx-background-radius: 0 20 20 0; -fx-border-radius: 15px;"
                 + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 0);");
 
         leftSidePane.getChildren().clear();
@@ -65,10 +65,10 @@ public class RequestServicesPane {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
         // إنشاء لوحات الخدمات المختلفة
-        VBox servicesBox = new VBox(10); // استخدام VBox مع مسافة بين العناصر
+        VBox servicesBox = new VBox(13); // استخدام VBox مع مسافة بين العناصر
         servicesBox.setLayoutX(120);
-        servicesBox.setLayoutY(200);
-        servicesBox.setStyle("-fx-background-color: #f8f8f8");
+        servicesBox.setLayoutY(220);
+        servicesBox.setStyle("-fx-background-color: #fbfbfb");
 
         Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("worker.png"), 0);
         electricPane.setId("electricPane");
@@ -110,9 +110,6 @@ public class RequestServicesPane {
         servicesButton.setPrefSize(120, 40);
         servicesButton.setLayoutX(x);
         servicesButton.setLayoutY(25);
-
-        servicesButton.setOnMouseEntered(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient(to right, #2c3e50, #4ca1af);-fx-cursor: hand"));
-        servicesButton.setOnMouseExited(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient(to right, #4ca1af, #2c3e50);"));
         return servicesButton;
     }
 
