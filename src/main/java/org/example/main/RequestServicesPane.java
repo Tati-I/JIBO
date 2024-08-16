@@ -18,12 +18,12 @@ import javafx.util.Duration;
 public class RequestServicesPane {
 
     // دالة لإنشاء وعرض صفحة الخدمات
-    public Pane showServicesPage(Pane leftSidePane) {
+    public static Pane showServicesPage(Pane leftSidePane) {
 
         // إنشاء لوحة المحتوى الرئيسية
         Pane contentPane = new Pane();
-        contentPane.setStyle("-fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0);"
-                + "-fx-background-radius: 15px; -fx-border-radius: 15px;"
+        contentPane.setStyle("-fx-background-color: #fbfbfb;"
+                + " -fx-background-radius: 0 20 20 0;"
                 + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 15, 0, 0, 0);");
 
         leftSidePane.getChildren().clear();
@@ -65,10 +65,10 @@ public class RequestServicesPane {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
         // إنشاء لوحات الخدمات المختلفة
-        VBox servicesBox = new VBox(10); // استخدام VBox مع مسافة بين العناصر
+        VBox servicesBox = new VBox(13); // استخدام VBox مع مسافة بين العناصر
         servicesBox.setLayoutX(120);
-        servicesBox.setLayoutY(200);
-        servicesBox.setStyle("-fx-background-color: #f8f8f8");
+        servicesBox.setLayoutY(220);
+        servicesBox.setStyle("-fx-background-color: #fbfbfb");
 
         Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("worker.png"), 0);
         electricPane.setId("electricPane");
@@ -104,20 +104,17 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء أزرار الخدمات
-    private Button createServicesButton(String name, double x) {
+    private static Button createServicesButton(String name, double x) {
         Button servicesButton = new Button(name);
         servicesButton.setId("servicesButton");
         servicesButton.setPrefSize(120, 40);
         servicesButton.setLayoutX(x);
         servicesButton.setLayoutY(25);
-
-        servicesButton.setOnMouseEntered(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient(to right, #2c3e50, #4ca1af);-fx-cursor: hand"));
-        servicesButton.setOnMouseExited(_ -> servicesButton.setStyle("-fx-background-color: linear-gradient(to right, #4ca1af, #2c3e50);"));
         return servicesButton;
     }
 
     // دالة لإنشاء لوحة خدمة معينة
-    private Pane createServicesPane(String title, String price, Image image, double y) {
+    private static Pane createServicesPane(String title, String price, Image image, double y) {
         Pane pane = new Pane();
         pane.setPrefSize(680, 110);
 
@@ -160,7 +157,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء زر الطلب
-    private Button createRequestButton() {
+    private static Button createRequestButton() {
         Button requestButton = new Button("أطلب الاَن");
         requestButton.setId("requestButton");
         requestButton.setPrefSize(130, 110);
@@ -172,7 +169,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء حركة تكبير الزر عند تمرير الماوس
-    private void createUpAnimateButton(Button button) {
+    private static void createUpAnimateButton(Button button) {
         ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), button);
         scaleUp.setToX(1.05);
         scaleUp.setToY(1.05);
@@ -180,7 +177,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء حركة تصغير الزر عند إزالة الماوس
-    private void createDownAnimateButton(Button button) {
+    private static void createDownAnimateButton(Button button) {
         ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), button);
         scaleDown.setToX(1);
         scaleDown.setToY(1);
