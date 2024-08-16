@@ -1,161 +1,132 @@
-* {
-    -fx-font-family: 'Dubai', 'Arial', sans-serif;
-}
-
-.root {
-    -fx-background-color: #f5f5f5;
-}
-
-
-.text-field {
-    -fx-background-color: white;
-    -fx-border-color: #e0e0e0;
-    -fx-border-radius: 15;
-    -fx-background-radius: 15;
-    -fx-padding: 8 15;
-    -fx-prompt-text-fill: #757575;
-    -fx-font-size: 14px;
-}
-
 .text-field:focused {
-    -fx-border-color: #4ca1af;
-    -fx-effect: dropshadow(gaussian, rgba(76, 161, 175, 0.4), 10, 0, 0, 0);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #000000;
+    -fx-background-color: white;
 }
-
+.left-menu {
+    background-color: #f8f9fa;
+    padding: 20px;
+    spacing: 10px;
+    border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 2, 2);
+}
 
 #rightSideBar {
-    -fx-background-color: linear-gradient(to bottom, #2c3e50, #4ca1af);
-    -fx-background-radius: 20 0 0 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
-    -fx-padding: 20;
+    -fx-background-color: linear-gradient( #39d0d0 0%, #742bf1 74%);
 }
-
-
-#homeBtn, #requestServiceBtn, #myServicesBtn, #profileBtn, #settingsBtn {
+#rightSideBarButton{
     -fx-background-color: transparent;
     -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-padding: 10 15;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+#trendService{
+    -fx-font-size: 44px;
+    -fx-font-family: Dubai;
+    -fx-text-fill: #000000;
+}
+#requestServiceBtn{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+#serviceSearch{
+    -fx-background-color: white;
+    -fx-border-color: #c0c0c0;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+
+}
+#requestButton {
+    -fx-background-color: linear-gradient(#6bd245 0%, #6bd245 74%);
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-cursor: hand;
-    -fx-transition: all 0.3s;
+    -fx-alignment: center;
+
 }
-
-#homeBtn:hover, #requestServiceBtn:hover, #myServicesBtn:hover, #profileBtn:hover, #settingsBtn:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
-}
-
-.button:selected {
-    -fx-background-color: white;
-    -fx-text-fill: #2c3e50;
-}
-
-
-#logoutBtn {
-    -fx-background-color: #ff6347;
-    -fx-text-fill: white;
-    -fx-background-radius: 20;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 10 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
-}
-
-#logoutBtn:hover {
-    -fx-background-color: #ff7f50;
-}
-
-
-#trendService {
-    -fx-font-size: 28px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
-}
-
-
-#electricPane, #waterPane, #tailorPane, #woodmenPane, #cleaningPane, #securityPane, #applianceRepairPane {
-    -fx-background-color: white;
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
-    -fx-padding: 15;
-}
-
-#electricPane {
-    -fx-background-color: rgba(0, 187, 255, 0.05);
-}
-
-#waterPane {
-    -fx-background-color: rgba(0, 34, 255, 0.05);
-}
-
-#tailorPane {
-    -fx-background-color: rgba(255, 192, 203, 0.1);
-}
-
-#woodmenPane {
-    -fx-background-color: rgba(255, 255, 0, 0.05);
-}
-
-#cleaningPane {
-    -fx-background-color: rgba(0, 187, 255, 0.05);
-}
-
-#securityPane {
-    -fx-background-color: rgba(0, 34, 255, 0.05);
-}
-
-#applianceRepairPane {
-    -fx-background-color: rgba(255, 192, 203, 0.1);
-}
-
-#titleLabel {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
-}
-
-#priceLabel {
+#titleLabel{
+    -fx-text-fill: #000000;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #4ca1af;
-}
+    -fx-alignment: top-right;
 
-/* زر الطلب */
-#requestButton {
-    -fx-background-color: #4ca1af;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 20;
+
+
+}
+#priceLabel{
+    -fx-text-fill: black;
     -fx-font-size: 16px;
-    -fx-padding: 10 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);
+    -fx-font-weight: bold;
+
+
 }
-
-#requestButton:hover {
-    -fx-background-color: #2c3e50;
-}
-
-
-#additionalInfo {
+#servicesButton{
+    -fx-background-color: linear-gradient( #39d0d0 10%, #2bc3f1 84%);
+    -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-text-fill: #757575;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+
+}
+#logoutBtn{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+#electricPane{
+    -fx-background-color: #f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+}
+#waterPane{
+    -fx-background-color:  #f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
+#tailorPane{
+    -fx-background-color:#f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
+}
+#woodmenPane{
+    -fx-background-color: #f7f8f3;
+    -fx-border-color: #c0c0c0;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+
 }
 
-.scroll-pane {
-    -fx-background-color: transparent;
-}
 
-.scroll-pane > .viewport {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:vertical {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #4ca1af;
-    -fx-background-radius: 5;
-}
