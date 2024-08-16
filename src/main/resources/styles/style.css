@@ -5,19 +5,37 @@
     -fx-background-color: white;
 }
 .left-menu {
-    background-color: #f8f9fa;
+    background-color: #f0f1ed;
     padding: 20px;
     spacing: 10px;
     border-radius: 10px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 2, 2);
 }
 
-#rightSideBar {
-    -fx-background-color: linear-gradient( #39d0d0 0%, #742bf1 74%);
+#homeBtn {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-text-fill: #000000;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
 }
-#rightSideBarButton{
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
+#rightSideBar {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #4ca1af);
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0, 0, 0);
+}
+
+#homeBtn:hover {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #2c3e50;
+}
+
+#requestServiceBtn{
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-text-fill: #000000;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-background-radius: 10;
@@ -26,106 +44,158 @@
     -fx-cursor: hand;
 
 }
+
+#myServicesBtn{
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-text-fill: #000000;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+
+#profileBtn{
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-text-fill: #000000;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+
+#settingsBtn{
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-text-fill: #000000;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-font-family: Dubai;
+    -fx-cursor: hand;
+
+}
+
 #trendService{
-    -fx-font-size: 44px;
+    -fx-font-size: 30px;
     -fx-font-family: Dubai;
     -fx-text-fill: #000000;
 }
-#requestServiceBtn{
-    -fx-background-color: #ffffff;
-    -fx-text-fill: black;
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-font-family: Dubai;
-    -fx-cursor: hand;
 
-}
 #serviceSearch{
     -fx-background-color: white;
-    -fx-border-color: #c0c0c0;
-    -fx-text-fill: black;
+    -fx-border-color: #e1e1e1;
+    -fx-prompt-text-fill: #272727;
     -fx-font-weight: bold;
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
 
 }
 #requestButton {
-    -fx-background-color: linear-gradient(#6bd245 0%, #6bd245 74%);
+    -fx-background-color: linear-gradient(#ff7f50, #ff6347);
+    -fx-font-weight: bold;
+    -fx-background-radius: 15px; -fx-border-radius: 15px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
     -fx-text-fill: white;
     -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
     -fx-cursor: hand;
     -fx-alignment: center;
 
 }
 #titleLabel{
-    -fx-text-fill: #000000;
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-alignment: top-right;
-
-
+    -fx-text-fill: #333333;
 
 }
 #priceLabel{
-    -fx-text-fill: black;
-    -fx-font-size: 16px;
+    -fx-text-fill: #ff6347;
     -fx-font-weight: bold;
-
-
+    -fx-font-size: 16px;
 }
 #servicesButton{
-    -fx-background-color: linear-gradient( #39d0d0 10%, #2bc3f1 84%);
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-font-family: Dubai;
-    -fx-cursor: hand;
+    -fx-background-color: linear-gradient(to right, #4ca1af, #2c3e50);
+    -fx-text-fill: white; -fx-font-weight: bold;
+    -fx-background-radius: 10px; -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
 
 
 }
 #logoutBtn{
-    -fx-background-color: #ffffff;
-    -fx-text-fill: red;
+    -fx-background-color: linear-gradient(to bottom, #ff7f50, #ff6347);
+    -fx-text-fill: white;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
     -fx-font-family: Dubai;
     -fx-cursor: hand;
 
 }
 #electricPane{
-    -fx-background-color: #f7f8f3;
-    -fx-border-color: #c0c0c0;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color: rgba(0, 187, 255, 0.05);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
+
 
 }
 #waterPane{
-    -fx-background-color:  #f7f8f3;
-    -fx-border-color: #c0c0c0;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color:  rgba(0, 34, 255, 0.05);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
 }
 #tailorPane{
-    -fx-background-color:#f7f8f3;
-    -fx-border-color: #c0c0c0;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 192, 203, 0.1);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
 
 }
 #woodmenPane{
-    -fx-background-color: #f7f8f3;
-    -fx-border-color: #c0c0c0;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 255, 0, 0.05);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
+
+}
+
+
+
+#cleaningPane{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color: rgba(0, 187, 255, 0.05);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
+
+
+}
+#securityPane{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color:  rgba(0, 34, 255, 0.05);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
+}
+#applianceRepairPane{
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-background-color: rgba(255, 192, 203, 0.1);
+    -fx-border-color: #dcdcdc;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px
 
 }
 

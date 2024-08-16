@@ -1,7 +1,6 @@
 package org.example.main;
 
 import javafx.animation.ScaleTransition;
-import javafx.css.PseudoClass;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,9 +63,11 @@ public class RightSideBar {
     private Button createRightSideBarButton(String id,String name, double y) {
         Button rightSideBarButton = new Button(name);
         rightSideBarButton.setId(id);
-        rightSideBarButton.setPrefSize(220, 30);
-        rightSideBarButton.setLayoutX(27.5);
+        rightSideBarButton.setPrefSize(200, 30);
+        rightSideBarButton.setLayoutX(37.5);
         rightSideBarButton.setLayoutY(y);
+        rightSideBarButton.setOnMouseEntered(_ -> rightSideBarButton.setStyle("-fx-background-color: #fff"));
+        rightSideBarButton.setOnMouseExited(_ -> rightSideBarButton.setStyle("-fx-background-color: rgba(255, 255, 255, 0.7);"));
         return rightSideBarButton;
     }
 
@@ -98,52 +99,20 @@ public class RightSideBar {
 
 
     // دالة لربط الأزرار بالوظائف المناسبة في الجانب الأيسر
-    public void requestLeftPanes(Button homeBtn, Button requestServiceBtn, Button myServicesBtn, Button profileBtn, Button settingsBtn, Pane leftSidePane) {
-        // مصفوفة تحتوي جميع الأزرار
-        homeBtn.setOnMouseClicked(_ -> {
-            resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            homeBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
-            homeBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true); // تفعيل حالة التحديد
-
+    public void requestLeftPanes(Button homeBtn, Button requestServiceBtn, Button myServicesBtn, Button profileBtn, Button settingsBtn,Pane leftSidePane) {
+        homeBtn.setOnAction(_ ->{
             HomeScreen homeScreen = new HomeScreen();
+            homeBtn.setStyle("-fx-background-color: #fff;");
+            homeBtn.setOnMouseExited(_ -> requestServiceBtn.setStyle("-fx-background-color: #fff;"));
             homeScreen.RequestHomePane(leftSidePane);
         });
-        requestServiceBtn.setOnMouseClicked(_ -> {
-            resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            requestServiceBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
 
+        requestServiceBtn.setOnAction(_ -> {
             RequestServicesPane requestServicesPane = new RequestServicesPane();
+            requestServiceBtn.setStyle("-fx-background-color: #fff;");
+            requestServiceBtn.setOnMouseExited(_ -> requestServiceBtn.setStyle("-fx-background-color: #fff;"));
+
             requestServicesPane.showServicesPage(leftSidePane);// استدعاء صفحة طلب الخدمات
         });
-
-        myServicesBtn.setOnMouseClicked(_ -> {
-            resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            myServicesBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
-
-            // استدعاء الصفحة الخاصة بـ MyServices
-        });
-
-        profileBtn.setOnMouseClicked(_ -> {
-            resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            profileBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
-
-            // استدعاء الصفحة الخاصة بـ Profile
-        });
-
-        settingsBtn.setOnMouseClicked(_ -> {
-            resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            settingsBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
-
-            // استدعاء الصفحة الخاصة بـ Settings
-        });
     }
-
-    void resetButtonStyles(Button homeBtn, Button requestServiceBtn, Button myServicesBtn, Button profileBtn, Button settingsBtn) {
-        Button[] buttons = {homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn};
-        for (Button btn : buttons) {
-            btn.setStyle(""); // إعادة تعيين الأنماط الحالية للزر
-            btn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), false); // إلغاء حالة التحديد
-        }
-    }
-
 }
