@@ -48,9 +48,9 @@ public class RightSideBar {
         // إضافة شعار التطبيق مع تصميم محسّن
         Image logo1 = loadImage("logo1.png");
         ImageView logoImageView = new ImageView(logo1);
-        logoImageView.setFitHeight(180);
-        logoImageView.setFitWidth(180);
-        logoImageView.setLayoutX(47.5); // تعديل الموضع ليكون في الوسط
+        logoImageView.setFitHeight(240);
+        logoImageView.setFitWidth(240);
+        logoImageView.setLayoutX(23); // تعديل الموضع ليكون في الوسط
         logoImageView.setLayoutY(10);
 
         // ربط الأزرار بالوظائف المناسبة

@@ -170,15 +170,15 @@ public class RequestServicesPane {
 
     // دالة لإنشاء حركة تكبير الزر عند تمرير الماوس
     private void createUpAnimateButton(Button button) {
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), button);
-        scaleUp.setToX(1.05);
-        scaleUp.setToY(1.05);
+        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(300), button);
+        scaleUp.setToX(0.9);
+        scaleUp.setToY(0.9);
         scaleUp.play();
     }
 
     // دالة لإنشاء حركة تصغير الزر عند إزالة الماوس
     private void createDownAnimateButton(Button button) {
-        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), button);
+        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(300), button);
         scaleDown.setToX(1);
         scaleDown.setToY(1);
         scaleDown.play();

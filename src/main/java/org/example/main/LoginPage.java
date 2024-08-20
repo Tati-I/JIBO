@@ -44,14 +44,25 @@ public class LoginPage extends Application {
 
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
         AnchorPane root = new AnchorPane();
+        root.setStyle("-fx-background-color: linear-gradient( #4ca1af 0%, #0c0d2c 75%)");
+
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
+        ImageView logoView = new ImageView(logo);
+        logoView.setFitHeight(250);
+        logoView.setFitWidth(250);
+        logoView.setLayoutX(230);
+        logoView.setLayoutY(-60);
+
 
         visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
         hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
 
-        Image background = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/logo.png")).toExternalForm());
+     /*   Image background = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/logo.png")).toExternalForm());
         ImageView imageView = new ImageView(background);
         imageView.setFitWidth(700);
         imageView.setFitHeight(720);
+
+      */
 
 
         pane = new Pane();
@@ -61,7 +72,7 @@ public class LoginPage extends Application {
 
         createLoginView();
 
-        root.getChildren().addAll(imageView, pane);
+        root.getChildren().addAll(logoView, pane);
 
         Scene scene = new Scene(root, 700, 720);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());

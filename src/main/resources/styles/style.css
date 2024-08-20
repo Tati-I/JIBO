@@ -1,7 +1,3 @@
-/* تنسيق عام */
-* {
-    -fx-font-family: 'Dubai', 'Arial', sans-serif;
-}
 
 .root {
     -fx-background-color: #f5f5f5;
@@ -17,6 +13,40 @@
     -fx-prompt-text-fill: #757575;
     -fx-font-size: 14px;
 }
+.radio-button {
+    -fx-background-color: #01012a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 4);
+    -fx-cursor: hand;
+}
+
+.radio-button:hover {
+    -fx-background-color:  #090942;
+
+}
+
+
+.radio-button .radio {
+    -fx-mark-color: #4ca1af;
+    -fx-background-color: #ffffff;
+    -fx-padding: 5px;
+    -fx-radius: 10px;
+}
+
+.radio-button:selected .radio {
+    -fx-mark-color: white;
+    -fx-background-color: #0c0d2c;
+    -fx-border-color: #4ca1af;
+    -fx-border-width: 2px;
+
+}
+
 
 .text-field:focused {
     -fx-border-color: #4ca1af;
@@ -25,7 +55,7 @@
 
 /* الشريط الجانبي الأيمن */
 #rightSideBar {
-    -fx-background-color: linear-gradient(to bottom, #2c3e50, #4ca1af);
+    -fx-background-color: linear-gradient(#4ca1af, #0c0d2c);
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
     -fx-padding: 20;
@@ -44,7 +74,8 @@
 }
 
 #homeBtn:hover, #requestServiceBtn:hover, #myServicesBtn:hover, #profileBtn:hover, #settingsBtn:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
 }
 
 .button:selected {
@@ -59,7 +90,6 @@
     -fx-background-radius: 20;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 10 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
 }
 
@@ -135,7 +165,8 @@
 }
 
 #requestButton:hover {
-    -fx-background-color: #2c3e50;
+    -fx-background-color: #143e5b;
+
 }
 
 /* معلومات إضافية */

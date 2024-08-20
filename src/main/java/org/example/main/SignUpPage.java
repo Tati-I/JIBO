@@ -160,15 +160,16 @@ public class SignUpPage {
     private void setupAccountTypeSelection(Pane pane) {
 
         personType = new RadioButton("شخصي");
-        personType.setLayoutX(130);
-        personType.setLayoutY(160);
+        personType.setPrefSize(100,30);
+        personType.setLayoutX(400);
+        personType.setLayoutY(180);
         personType.setSelected(true);
-        personType.setStyle("-fx-font-size: 16; -fx-padding: 10; -fx-text-fill: #000000;");
+
 
         workerType = new RadioButton("عامل");
-        workerType.setLayoutX(210);
-        workerType.setLayoutY(190);
-        workerType.setStyle("-fx-font-size: 16; -fx-padding: 10; -fx-text-fill: #000000;");
+        workerType.setPrefSize(100,30);
+        workerType.setLayoutX(280);
+        workerType.setLayoutY(180);
 
         ToggleGroup accountTypeGroup = new ToggleGroup();
         workerType.setToggleGroup(accountTypeGroup);
