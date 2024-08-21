@@ -22,7 +22,6 @@
 
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.6), 10, 0, 0, 4);
     -fx-cursor: hand;
 }
 

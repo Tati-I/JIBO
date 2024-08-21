@@ -120,6 +120,9 @@ public class RightSideBar {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
             myServicesBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
 
+            MyServices myServices = new MyServices();
+            myServices.MyServicePane(leftSidePane);
+
             // استدعاء الصفحة الخاصة بـ MyServices
         });
 
@@ -127,12 +130,18 @@ public class RightSideBar {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
             profileBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
 
+            MyProfile myProfile = new MyProfile();
+            myProfile.myProfilePane(leftSidePane);
+
             // استدعاء الصفحة الخاصة بـ Profile
         });
 
         settingsBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
             settingsBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+            SettingPage settingPage = new SettingPage();
+            settingPage.SettingPane(leftSidePane);
+
 
             // استدعاء الصفحة الخاصة بـ Settings
         });

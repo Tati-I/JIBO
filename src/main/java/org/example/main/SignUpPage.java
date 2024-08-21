@@ -19,8 +19,8 @@ public class SignUpPage {
     private RadioButton personType,workerType;
     private boolean isPasswordVisible = false;
     // css colors and settings
-    private final String personUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #8e2cc8; -fx-background-radius: 10; -fx-border-radius: 10;";
-    private final String workerUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #61d0e3; -fx-background-radius: 10; -fx-border-radius: 10;";
+    private final String personUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #01012a; -fx-background-radius: 10; -fx-border-radius: 10;";
+    private final String workerUiStyle = "-fx-prompt-text-fill: #6E6D6DFF;-fx-border-color: #01012a; -fx-background-radius: 10; -fx-border-radius: 10;";
     private final String textStyle = "-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;";
     private final String errorTextStyle = "-fx-text-fill: red; -fx-font-size: 12;";
 
