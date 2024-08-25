@@ -7,8 +7,8 @@
 .text-field {
     -fx-background-color: white;
     -fx-border-color: #e0e0e0;
-    -fx-border-radius: 20;
-    -fx-background-radius: 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-padding: 8 15;
     -fx-prompt-text-fill: #757575;
     -fx-font-size: 14px;
@@ -57,7 +57,6 @@
     -fx-background-color: linear-gradient(#4ca1af, #0c0d2c);
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
-    -fx-padding: 20;
 }
 
 /* أزرار القائمة */
@@ -190,4 +189,8 @@
 .scroll-bar:vertical .thumb {
     -fx-background-color: #4ca1af;
     -fx-background-radius: 5;
+}
+#contentPane{
+    -fx-background-color: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+    -fx-background-radius: 0 20 20 0;
 }

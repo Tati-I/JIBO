@@ -2,10 +2,13 @@ package org.example.main;
 
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -14,7 +17,6 @@ public class RightSideBar {
     // تحديد مسار الموارد للصور
     private static final String RESOURCES_PATH = "/Pictures/";
     private Pane rightSideBar;
-    private Button logoutBtn;
 
     // المُنشئ الذي يقوم بإنشاء الشريط الجانبي الأيمن
     public RightSideBar(Pane leftSideBar) {
@@ -25,49 +27,85 @@ public class RightSideBar {
     private void createRightSideBar(Pane leftSidePane) {
         rightSideBar = new Pane();
         rightSideBar.setId("rightSideBar");
-        rightSideBar.setPrefSize(275, 785);
-        rightSideBar.setLayoutX(927);
-        rightSideBar.setLayoutY(-1);
 
-        // إنشاء وتحسين أزرار القائمة الرئيسية
-        Button homeBtn = createRightSideBarButton("homeBtn", "الصفحة الرئيسية", 200);
-        Button requestServiceBtn = createRightSideBarButton("requestServiceBtn", "طلب خدمة", 250);
-        Button myServicesBtn = createRightSideBarButton("myServicesBtn", "خدماتي", 300);
-        Button profileBtn = createRightSideBarButton("profileBtn", "ملفي الشخصي", 350);
-        Button settingsBtn = createRightSideBarButton("settingsBtn", "إعدادات", 400);
+        // إنشاء حاوية للعناصر
+        VBox mainContainer = new VBox();
+        mainContainer.setPadding(new Insets(20, 10, 20, 10));
+        mainContainer.setAlignment(Pos.TOP_CENTER);
 
-        // تحسين تصميم زر تسجيل الخروج
-        logoutBtn = new Button("تسجيل الخروج");
-        logoutBtn.setId("logoutBtn");
-        logoutBtn.setPrefSize(100, 30);
-        logoutBtn.setLayoutX(87.5); // تعديل الموضع ليكون متناسقاً
-        logoutBtn.setLayoutY(690);
-        logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
-        logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
+        // شعار التطبيق
+        ImageView logoImageView = createLogo();
+        VBox logoContainer = new VBox(logoImageView);
+        logoContainer.setAlignment(Pos.CENTER);
 
-        // إضافة شعار التطبيق مع تصميم محسّن
-        Image logo1 = loadImage("logo1.png");
-        ImageView logoImageView = new ImageView(logo1);
-        logoImageView.setFitHeight(240);
-        logoImageView.setFitWidth(240);
-        logoImageView.setLayoutX(23); // تعديل الموضع ليكون في الوسط
-        logoImageView.setLayoutY(10);
+        // إنشاء حاوية لأزرار القائمة
+        VBox menuContainer = createMenuContainer(leftSidePane);
+        menuContainer.setAlignment(Pos.TOP_CENTER);
+
+        // زر تسجيل الخروج
+        Button logoutBtn = createLogoutButton();
+        VBox logoutContainer = new VBox(logoutBtn);
+        logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
+        logoutContainer.setPadding(new Insets(220, 0, 0, 0));
+
+        // إضافة جميع العناصر إلى الحاوية الرئيسية
+        mainContainer.getChildren().addAll(logoContainer, menuContainer, logoutContainer);
+
+        // جعل الحاوية الرئيسية responsive
+        mainContainer.prefWidthProperty().bind(rightSideBar.widthProperty());
+        mainContainer.prefHeightProperty().bind(rightSideBar.heightProperty());
+
+        // إضافة الحاوية الرئيسية إلى الشريط الجانبي الأيمن
+        rightSideBar.getChildren().add(mainContainer);
+    }
+
+    // دالة إنشاء شعار التطبيق
+    private ImageView createLogo() {
+        Image logo = loadImage("logo1.png");
+        ImageView logoImageView = new ImageView(logo);
+        logoImageView.setPreserveRatio(true);
+        logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.68));
+        return logoImageView;
+    }
+
+    // دالة إنشاء حاوية أزرار القائمة
+    private VBox createMenuContainer(Pane leftSidePane) {
+        VBox menuContainer = new VBox(10);
+        menuContainer.setAlignment(Pos.TOP_CENTER);
+
+        Button homeBtn = createRightSideBarButton("homeBtn", "الصفحة الرئيسية");
+        Button requestServiceBtn = createRightSideBarButton("requestServiceBtn", "طلب خدمة");
+        Button myServicesBtn = createRightSideBarButton("myServicesBtn", "خدماتي");
+        Button profileBtn = createRightSideBarButton("profileBtn", "ملفي الشخصي");
+        Button settingsBtn = createRightSideBarButton("settingsBtn", "إعدادات");
+
+        menuContainer.getChildren().addAll(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn);
 
         // ربط الأزرار بالوظائف المناسبة
         requestLeftPanes(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn, leftSidePane);
 
-        // إضافة جميع العناصر إلى الشريط الجانبي الأيمن
-        rightSideBar.getChildren().addAll(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn, logoutBtn, logoImageView);
+        return menuContainer;
     }
 
     // دالة إنشاء زر في الشريط الجانبي الأيمن
-    private Button createRightSideBarButton(String id,String name, double y) {
+    private Button createRightSideBarButton(String id, String name) {
         Button rightSideBarButton = new Button(name);
         rightSideBarButton.setId(id);
-        rightSideBarButton.setPrefSize(220, 30);
-        rightSideBarButton.setLayoutX(27.5);
-        rightSideBarButton.setLayoutY(y);
+        rightSideBarButton.setPrefWidth(220);
+        rightSideBarButton.setStyle("-fx-alignment: center");
+        rightSideBarButton.setOnMouseEntered(_ -> createUpAnimateButton(rightSideBarButton));
+        rightSideBarButton.setOnMouseExited(_ -> createDownAnimateButton(rightSideBarButton));
         return rightSideBarButton;
+    }
+
+    // دالة إنشاء زر تسجيل الخروج
+    private Button createLogoutButton() {
+        Button logoutBtn = new Button("تسجيل الخروج");
+        logoutBtn.setId("logoutBtn");
+        logoutBtn.setPrefWidth(220);
+        logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
+        logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
+        return logoutBtn;
     }
 
     // دالة إنشاء حركة تكبير الزر عند تمرير الماوس
@@ -78,6 +116,7 @@ public class RightSideBar {
         scaleUp.play();
     }
 
+    // دالة إنشاء حركة تصغير الزر عند إزالة الماوس
     private void createDownAnimateButton(Button button) {
         ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), button);
         scaleDown.setToX(1);
@@ -95,8 +134,6 @@ public class RightSideBar {
         return rightSideBar;
     }
 
-
-
     // دالة لربط الأزرار بالوظائف المناسبة في الجانب الأيسر
     public void requestLeftPanes(Button homeBtn, Button requestServiceBtn, Button myServicesBtn, Button profileBtn, Button settingsBtn, Pane leftSidePane) {
         // مصفوفة تحتوي جميع الأزرار
@@ -108,6 +145,7 @@ public class RightSideBar {
             HomeScreen homeScreen = new HomeScreen();
             homeScreen.RequestHomePane(leftSidePane);
         });
+
         requestServiceBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
             requestServiceBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
@@ -139,6 +177,7 @@ public class RightSideBar {
         settingsBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
             settingsBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+
             SettingPage settingPage = new SettingPage();
             settingPage.SettingPane(leftSidePane);
 
@@ -147,12 +186,10 @@ public class RightSideBar {
         });
     }
 
-    void resetButtonStyles(Button homeBtn, Button requestServiceBtn, Button myServicesBtn, Button profileBtn, Button settingsBtn) {
-        Button[] buttons = {homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn};
+    // دالة لإعادة تعيين أنماط الأزرار
+    void resetButtonStyles(Button... buttons) {
         for (Button btn : buttons) {
-            btn.setStyle(""); // إعادة تعيين الأنماط الحالية للزر
-            btn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), false); // إلغاء حالة التحديد
+            btn.setStyle("");
         }
     }
-
 }
