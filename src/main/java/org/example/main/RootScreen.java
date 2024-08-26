@@ -29,6 +29,9 @@ public class RootScreen {
         HomeScreen homeScreen = new HomeScreen();
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
 
+        SettingPage settingPage = new SettingPage();
+        Pane settingPane = settingPage.SettingPane(leftSidePane);
+
         // إضافة شريط الجانب الأيمن والشاشة الرئيسية إلى اللوحة الرئيسية
         root.getChildren().addAll(rightSideBarPane, homePane);
 
@@ -50,7 +53,8 @@ public class RootScreen {
 
         // إنشاء المشهد وإضافة ملف الأنماط
         Scene scene = new Scene(root, 1200, 780);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMood.css")).toExternalForm());
+
 
         // إعداد النافذة الرئيسية وعرضها
         Stage primaryStage = new Stage();

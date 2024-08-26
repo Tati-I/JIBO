@@ -1,0 +1,196 @@
+
+.root {
+    -fx-background-color: #f5f5f5;
+}
+
+/* حقل البحث */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 8 15;
+    -fx-prompt-text-fill: #757575;
+    -fx-font-size: 14px;
+}
+.radio-button {
+    -fx-background-color: #01012a;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.radio-button:hover {
+    -fx-background-color:  #090942;
+
+}
+
+
+.radio-button .radio {
+    -fx-mark-color: #4ca1af;
+    -fx-background-color: #ffffff;
+    -fx-padding: 5px;
+    -fx-radius: 10px;
+}
+
+.radio-button:selected .radio {
+    -fx-mark-color: white;
+    -fx-background-color: #0c0d2c;
+    -fx-border-color: #4ca1af;
+    -fx-border-width: 2px;
+
+}
+
+
+.text-field:focused {
+    -fx-border-color: #4ca1af;
+    -fx-effect: dropshadow(gaussian, rgba(76, 161, 175, 0.4), 10, 0, 0, 0);
+}
+
+/* الشريط الجانبي الأيمن */
+#rightSideBar {
+    -fx-background-color: linear-gradient(#818181, #ffffff);
+    -fx-background-radius: 20 0 0 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
+}
+
+/* أزرار القائمة */
+#homeBtn, #requestServiceBtn, #myServicesBtn, #profileBtn, #settingsBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 15;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s;
+}
+
+#homeBtn:hover, #requestServiceBtn:hover, #myServicesBtn:hover, #profileBtn:hover, #settingsBtn:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button:selected {
+    -fx-background-color: white;
+    -fx-text-fill: #2c3e50;
+}
+
+/* زر تسجيل الخروج */
+#logoutBtn {
+    -fx-background-color: #ff6347;
+    -fx-text-fill: white;
+    -fx-background-radius: 20;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
+}
+
+#logoutBtn:hover {
+    -fx-background-color: #ff7f50;
+}
+
+/* عنوان الخدمات الشائعة */
+#trendService {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* بطاقات الخدمات */
+#electricPane, #waterPane, #tailorPane, #woodmenPane, #cleaningPane, #securityPane, #applianceRepairPane {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-padding: 15;
+}
+
+#electricPane {
+    -fx-background-color: rgba(0, 187, 255, 0.05);
+}
+
+#waterPane {
+    -fx-background-color: rgba(0, 34, 255, 0.05);
+}
+
+#tailorPane {
+    -fx-background-color: rgba(255, 192, 203, 0.1);
+}
+
+#woodmenPane {
+    -fx-background-color: rgba(255, 255, 0, 0.05);
+}
+
+#cleaningPane {
+    -fx-background-color: rgba(0, 187, 255, 0.05);
+}
+
+#securityPane {
+    -fx-background-color: rgba(0, 34, 255, 0.05);
+}
+
+#applianceRepairPane {
+    -fx-background-color: rgba(255, 192, 203, 0.1);
+}
+
+#titleLabel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+#priceLabel {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4ca1af;
+}
+
+/* زر الطلب */
+#requestButton {
+    -fx-background-color: #4ca1af;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);
+}
+
+#requestButton:hover {
+    -fx-background-color: #143e5b;
+
+}
+
+/* معلومات إضافية */
+#additionalInfo {
+    -fx-font-size: 14px;
+    -fx-text-fill: #757575;
+}
+
+/* تحسينات عامة */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #4ca1af;
+    -fx-background-radius: 5;
+}
+#contentPane{
+    -fx-background-color: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
+    -fx-background-radius: 0 20 20 0;
+}
