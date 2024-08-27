@@ -17,6 +17,7 @@ public class RequestServicesPane {
     // دالة لإنشاء وعرض صفحة الخدمات
     public Pane showServicesPage(Pane leftSidePane) {
         // إنشاء لوحة المحتوى الرئيسية
+
         Pane contentPane = new Pane();
         leftSidePane.getChildren().clear();
         contentPane.prefWidthProperty().bind(leftSidePane.widthProperty());
