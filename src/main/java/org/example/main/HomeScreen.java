@@ -55,6 +55,7 @@ public class HomeScreen {
         HBox header = new HBox(20);
         header.setAlignment(Pos.CENTER);
 
+
         Label welcomeLabel = new Label("مرحباً بك في Jibo");
         welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
         welcomeLabel.setStyle("-fx-text-fill: #2c3e50;");
