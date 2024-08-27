@@ -75,7 +75,7 @@ public class LoginPage extends Application {
         root.getChildren().addAll(logoView, pane);
 
         Scene scene = new Scene(root, 700, 720);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMood.css")).toExternalForm());
 
         stage.setTitle("Jibo");
         stage.setResizable(false);
