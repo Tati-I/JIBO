@@ -6,6 +6,7 @@ public class SettingPage {
     public Pane SettingPane(Pane leftSidePane) {
         // إنشاء لوحة الشاشة الرئيسية
         Pane SettingPane = new Pane();
+        leftSidePane.getChildren().clear();
         SettingPane.setPrefSize(925, 784);
         SettingPane.setStyle("-fx-background-color: #ead400;-fx-border-radius: 15px;-fx-background-radius: 15px");
 

@@ -3,32 +3,24 @@ package org.example.main;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
-import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class RequestServicesPane {
 
     // دالة لإنشاء وعرض صفحة الخدمات
     public Pane showServicesPage(Pane leftSidePane) {
-
         // إنشاء لوحة المحتوى الرئيسية
         Pane contentPane = new Pane();
         leftSidePane.getChildren().clear();
-        contentPane.setPrefSize(934, 784);
+        contentPane.prefWidthProperty().bind(leftSidePane.widthProperty());
+        contentPane.prefHeightProperty().bind(leftSidePane.heightProperty());
         contentPane.setId("contentPane");
 
         // إنشاء زر الانتقال إلى الملف الشخصي
@@ -41,18 +33,18 @@ public class RequestServicesPane {
 
         HBox topRightButtons = new HBox();
         topRightButtons.setSpacing(10.0);
+        topRightButtons.setPadding(new Insets(10.0, 0, 10.0, 0));
+
         topRightButtons.getChildren().addAll(nowService, previousService, myRate);
 
-        HBox topButtons = new HBox();
-        topButtons.setPadding(new Insets(20, 20, 20, 120));
-        topButtons.setSpacing(300);
+        HBox topButtons = new HBox(300);
+        topButtons.setAlignment(Pos.CENTER);
+        topButtons.setPadding(new Insets(10.0));
         topButtons.getChildren().addAll(goToProfile, topRightButtons);
-
-
-        ////////////////////////////////////////////////////////////////////////////////
 
         // إنشاء عنوان "الخدمات الشائعة"
         Label trendService = new Label("الخدمات الشائعة");
+        trendService.setAlignment(Pos.TOP_RIGHT);
         trendService.setId("trendService");
 
         // إنشاء حقل البحث عن الخدمات
@@ -63,14 +55,9 @@ public class RequestServicesPane {
         serviceSearch.setId("serviceSearch");
 
         HBox topFields = new HBox();
-        topFields.setPadding(new Insets(20, 20, 20, 120));
+        topFields.setAlignment(Pos.CENTER);
         topFields.setSpacing(300);
         topFields.getChildren().addAll(serviceSearch, trendService);
-
-
-        ////////////////////////////////////////////////////////////////////////////////
-
-        // إنشاء خط فاصل
 
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
@@ -103,22 +90,63 @@ public class RequestServicesPane {
         // إنشاء ScrollPane لتغليف لوحات الخدمات
         ScrollPane scrollPane = new ScrollPane(servicesBox);
         scrollPane.setStyle("-fx-background-color: transparent;");
-        scrollPane.setPrefSize(934,570);
-        scrollPane.setPadding(new Insets(0,20,20,133));
+        scrollPane.setPrefHeight(570);
+        scrollPane.setPadding(new Insets(0,80,0,80));
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
 
         VBox mainContainer = new VBox();
         mainContainer.setSpacing(30);
+        mainContainer.setAlignment(Pos.CENTER);
+        mainContainer.prefWidthProperty().bind(contentPane.widthProperty());
+        mainContainer.prefHeightProperty().bind(contentPane.heightProperty());
         mainContainer.getChildren().addAll(topButtons, topFields, scrollPane);
 
         // إضافة جميع العناصر إلى لوحة المحتوى
-        contentPane.getChildren().addAll(mainContainer);
+
+        // إضافة أزرار الاختصار
+        HBox categoryButtonsBox = new HBox(10);
+        categoryButtonsBox.setAlignment(Pos.CENTER);
+        categoryButtonsBox.setPadding(new Insets(0,110,0,110));
+
+        Button cleaningButton = new Button("تنظيف");
+        cleaningButton.setOnAction(_ -> filterServices("تنظيف"));
+        cleaningButton.setPrefHeight(350);
+        cleaningButton.prefWidthProperty().bind(contentPane.widthProperty());
+
+        Button mechanicsButton = new Button("ميكانيك");
+        mechanicsButton.setOnAction(_ -> filterServices("ميكانيك"));
+        mechanicsButton.setPrefHeight(350);
+        mechanicsButton.prefWidthProperty().bind(contentPane.widthProperty());
+
+        Button electricalButton = new Button("كهرباء");
+        electricalButton.setOnAction(_ -> filterServices("كهرباء"));
+        electricalButton.setPrefHeight(350);
+        electricalButton.prefWidthProperty().bind(contentPane.widthProperty());
+
+        Button carpentryButton = new Button("نجارة");
+        carpentryButton.setOnAction(_ -> filterServices("نجارة"));
+        carpentryButton.setPrefHeight(350);
+        carpentryButton.prefWidthProperty().bind(contentPane.widthProperty());
+
+
+        categoryButtonsBox.getChildren().addAll(cleaningButton, mechanicsButton, electricalButton, carpentryButton);
+
+        mainContainer.getChildren().add(1, categoryButtonsBox);
+
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), contentPane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
+        contentPane.getChildren().addAll(mainContainer);
         leftSidePane.getChildren().add(contentPane);
         return leftSidePane;
+    }
+
+    private void filterServices(String category) {
+        // من هنا يمكنك إضافة الكود الخاص بتصفية الخدمات حسب الفئة المحددة
+        // مثال: عرض الخدمات المتعلقة بالتصنيف "تنظيف" فقط
     }
 
     private Button goToProfile() {
@@ -133,64 +161,92 @@ public class RequestServicesPane {
     private Button createServicesButton(String name) {
         Button servicesButton = new Button(name);
         servicesButton.setId("servicesButton");
-        servicesButton.setPrefSize(120, 40);
+        servicesButton.setPrefSize(120,40);
         return servicesButton;
     }
 
     // دالة لإنشاء لوحة خدمة معينة
     private Pane createServicesPane(String title, String price, Image image) {
-        // عنوان الخدمة
-        Label titleLabel = new Label(title);
-        titleLabel.setId("titleLabel");
-        titleLabel.setPrefWidth(295);
-        titleLabel.setAlignment(Pos.CENTER_RIGHT);
-
-        // سعر الخدمة
-        Label priceLabel = new Label(price);
-        priceLabel.setPrefWidth(295);
-        priceLabel.setAlignment(Pos.CENTER_RIGHT);
-        priceLabel.setId("priceLabel");
-
-        VBox titlePriceBox = new VBox();
-        titlePriceBox.setSpacing(10);
-        titlePriceBox.getChildren().addAll(titleLabel, priceLabel);
-
-        ////////////////////////////////////////////////////////////
-
-        // صورة الخدمة
+        // إنشاء صورة الخدمة ووضعها على أقصى اليمين
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
         imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0, 0, 0);");
 
-        HBox imageBox = new HBox();
-        imageBox.getChildren().addAll(imageView);
+        // إنشاء مستطيل مدور الحواف باللون الفضي ووضع العنوان بداخله
+        Label titleLabel = new Label(title);
+        titleLabel.setId("titleLabel");
 
-        ////////////////////////////////////////////////////////////
+        StackPane titleContainer = new StackPane();
+        Rectangle textRectangle = new Rectangle(370, 30);
+        textRectangle.setArcWidth(10);
+        textRectangle.setArcHeight(10);
+        textRectangle.setFill(Color.rgb(255, 255, 255, 0.8));
 
-        // زر الطلب
+        titleContainer.getChildren().addAll(textRectangle, titleLabel);
+        titleContainer.setAlignment(Pos.CENTER);
+
+        // إضافة نظام التقييم بالنجوم بجانب السعر
+        Label ratingLabel = new Label("★★★★★");
+        ratingLabel.setStyle("-fx-text-fill: gold; -fx-font-size: 14px;");
+
+        // وصف مختصر للخدمة تحت السعر
+        Label serviceDescription = new Label("خدمة سريعة واحترافية لتلبية احتياجاتك.");
+        serviceDescription.setStyle("-fx-text-fill: #666666; -fx-font-size: 12px;");
+
+        // سعر الخدمة
+        Label priceLabel = new Label(price);
+        priceLabel.setId("priceLabel");
+
+        VBox titlePriceBox = new VBox(5);
+        titlePriceBox.setAlignment(Pos.CENTER_RIGHT);
+        titlePriceBox.getChildren().addAll(titleContainer, priceLabel, ratingLabel, serviceDescription);
+
+        // زر الطلب ووضعه على أقصى اليسار مع Tooltip
         Button requestButton = createRequestButton();
+        Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
 
-        Label additionalInfo = new Label("استفسارات؟ اتصل بنا");
-        additionalInfo.setId("additionalInfo");
+        // إضافة Tagline تحت معلومات إضافية
+        Label tagline = new Label("أفضل الخدمات بأقل الأسعار!");
+        tagline.setStyle("-fx-text-fill: #0076a3; -fx-font-size: 12px;");
 
-        HBox leftButtons = new HBox();
-        leftButtons.getChildren().addAll(requestButton, additionalInfo);
+        VBox buttonInfoBox = new VBox(5);
+        buttonInfoBox.setAlignment(Pos.CENTER_LEFT);
+        buttonInfoBox.getChildren().addAll(requestButton, tagline);
 
-        // ضبط المسافات المتساوية
-        HBox pane = new HBox();
+        // إنشاء HBox لاحتواء العناصر
+        HBox pane = new HBox(20);
         pane.setPrefSize(680, 110);
+        pane.setPadding(new Insets(10));
 
-        pane.getChildren().addAll(leftButtons,titlePriceBox,imageBox);
+        pane.setOnMouseEntered(_ -> {
+            ScaleTransition scaleUp = new ScaleTransition(Duration.millis(100), pane);
+            scaleUp.setToX(1.02);
+            scaleUp.setToY(1.02);
+            scaleUp.play();
+        });
+        pane.setOnMouseExited(_ -> {
+            ScaleTransition scaleDown = new ScaleTransition(Duration.millis(300), pane);
+            scaleDown.setToX(1);
+            scaleDown.setToY(1);
+            scaleDown.play();
+        });
+
+        // إضافة العناصر إلى اللوحة
+        pane.getChildren().addAll(buttonInfoBox, titlePriceBox, imageView);
+
+        // لضمان توسيع VBox وفقاً للمساحة المتاحة
+        HBox.setHgrow(buttonInfoBox, Priority.ALWAYS);
+        HBox.setHgrow(titlePriceBox, Priority.ALWAYS);
+
         return pane;
     }
-
 
     // دالة لإنشاء زر الطلب
     private Button createRequestButton() {
         Button requestButton = new Button("أطلب الاَن");
         requestButton.setId("requestButton");
-        requestButton.setPrefSize(130,110);
+        requestButton.setPrefSize(130, 110);
         requestButton.setOnMouseEntered(_ -> createUpAnimateButton(requestButton));
         requestButton.setOnMouseExited(_ -> createDownAnimateButton(requestButton));
 
