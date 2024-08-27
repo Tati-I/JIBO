@@ -75,10 +75,10 @@ public class HomeScreen {
         grid.setAlignment(Pos.CENTER);
 
         String[][] actions = {
-                {"طلب خدمة", "worker.png"},
-                {"خدماتي", "worker.png"},
-                {"الملف الشخصي", "worker.png"},
-                {"الإعدادات", "worker.png"}
+                {"طلب خدمة", "request_services.png"},
+                {"خدماتي", "services.png"},
+                {"الملف الشخصي", "personal.png"},
+                {"الإعدادات", "settings.png"}
         };
 
         for (int i = 0; i < actions.length; i++) {

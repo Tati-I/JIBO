@@ -63,25 +63,25 @@ public class RequestServicesPane {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
         // إنشاء لوحات الخدمات المختلفة
-        Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("worker.png"));
+        Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("electrical.png"));
         electricPane.setId("electricPane");
 
-        Pane waterPane = createServicesPane("سبّاك", "30$", rightSideBar.loadImage("worker.png"));
+        Pane waterPane = createServicesPane("سبّاك", "30$", rightSideBar.loadImage("water_pane.png"));
         waterPane.setId("waterPane");
 
-        Pane tailorPane = createServicesPane("خياط", "45$", rightSideBar.loadImage("worker.png"));
+        Pane tailorPane = createServicesPane("خياط", "45$", rightSideBar.loadImage("tailor.png"));
         tailorPane.setId("tailorPane");
 
-        Pane woodmenPane = createServicesPane("نجار", "28$", rightSideBar.loadImage("worker.png"));
+        Pane woodmenPane = createServicesPane("نجار", "28$", rightSideBar.loadImage("wood_man.png"));
         woodmenPane.setId("woodmenPane");
 
-        Pane cleaningPane = createServicesPane("تنظيف", "20$", rightSideBar.loadImage("worker.png"));
+        Pane cleaningPane = createServicesPane("تنظيف", "20$", rightSideBar.loadImage("clean.png"));
         cleaningPane.setId("cleaningPane");
 
-        Pane securityPane = createServicesPane("تركيب أنظمة أمان", "50$", rightSideBar.loadImage("worker.png"));
+        Pane securityPane = createServicesPane("تركيب أنظمة أمان", "50$", rightSideBar.loadImage("security.png"));
         securityPane.setId("securityPane");
 
-        Pane applianceRepairPane = createServicesPane("صيانة أجهزة كهربائية", "40$", rightSideBar.loadImage("worker.png"));
+        Pane applianceRepairPane = createServicesPane("صيانة أجهزة كهربائية", "40$", rightSideBar.loadImage("repair.png"));
         applianceRepairPane.setId("applianceRepairPane");
 
         VBox servicesBox = new VBox(10); // استخدام VBox مع مسافة بين العناصر
@@ -177,15 +177,17 @@ public class RequestServicesPane {
         // إنشاء مستطيل مدور الحواف باللون الفضي ووضع العنوان بداخله
         Label titleLabel = new Label(title);
         titleLabel.setId("titleLabel");
+        titleLabel.setAlignment(Pos.CENTER);
 
         StackPane titleContainer = new StackPane();
-        Rectangle textRectangle = new Rectangle(370, 30);
+        Rectangle textRectangle = new Rectangle(450, 30);
         textRectangle.setArcWidth(10);
         textRectangle.setArcHeight(10);
-        textRectangle.setFill(Color.rgb(255, 255, 255, 0.8));
+        textRectangle.setFill(Color.rgb(94, 94, 94, 0.1));
 
         titleContainer.getChildren().addAll(textRectangle, titleLabel);
-        titleContainer.setAlignment(Pos.CENTER);
+        titleContainer.prefHeightProperty().bind(titleContainer.heightProperty());
+        titleContainer.setAlignment(Pos.TOP_RIGHT);
 
         // إضافة نظام التقييم بالنجوم بجانب السعر
         Label ratingLabel = new Label("★★★★★");
