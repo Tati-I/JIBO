@@ -110,23 +110,29 @@ public class RequestServicesPane {
         categoryButtonsBox.setAlignment(Pos.CENTER);
         categoryButtonsBox.setPadding(new Insets(0,110,0,110));
 
-        Button cleaningButton = new Button("تنظيف");
+        Button cleaningButton = new Button();
+        cleaningButton.setStyle("-fx-background-color: #c6dce4;-fx-background-radius: 10px");
         cleaningButton.setOnAction(_ -> filterServices("تنظيف"));
         cleaningButton.setPrefHeight(350);
         cleaningButton.prefWidthProperty().bind(contentPane.widthProperty());
 
-        Button mechanicsButton = new Button("ميكانيك");
+        Button mechanicsButton = new Button();
         mechanicsButton.setOnAction(_ -> filterServices("ميكانيك"));
+        mechanicsButton.setStyle("-fx-background-color: #716f6f;-fx-background-radius: 10px");
         mechanicsButton.setPrefHeight(350);
         mechanicsButton.prefWidthProperty().bind(contentPane.widthProperty());
 
-        Button electricalButton = new Button("كهرباء");
+        Button electricalButton = new Button();
         electricalButton.setOnAction(_ -> filterServices("كهرباء"));
+        electricalButton.setStyle("-fx-background-color: rgba(0,22,255,0.44);-fx-background-radius: 10px");
+
         electricalButton.setPrefHeight(350);
         electricalButton.prefWidthProperty().bind(contentPane.widthProperty());
 
-        Button carpentryButton = new Button("نجارة");
+        Button carpentryButton = new Button();
         carpentryButton.setOnAction(_ -> filterServices("نجارة"));
+        carpentryButton.setStyle("-fx-background-color: rgba(235,135,0,0.56);-fx-background-radius: 10px");
+
         carpentryButton.setPrefHeight(350);
         carpentryButton.prefWidthProperty().bind(contentPane.widthProperty());
 
@@ -183,7 +189,7 @@ public class RequestServicesPane {
         Rectangle textRectangle = new Rectangle(450, 30);
         textRectangle.setArcWidth(10);
         textRectangle.setArcHeight(10);
-        textRectangle.setFill(Color.rgb(94, 94, 94, 0.1));
+        textRectangle.setFill(Color.rgb(94, 94, 94, 0.05));
 
         titleContainer.getChildren().addAll(textRectangle, titleLabel);
         titleContainer.prefHeightProperty().bind(titleContainer.heightProperty());
