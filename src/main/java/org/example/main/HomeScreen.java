@@ -25,7 +25,8 @@ public class HomeScreen {
         VBox mainContainer = new VBox(20);
         mainContainer.setAlignment(Pos.TOP_CENTER);
         mainContainer.setPadding(new Insets(30, 50, 30, 50));
-        mainContainer.setPrefSize(934, 784);
+        mainContainer.prefWidthProperty().bind(homePane.widthProperty());
+        mainContainer.prefHeightProperty().bind(homePane.heightProperty());
 
         // text
         HBox header = createHeader();
@@ -38,6 +39,8 @@ public class HomeScreen {
 
         mainContainer.getChildren().addAll(header, quickActions, featuredServices);
         homePane.getChildren().add(mainContainer);
+        homePane.prefHeightProperty().bind(leftSidePane.heightProperty());
+        homePane.prefWidthProperty().bind(leftSidePane.widthProperty());
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), mainContainer);
         fadeIn.setFromValue(0.0);

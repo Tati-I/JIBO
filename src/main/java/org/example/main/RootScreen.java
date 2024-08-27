@@ -29,8 +29,6 @@ public class RootScreen {
         HomeScreen homeScreen = new HomeScreen();
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
 
-        SettingPage settingPage = new SettingPage();
-        Pane settingPane = settingPage.SettingPane(leftSidePane);
 
         // إضافة شريط الجانب الأيمن والشاشة الرئيسية إلى اللوحة الرئيسية
         root.getChildren().addAll(rightSideBarPane, homePane);
