@@ -5,7 +5,6 @@ import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -63,25 +62,60 @@ public class RequestServicesPane {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
         // إنشاء لوحات الخدمات المختلفة
-        Pane electricPane = createServicesPane("كهربائي", "15$", rightSideBar.loadImage("electrical.png"));
+        Pane electricPane = createServicesPane(
+                "كهربائي",
+                "15$",
+                "electrical.png",
+                rightSideBar
+        );
         electricPane.setId("electricPane");
 
-        Pane waterPane = createServicesPane("سبّاك", "30$", rightSideBar.loadImage("water_pane.png"));
+        Pane waterPane = createServicesPane(
+                "سبّاك",
+                "30$",
+                "water_pane.png",
+                rightSideBar
+        );
         waterPane.setId("waterPane");
 
-        Pane tailorPane = createServicesPane("خياط", "45$", rightSideBar.loadImage("tailor.png"));
+        Pane tailorPane = createServicesPane(
+                "خياط",
+                "45$",
+                "tailor.png",
+                rightSideBar
+        );
         tailorPane.setId("tailorPane");
 
-        Pane woodmenPane = createServicesPane("نجار", "28$", rightSideBar.loadImage("wood_man.png"));
+        Pane woodmenPane = createServicesPane(
+                "نجار",
+                "28$",
+                "wood_man.png",
+                rightSideBar
+        );
         woodmenPane.setId("woodmenPane");
 
-        Pane cleaningPane = createServicesPane("تنظيف", "20$", rightSideBar.loadImage("clean.png"));
+        Pane cleaningPane = createServicesPane(
+                "تنظيف",
+                "20$",
+                "clean.png",
+                rightSideBar
+        );
         cleaningPane.setId("cleaningPane");
 
-        Pane securityPane = createServicesPane("تركيب أنظمة أمان", "50$", rightSideBar.loadImage("security.png"));
+        Pane securityPane = createServicesPane(
+                "تركيب أنظمة أمان",
+                "50$",
+                "security.png",
+                rightSideBar
+        );
         securityPane.setId("securityPane");
 
-        Pane applianceRepairPane = createServicesPane("صيانة أجهزة كهربائية", "40$", rightSideBar.loadImage("repair.png"));
+        Pane applianceRepairPane = createServicesPane(
+                "صيانة أجهزة كهربائية",
+                "40$",
+                "repair.png",
+                rightSideBar
+        );
         applianceRepairPane.setId("applianceRepairPane");
 
         VBox servicesBox = new VBox(10); // استخدام VBox مع مسافة بين العناصر
@@ -108,36 +142,53 @@ public class RequestServicesPane {
         // إضافة أزرار الاختصار
         HBox categoryButtonsBox = new HBox(10);
         categoryButtonsBox.setAlignment(Pos.CENTER);
-        categoryButtonsBox.setPadding(new Insets(0,110,0,110));
+        categoryButtonsBox.setPadding(new Insets(0, 110, 0, 110));
 
-        Button cleaningButton = new Button();
-        cleaningButton.setStyle("-fx-background-color: #c6dce4;-fx-background-radius: 10px");
-        cleaningButton.setOnAction(_ -> filterServices("تنظيف"));
-        cleaningButton.setPrefHeight(350);
-        cleaningButton.prefWidthProperty().bind(contentPane.widthProperty());
+        Button servicesButton = createShortcutButton(
+                "خدماتي",
+                "services.png",
+                "-fx-background-color: rgba(60,189,130,0.64); -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
+                "خدماتي",
+                contentPane,
+                rightSideBar
+        );
+        servicesButton.setOnMouseEntered(_ ->createUpAnimateButton(servicesButton));
+        servicesButton.setOnMouseExited(_ ->createDownAnimateButton(servicesButton));
 
-        Button mechanicsButton = new Button();
-        mechanicsButton.setOnAction(_ -> filterServices("ميكانيك"));
-        mechanicsButton.setStyle("-fx-background-color: #716f6f;-fx-background-radius: 10px");
-        mechanicsButton.setPrefHeight(350);
-        mechanicsButton.prefWidthProperty().bind(contentPane.widthProperty());
+        Button myLocationsButton = createShortcutButton(
+                "عناويني",
+                "map.png",
+                "-fx-background-color: #716f6f; -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
+                "عناويني",
+                contentPane,
+                rightSideBar
+        );
+        myLocationsButton.setOnMouseEntered(_->createUpAnimateButton(myLocationsButton));
+        myLocationsButton.setOnMouseExited(_ ->createDownAnimateButton(myLocationsButton));
 
-        Button electricalButton = new Button();
-        electricalButton.setOnAction(_ -> filterServices("كهرباء"));
-        electricalButton.setStyle("-fx-background-color: rgba(0,22,255,0.44);-fx-background-radius: 10px");
+        Button categoryButton = createShortcutButton(
+                "كتالوج الخدمات",
+                "category.png",
+                "-fx-background-color: rgba(235,135,0,0.56); -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
+                "كتالوج الخدمات",
+                contentPane,
+                rightSideBar
+        );
+        categoryButton.setOnMouseEntered(_ ->createUpAnimateButton(categoryButton));
+        categoryButton.setOnMouseExited(_ ->createDownAnimateButton(categoryButton));
 
-        electricalButton.setPrefHeight(350);
-        electricalButton.prefWidthProperty().bind(contentPane.widthProperty());
+        Button favoriteButton = createShortcutButton(
+                "خدماتي المفضلة",
+                "favorite.png",
+                "-fx-background-color: rgba(0,22,255,0.44); -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
+                "خدماتي المفضلة",
+                contentPane,
+                rightSideBar
+        );
+        favoriteButton.setOnMouseEntered(_ ->createUpAnimateButton(favoriteButton));
+        favoriteButton.setOnMouseExited(_ ->createDownAnimateButton(favoriteButton));
 
-        Button carpentryButton = new Button();
-        carpentryButton.setOnAction(_ -> filterServices("نجارة"));
-        carpentryButton.setStyle("-fx-background-color: rgba(235,135,0,0.56);-fx-background-radius: 10px");
-
-        carpentryButton.setPrefHeight(350);
-        carpentryButton.prefWidthProperty().bind(contentPane.widthProperty());
-
-
-        categoryButtonsBox.getChildren().addAll(cleaningButton, mechanicsButton, electricalButton, carpentryButton);
+        categoryButtonsBox.getChildren().addAll(servicesButton, myLocationsButton, categoryButton, favoriteButton);
 
         mainContainer.getChildren().add(1, categoryButtonsBox);
 
@@ -149,6 +200,22 @@ public class RequestServicesPane {
         contentPane.getChildren().addAll(mainContainer);
         leftSidePane.getChildren().add(contentPane);
         return leftSidePane;
+    }
+
+    private Button createShortcutButton(String text, String imagePath, String style, String category, Pane contentPane, RightSideBar rightSideBar) {
+        ImageView imageView = new ImageView(rightSideBar.loadImage(imagePath));
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
+
+        Button button = new Button(text, imageView);
+        button.setStyle(style);
+        button.setOnAction(_ -> filterServices(category));
+        button.setContentDisplay(ContentDisplay.TOP);
+        button.setAlignment(Pos.CENTER);
+        button.setPrefHeight(350);
+        button.prefWidthProperty().bind(contentPane.widthProperty());
+
+        return button;
     }
 
     private void filterServices(String category) {
@@ -173,9 +240,9 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء لوحة خدمة معينة
-    private Pane createServicesPane(String title, String price, Image image) {
+    private Pane createServicesPane(String title, String price, String imagePath, RightSideBar rightSideBar) {
         // إنشاء صورة الخدمة ووضعها على أقصى اليمين
-        ImageView imageView = new ImageView(image);
+        ImageView imageView = new ImageView(rightSideBar.loadImage(imagePath));
         imageView.setFitHeight(100);
         imageView.setFitWidth(100);
         imageView.setStyle("-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 12, 0, 0, 0);");
