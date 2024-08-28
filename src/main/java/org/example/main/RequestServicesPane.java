@@ -20,8 +20,6 @@ public class RequestServicesPane {
 
         Pane contentPane = new Pane();
         leftSidePane.getChildren().clear();
-        contentPane.prefWidthProperty().bind(leftSidePane.widthProperty());
-        contentPane.prefHeightProperty().bind(leftSidePane.heightProperty());
         contentPane.setId("contentPane");
 
         // إنشاء زر الانتقال إلى الملف الشخصي
@@ -34,12 +32,9 @@ public class RequestServicesPane {
 
         Label shortCuts = new Label("اختصارات");
         shortCuts.setId("shortCuts");
-        shortCuts.setLayoutX(710);
-        shortCuts.setLayoutY(55);
 
         HBox topRightButtons = new HBox();
         topRightButtons.setSpacing(10.0);
-        topRightButtons.setPadding(new Insets(10.0, 0, 10.0, 0));
 
         topRightButtons.getChildren().addAll(nowService, previousService, myRate);
 
@@ -204,14 +199,18 @@ public class RequestServicesPane {
 
         categoryButtonsBox.getChildren().addAll(servicesButton, myLocationsButton, categoryButton, favoriteButton);
 
-        mainContainer.getChildren().add(1, categoryButtonsBox);
+        mainContainer.getChildren().add(1,shortCuts);
+        mainContainer.getChildren().add(2, categoryButtonsBox);
+        mainContainer.getChildren().add(4,line);
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), contentPane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-        contentPane.getChildren().addAll(mainContainer,line,shortCuts);
+        contentPane.getChildren().addAll(mainContainer);
+        contentPane.prefWidthProperty().bind(leftSidePane.widthProperty());
+        contentPane.prefHeightProperty().bind(leftSidePane.heightProperty());
         leftSidePane.getChildren().add(contentPane);
         return leftSidePane;
     }
@@ -241,14 +240,13 @@ public class RequestServicesPane {
         Button goToProfile = new Button();
         goToProfile.setStyle("-fx-background-color: #ffffff; -fx-border-radius: 10px; -fx-background-radius: 10px;-fx-cursor: hand;"
                 + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);");
-        goToProfile.setPrefSize(50, 50);
+        goToProfile.setPrefSize(50,50);
         return goToProfile;
     }
 
     // دالة لإنشاء أزرار الخدمات
     private Button createServicesButton(String name) {
         Button servicesButton = new Button(name);
-        servicesButton.setId("servicesButton");
         servicesButton.setPrefSize(120,40);
         return servicesButton;
     }
