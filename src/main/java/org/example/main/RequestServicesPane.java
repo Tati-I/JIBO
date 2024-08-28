@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -31,6 +32,11 @@ public class RequestServicesPane {
         Button previousService = createServicesButton("خدماتي السابقة");
         Button myRate = createServicesButton("تقييماتي");
 
+        Label shortCuts = new Label("اختصارات");
+        shortCuts.setId("shortCuts");
+        shortCuts.setLayoutX(710);
+        shortCuts.setLayoutY(55);
+
         HBox topRightButtons = new HBox();
         topRightButtons.setSpacing(10.0);
         topRightButtons.setPadding(new Insets(10.0, 0, 10.0, 0));
@@ -46,6 +52,14 @@ public class RequestServicesPane {
         Label trendService = new Label("الخدمات الشائعة");
         trendService.setAlignment(Pos.TOP_RIGHT);
         trendService.setId("trendService");
+
+        Line line = new Line();
+        line.setId("line");
+        line.setStartX(85);
+        line.setStartY(360);
+        line.setEndX(840);
+        line.setEndY(360);
+
 
         // إنشاء حقل البحث عن الخدمات
         TextField serviceSearch = new TextField();
@@ -197,7 +211,7 @@ public class RequestServicesPane {
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-        contentPane.getChildren().addAll(mainContainer);
+        contentPane.getChildren().addAll(mainContainer,line,shortCuts);
         leftSidePane.getChildren().add(contentPane);
         return leftSidePane;
     }

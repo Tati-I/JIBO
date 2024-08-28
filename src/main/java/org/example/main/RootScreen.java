@@ -16,7 +16,8 @@ public class RootScreen {
 
         // إنشاء اللوحة الرئيسية للتطبيق
         AnchorPane root = new AnchorPane();
-        root.setStyle("-fx-background-color: #ffffff;");
+
+
 
         // إنشاء لوحة الجانب الأيسر
 
@@ -51,8 +52,8 @@ public class RootScreen {
 
         // إنشاء المشهد وإضافة ملف الأنماط
         Scene scene = new Scene(root, 1200, 780);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMood.css")).toExternalForm());
-
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/NightMode.css")).toExternalForm());
 
         // إعداد النافذة الرئيسية وعرضها
         Stage primaryStage = new Stage();

@@ -18,9 +18,10 @@ import java.util.Objects;
 
 public class HomeScreen {
     public Pane RequestHomePane(Pane leftSidePane) {
+        leftSidePane.getChildren().clear();
+
         Pane homePane = new Pane();
-        homePane.setStyle("-fx-background-color: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);"
-                +"-fx-background-radius: 0 20 20 0");
+        homePane.setId("homePane");
 
         VBox mainContainer = new VBox(20);
         mainContainer.setAlignment(Pos.TOP_CENTER);
