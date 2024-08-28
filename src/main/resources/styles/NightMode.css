@@ -62,7 +62,7 @@
 /* أزرار القائمة */
 #homeBtn, #requestServiceBtn, #myServicesBtn, #profileBtn, #settingsBtn {
     -fx-background-color: transparent;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 16px;
     -fx-padding: 10 15;
     -fx-background-radius: 10;
