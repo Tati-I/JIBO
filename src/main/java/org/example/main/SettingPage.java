@@ -2,8 +2,9 @@ package org.example.main;
 
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.util.Objects;
 
@@ -12,7 +13,6 @@ public class SettingPage {
     private Scene scene;
 
     public Pane SettingPane(Pane leftSidePane) {
-
         String nightMode = "/styles/NightMode.css";
         String lightMode = "/styles/LightMode.css";
 
@@ -22,24 +22,24 @@ public class SettingPage {
         SettingPane.setPrefSize(934, 784);
         SettingPane.setId("settingPane");
 
-        // ToggleButton بدلاً من Button
         ToggleButton toggleButton = new ToggleButton();
         toggleButton.setLayoutX(20);
         toggleButton.setLayoutY(20);
-        toggleButton.getStyleClass().add("toggleSwitch");
-        toggleButton.setPrefSize(200, 200);
+        toggleButton.setPrefSize(60, 30);
+        toggleButton.getStyleClass().add("mode-toggle-button");
 
-        // قم بتبديل الأنماط عند الضغط على زر التبديل
+        Image sunImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/Sun.png")));
+        Image moonImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/Moon.png")));
+
+        ImageView imageView = new ImageView(sunImage);
+        imageView.setFitWidth(20);
+        imageView.setFitHeight(20);
+        toggleButton.setGraphic(imageView);
+
         toggleButton.setOnAction(_ -> {
             isNightMode = !isNightMode;
-            if (scene != null) {
-                scene.getStylesheets().clear();
-                if (isNightMode) {
-                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(nightMode)).toExternalForm());
-                } else {
-                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(lightMode)).toExternalForm());
-                }
-            }
+            imageView.setImage(isNightMode ? moonImage : sunImage);
+            updateStyles(isNightMode);
         });
 
         SettingPane.getChildren().add(toggleButton);
@@ -50,13 +50,22 @@ public class SettingPage {
             leftSidePane.sceneProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     scene = newValue;
-                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(lightMode)).toExternalForm());
+                    updateStyles(isNightMode);
                 }
             });
         } else {
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(lightMode)).toExternalForm());
+            updateStyles(isNightMode);
         }
 
         return leftSidePane;
+    }
+
+    private void updateStyles(boolean isNightMode) {
+        if (scene != null) {
+            scene.getStylesheets().clear();
+            String mode = isNightMode ? "/styles/NightMode.css" : "/styles/LightMode.css";
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(mode)).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/toggleSwitch.css")).toExternalForm());
+        }
     }
 }
