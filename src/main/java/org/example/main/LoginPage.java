@@ -41,7 +41,6 @@ public class LoginPage extends Application {
         this.primaryStage = stage;
 
 
-
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
         AnchorPane root = new AnchorPane();
         root.setStyle("-fx-background-color: linear-gradient( #4ca1af 0%, #0c0d2c 75%)");
@@ -57,12 +56,6 @@ public class LoginPage extends Application {
         visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
         hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
 
-     /*   Image background = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/logo.png")).toExternalForm());
-        ImageView imageView = new ImageView(background);
-        imageView.setFitWidth(700);
-        imageView.setFitHeight(720);
-
-      */
 
 
         pane = new Pane();
