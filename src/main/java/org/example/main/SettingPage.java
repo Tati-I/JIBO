@@ -9,12 +9,11 @@ import javafx.scene.layout.Pane;
 import java.util.Objects;
 
 public class SettingPage {
-    private boolean isNightMode = false;
+    private static boolean isNightMode = false;
     private Scene scene;
 
     public Pane SettingPane(Pane leftSidePane) {
-        String nightMode = "/styles/NightMode.css";
-        String lightMode = "/styles/LightMode.css";
+
 
         leftSidePane.getChildren().clear();
 
@@ -36,11 +35,25 @@ public class SettingPage {
         imageView.setFitHeight(20);
         toggleButton.setGraphic(imageView);
 
+
+        if (isNightMode) {
+            imageView.setImage(moonImage);
+        } else {
+            imageView.setImage(sunImage);
+        }
+
+        toggleButton.setSelected(isNightMode);
+
         toggleButton.setOnAction(_ -> {
             isNightMode = !isNightMode;
-            imageView.setImage(isNightMode ? moonImage : sunImage);
+            if (isNightMode) {
+                imageView.setImage(moonImage);
+            } else {
+                imageView.setImage(sunImage);
+            }
             updateStyles(isNightMode);
         });
+
 
         SettingPane.getChildren().add(toggleButton);
         leftSidePane.getChildren().add(SettingPane);
@@ -61,9 +74,16 @@ public class SettingPage {
     }
 
     private void updateStyles(boolean isNightMode) {
+        String nightMode = "/styles/NightMode.css";
+        String lightMode = "/styles/LightMode.css";
         if (scene != null) {
             scene.getStylesheets().clear();
-            String mode = isNightMode ? "/styles/NightMode.css" : "/styles/LightMode.css";
+            String mode;
+            if (isNightMode) {
+                mode = nightMode;
+            } else {
+                mode = lightMode;
+            }
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(mode)).toExternalForm());
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/toggleSwitch.css")).toExternalForm());
         }

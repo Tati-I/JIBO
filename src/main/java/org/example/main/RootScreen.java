@@ -35,14 +35,14 @@ public class RootScreen {
         root.getChildren().addAll(rightSideBarPane, homePane);
 
         // جعل العناصر responsive
-        rightSideBarPane.prefWidthProperty().bind(root.widthProperty().multiply(0.22)); // 22% من عرض النافذة
+        rightSideBarPane.prefWidthProperty().bind(root.widthProperty().multiply(0.22));
         rightSideBarPane.prefHeightProperty().bind(root.heightProperty());
 
         AnchorPane.setRightAnchor(rightSideBarPane, 0.0);
         AnchorPane.setTopAnchor(rightSideBarPane, 0.0);
         AnchorPane.setBottomAnchor(rightSideBarPane, 0.0);
 
-        homePane.prefWidthProperty().bind(root.widthProperty().multiply(0.78)); // 78% من عرض النافذة
+        homePane.prefWidthProperty().bind(root.widthProperty().multiply(0.78));
         homePane.prefHeightProperty().bind(root.heightProperty());
 
         AnchorPane.setLeftAnchor(homePane, 0.0);

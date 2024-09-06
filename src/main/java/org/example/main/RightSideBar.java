@@ -46,7 +46,7 @@ public class RightSideBar {
         Button logoutBtn = createLogoutButton();
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
-        logoutContainer.setPadding(new Insets(220, 0, 0, 0));
+        logoutContainer.setPadding(new Insets(150, 0, 0, 0));
 
         // إضافة جميع العناصر إلى الحاوية الرئيسية
         mainContainer.getChildren().addAll(logoContainer, menuContainer, logoutContainer);
@@ -64,7 +64,7 @@ public class RightSideBar {
         Image logo = loadImage("logo1.png");
         ImageView logoImageView = new ImageView(logo);
         logoImageView.setPreserveRatio(true);
-        logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.68));
+        logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.90));
         return logoImageView;
     }
 
