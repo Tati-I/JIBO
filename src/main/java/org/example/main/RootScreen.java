@@ -12,15 +12,9 @@ public class RootScreen {
     public void start() {
         // إنشاء لوحة الجانب الأيسر
         Pane leftSidePane = new Pane();
-        // إنشاء شريط الجانب الأيمن وربطه بلوحة الجانب الأيسر
 
         // إنشاء اللوحة الرئيسية للتطبيق
         AnchorPane root = new AnchorPane();
-
-
-
-        // إنشاء لوحة الجانب الأيسر
-
 
         // إنشاء شريط الجانب الأيمن وربطه بلوحة الجانب الأيسر
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
@@ -30,6 +24,7 @@ public class RootScreen {
         HomeScreen homeScreen = new HomeScreen();
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
 
+        // التأكد من أن homePane مرتبط بعناصر أخرى مثل requestServicesPane بشكل صحيح
 
         // إضافة شريط الجانب الأيمن والشاشة الرئيسية إلى اللوحة الرئيسية
         root.getChildren().addAll(rightSideBarPane, homePane);
@@ -49,11 +44,9 @@ public class RootScreen {
         AnchorPane.setTopAnchor(homePane, 0.0);
         AnchorPane.setBottomAnchor(homePane, 0.0);
 
-
         // إنشاء المشهد وإضافة ملف الأنماط
         Scene scene = new Scene(root, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
-
 
         // إعداد النافذة الرئيسية وعرضها
         Stage primaryStage = new Stage();

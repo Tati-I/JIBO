@@ -38,10 +38,13 @@ public class RequestServicesPane {
 
         topRightButtons.getChildren().addAll(nowService, previousService, myRate);
 
-        HBox topButtons = new HBox(300);
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS); // ملء المساحة المتاحة
+
+        HBox topButtons = new HBox(10);
         topButtons.setAlignment(Pos.CENTER);
-        topButtons.setPadding(new Insets(10.0));
-        topButtons.getChildren().addAll(goToProfile, topRightButtons);
+        topButtons.setPadding(new Insets(20, 30, 0, 30));
+        topButtons.getChildren().addAll(goToProfile, spacer, topRightButtons);
 
         // إنشاء عنوان "الخدمات الشائعة"
         Label trendService = new Label("الخدمات الشائعة");
@@ -54,7 +57,6 @@ public class RequestServicesPane {
         line.setStartY(360);
         line.setEndX(840);
         line.setEndY(360);
-
 
         // إنشاء حقل البحث عن الخدمات
         TextField serviceSearch = new TextField();
@@ -135,13 +137,13 @@ public class RequestServicesPane {
         ScrollPane scrollPane = new ScrollPane(servicesBox);
         scrollPane.setStyle("-fx-background-color: transparent;");
         scrollPane.setPrefHeight(570);
-        scrollPane.setPadding(new Insets(0,80,0,80));
-        scrollPane.setFitToHeight(true);
         scrollPane.setFitToWidth(true);
+        scrollPane.setPadding(new Insets(0, 30, 0, 30));
 
         VBox mainContainer = new VBox();
         mainContainer.setSpacing(30);
         mainContainer.setAlignment(Pos.CENTER);
+        mainContainer.setPadding(new Insets(0, 50, 0, 50)); // إضافة الفراغ 50px من الجانبين
         mainContainer.prefWidthProperty().bind(contentPane.widthProperty());
         mainContainer.prefHeightProperty().bind(contentPane.heightProperty());
         mainContainer.getChildren().addAll(topButtons, topFields, scrollPane);
@@ -151,7 +153,7 @@ public class RequestServicesPane {
         // إضافة أزرار الاختصار
         HBox categoryButtonsBox = new HBox(10);
         categoryButtonsBox.setAlignment(Pos.CENTER);
-        categoryButtonsBox.setPadding(new Insets(0, 110, 0, 110));
+        categoryButtonsBox.setPadding(new Insets(0, 50, 0, 50));
 
         Button servicesButton = createShortcutButton(
                 "خدماتي",
@@ -305,7 +307,8 @@ public class RequestServicesPane {
         // إنشاء HBox لاحتواء العناصر
         HBox pane = new HBox(20);
         pane.setPrefSize(680, 110);
-        pane.setPadding(new Insets(10));
+        pane.setPadding(new Insets(10, 50, 10, 50));
+        pane.setAlignment(Pos.CENTER);
 
         pane.setOnMouseEntered(_ -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(100), pane);

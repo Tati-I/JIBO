@@ -1,6 +1,7 @@
 package login.pages;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -39,7 +41,7 @@ public class LoginPage extends Application {
     @Override
     public void start(Stage stage) {
 
-        this.primaryStage = stage;
+        primaryStage = stage;
 
 
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
@@ -52,27 +54,34 @@ public class LoginPage extends Application {
         logoView.setFitWidth(250);
         logoView.setLayoutX(230);
         logoView.setLayoutY(-60);
+        AnchorPane.setTopAnchor(logoView, 0.0);
+        AnchorPane.setLeftAnchor(logoView, 0.0);
+        AnchorPane.setRightAnchor(logoView, 0.0);
+        AnchorPane.setBottomAnchor(logoView, 0.0);
 
 
         visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
         hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
 
 
-
         pane = new Pane();
-        pane.setStyle("-fx-background-color: white; -fx-background-radius: 27px;");
-        pane.setPrefSize(525, 470);
-        pane.setLayoutX(88);
-
         createLoginView();
 
-        root.getChildren().addAll(logoView, pane);
+        VBox paneVbox = new VBox();
+        paneVbox.getChildren().add(pane);
 
-        Scene scene = new Scene(root, 700, 720);
+        AnchorPane.setTopAnchor(paneVbox, null);
+        AnchorPane.setRightAnchor(paneVbox, 50.0); // 50px from the right edge
+        AnchorPane.setTopAnchor(paneVbox, 150.0);
+        AnchorPane.setLeftAnchor(paneVbox, null);
+        root.getChildren().addAll(logoView, paneVbox);
+
+        Scene scene = new Scene(root, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
         stage.setTitle("Jibo");
-        stage.setResizable(false);
+        stage.setMinWidth(920);  // الحد الأدنى لعرض النافذة
+        stage.setMinHeight(700); // الحد الأدنى لارتفاع النافذة
         stage.setScene(scene);
         stage.show();
 
@@ -82,8 +91,8 @@ public class LoginPage extends Application {
 
 
         pane.getChildren().clear();
+        pane.setStyle("-fx-background-color: white; -fx-background-radius: 27px;");
         pane.setPrefSize(525, 470);
-        pane.setLayoutY(130);
 
         Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBO");
         WelcomeMsg.setLayoutX(140);

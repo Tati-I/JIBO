@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 import auth.EmailCheck;
 import auth.FileBasedAuthenticationSystem;
-import org.example.main.PasswordCheck;
+import auth.PasswordCheck;
 
 import java.util.Objects;
 
