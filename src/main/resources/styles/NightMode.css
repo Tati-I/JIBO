@@ -1,38 +1,49 @@
-
+/* الخلفية العامة */
 .root {
-    -fx-background-color: linear-gradient(#121212, #414141);
+    -fx-background-color: #1e1e1e;
+}
+
+/* مربع البحث */
+#serviceSearch {
+    -fx-background-color: #2c2c2c;
+    -fx-background-radius: 15px;
+    -fx-border-color: #4a4a4a;
 }
 
 /* حقل البحث */
 .text-field {
-    -fx-background-color: white;
-    -fx-border-color: #e0e0e0;
+    -fx-background-color: #2c2c2c;
+    -fx-border-color: #4a4a4a;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-padding: 8 15;
-    -fx-prompt-text-fill: #757575;
+    -fx-prompt-text-fill: #b0b0b0;
     -fx-font-size: 14px;
 }
+
+.text-field:focused {
+    -fx-border-color: #76c7c0;
+    -fx-effect: dropshadow(gaussian, rgba(76, 199, 192, 0.4), 10, 0, 0, 0);
+}
+
+/* الأزرار الإذاعية */
 .radio-button {
-    -fx-background-color: #01012a;
+    -fx-background-color: #2a2a3d;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
-    -fx-padding: 10 20 10 20;
-
+    -fx-padding: 10 20;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-cursor: hand;
 }
 
 .radio-button:hover {
-    -fx-background-color:  #090942;
-
+    -fx-background-color: #343454;
 }
 
-
 .radio-button .radio {
-    -fx-mark-color: #4ca1af;
+    -fx-mark-color: #76c7c0;
     -fx-background-color: #ffffff;
     -fx-padding: 5px;
     -fx-radius: 10px;
@@ -40,21 +51,14 @@
 
 .radio-button:selected .radio {
     -fx-mark-color: white;
-    -fx-background-color: #0c0d2c;
-    -fx-border-color: #4ca1af;
+    -fx-background-color: #3a3a5a;
+    -fx-border-color: #76c7c0;
     -fx-border-width: 2px;
-
-}
-
-
-.text-field:focused {
-    -fx-border-color: #4ca1af;
-    -fx-effect: dropshadow(gaussian, rgba(76, 161, 175, 0.4), 10, 0, 0, 0);
 }
 
 /* الشريط الجانبي الأيمن */
 #rightSideBar {
-    -fx-background-color: linear-gradient(#3a3a3a, rgb(119, 119, 119));
+    -fx-background-color: linear-gradient(#76c7c0, #1c1c3b);
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
 }
@@ -81,6 +85,21 @@
     -fx-text-fill: #2c3e50;
 }
 
+/* الأنماط العامة للأزرار */
+#nowService, #previousService, #myRate {
+    -fx-background-color: #2c2c2c;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+    -fx-padding: 10 0 10 0;
+}
+
+/* تأثير hover */
+#nowService:hover, #previousService:hover, #myRate:hover {
+    -fx-background-color: #3c3c3c;
+}
+
 /* زر تسجيل الخروج */
 #logoutBtn {
     -fx-background-color: #ff6347;
@@ -96,18 +115,19 @@
 }
 
 /* عنوان الخدمات الشائعة */
-#trendService,#shortCuts {
+#trendService, #shortCuts {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #d5d5d5;
+    -fx-text-fill: #f0f0f0;
 }
-#line{
-    -fx-stroke: #d5d5d5;
+
+#line {
+    -fx-stroke: #f0f0f0;
 }
 
 /* بطاقات الخدمات */
 #electricPane, #waterPane, #tailorPane, #woodmenPane, #cleaningPane, #securityPane, #applianceRepairPane {
-    -fx-background-color: white;
+    -fx-background-color: #2c2c2c;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
@@ -115,65 +135,64 @@
 }
 
 #electricPane {
-    -fx-background-color: rgba(0, 187, 255, 0.16);
+    -fx-background-color: rgba(0, 187, 255, 0.24);
 }
 
 #waterPane {
-    -fx-background-color: rgba(0, 34, 255, 0.18);
+    -fx-background-color: rgba(0, 34, 255, 0.19);
 }
 
 #tailorPane {
-    -fx-background-color: rgba(255, 192, 203, 0.2);
+    -fx-background-color: rgba(255, 192, 203, 0.15);
 }
 
 #woodmenPane {
-    -fx-background-color: rgba(255, 255, 0, 0.15);
+    -fx-background-color: rgba(255, 255, 0, 0.05);
 }
 
 #cleaningPane {
-    -fx-background-color: rgba(0, 187, 255, 0.23);
+    -fx-background-color: rgba(0, 187, 255, 0.05);
 }
 
 #securityPane {
-    -fx-background-color: rgba(0, 34, 255, 0.22);
+    -fx-background-color: rgba(0, 34, 255, 0.05);
 }
 
 #applianceRepairPane {
-    -fx-background-color: rgba(255, 192, 203, 0.23);
+    -fx-background-color: rgba(255, 192, 203, 0.1);
 }
 
 #titleLabel {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-text-fill: #d5d5d5;
+    -fx-text-fill: #f0f0f0;
 }
 
 #priceLabel {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #d5d5d5;
+    -fx-text-fill: #76c7c0;
 }
 
 /* زر الطلب */
 #requestButton {
-    -fx-background-color: #4ca1af;
+    -fx-background-color: #76c7c0;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-background-radius: 20;
     -fx-font-size: 16px;
-    -fx-padding: 10 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);
+    -fx-padding: 35 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 8, 0, 0, 0);
 }
 
 #requestButton:hover {
     -fx-background-color: #143e5b;
-
 }
 
 /* معلومات إضافية */
 #additionalInfo {
     -fx-font-size: 14px;
-    -fx-text-fill: #757575;
+    -fx-text-fill: #b0b0b0;
 }
 
 /* تحسينات عامة */
@@ -190,11 +209,45 @@
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #4ca1af;
+    -fx-background-color: #76c7c0;
     -fx-background-radius: 5;
 }
 
-#SettingPane,#homePane,#ServicePane,myProfilePane,#contentPane{
-    -fx-background-color: linear-gradient( #121212, #414141);
-    -fx-background-radius: 0 20 20 0
+#contentPane {
+    -fx-background-color: linear-gradient(to bottom right, #2e2e2e, #1e1e1e);
+    -fx-background-radius: 0 20 20 0;
+}
+#servicesButton {
+    -fx-background-color: rgba(122, 122, 122, 0.6);
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand}
+
+#myLocationsButton {
+    -fx-background-color: rgba(60, 189, 130, 0.38);
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand
+}
+
+#categoryButton {
+    -fx-background-color: rgba(235, 135, 0, 0.56);
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand
+}
+
+#favoriteButton {
+    -fx-background-color: rgba(0, 22, 255, 0.44);
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand
 }

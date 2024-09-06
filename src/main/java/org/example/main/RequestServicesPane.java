@@ -27,8 +27,11 @@ public class RequestServicesPane {
 
         // إنشاء أزرار الخدمات
         Button nowService = createServicesButton("خدماتي الحالية");
+        nowService.setId("nowService");
         Button previousService = createServicesButton("خدماتي السابقة");
+        previousService.setId("previousService");
         Button myRate = createServicesButton("تقييماتي");
+        myRate.setId("myRate");
 
         Label shortCuts = new Label("اختصارات");
         shortCuts.setId("shortCuts");
@@ -158,46 +161,46 @@ public class RequestServicesPane {
         Button servicesButton = createShortcutButton(
                 "خدماتي",
                 "services.png",
-                "-fx-background-color: rgba(60,189,130,0.64); -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
                 "خدماتي",
                 contentPane,
                 rightSideBar
         );
-        servicesButton.setOnMouseEntered(_ ->createUpAnimateButton(servicesButton));
-        servicesButton.setOnMouseExited(_ ->createDownAnimateButton(servicesButton));
+        servicesButton.setId("servicesButton");
+        servicesButton.setOnMouseEntered(_ -> createUpAnimateButton(servicesButton));
+        servicesButton.setOnMouseExited(_ -> createDownAnimateButton(servicesButton));
 
         Button myLocationsButton = createShortcutButton(
                 "عناويني",
                 "map.png",
-                "-fx-background-color: #716f6f; -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
                 "عناويني",
                 contentPane,
                 rightSideBar
         );
-        myLocationsButton.setOnMouseEntered(_->createUpAnimateButton(myLocationsButton));
-        myLocationsButton.setOnMouseExited(_ ->createDownAnimateButton(myLocationsButton));
+        myLocationsButton.setId("myLocationsButton");
+        myLocationsButton.setOnMouseEntered(_ -> createUpAnimateButton(myLocationsButton));
+        myLocationsButton.setOnMouseExited(_ -> createDownAnimateButton(myLocationsButton));
 
         Button categoryButton = createShortcutButton(
                 "كتالوج الخدمات",
                 "category.png",
-                "-fx-background-color: rgba(235,135,0,0.56); -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
                 "كتالوج الخدمات",
                 contentPane,
                 rightSideBar
         );
-        categoryButton.setOnMouseEntered(_ ->createUpAnimateButton(categoryButton));
-        categoryButton.setOnMouseExited(_ ->createDownAnimateButton(categoryButton));
+        categoryButton.setId("categoryButton");
+        categoryButton.setOnMouseEntered(_ -> createUpAnimateButton(categoryButton));
+        categoryButton.setOnMouseExited(_ -> createDownAnimateButton(categoryButton));
 
         Button favoriteButton = createShortcutButton(
                 "خدماتي المفضلة",
                 "favorite.png",
-                "-fx-background-color: rgba(0,22,255,0.44); -fx-background-radius: 10px; -fx-text-fill: white; -fx-font-size: 20px;-fx-font-weight: bold;-fx-cursor: hand",
                 "خدماتي المفضلة",
                 contentPane,
                 rightSideBar
         );
-        favoriteButton.setOnMouseEntered(_ ->createUpAnimateButton(favoriteButton));
-        favoriteButton.setOnMouseExited(_ ->createDownAnimateButton(favoriteButton));
+        favoriteButton.setId("favoriteButton");
+        favoriteButton.setOnMouseEntered(_ -> createUpAnimateButton(favoriteButton));
+        favoriteButton.setOnMouseExited(_ -> createDownAnimateButton(favoriteButton));
 
         categoryButtonsBox.getChildren().addAll(servicesButton, myLocationsButton, categoryButton, favoriteButton);
 
@@ -217,13 +220,12 @@ public class RequestServicesPane {
         return leftSidePane;
     }
 
-    private Button createShortcutButton(String text, String imagePath, String style, String category, Pane contentPane, RightSideBar rightSideBar) {
+    private Button createShortcutButton(String text, String imagePath, String category, Pane contentPane, RightSideBar rightSideBar) {
         ImageView imageView = new ImageView(rightSideBar.loadImage(imagePath));
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
 
         Button button = new Button(text, imageView);
-        button.setStyle(style);
         button.setOnAction(_ -> filterServices(category));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setAlignment(Pos.CENTER);
