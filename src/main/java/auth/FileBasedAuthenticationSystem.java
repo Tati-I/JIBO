@@ -1,4 +1,4 @@
-package org.example.main;
+package auth;
 
 import java.io.*;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package org.example.main;
+package login.pages;
 
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -7,6 +7,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+
+import auth.EmailCheck;
+import auth.FileBasedAuthenticationSystem;
+import org.example.main.PasswordCheck;
 
 import java.util.Objects;
 

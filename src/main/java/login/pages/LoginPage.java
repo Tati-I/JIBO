@@ -1,4 +1,4 @@
-package org.example.main;
+package login.pages;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import org.example.main.RootScreen;
 
 import java.util.Objects;
 
@@ -147,7 +148,6 @@ public class LoginPage extends Application {
             signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 10px;-fx-border-radius: 10px; -fx-cursor: hand;");
             createLoginView();
         });
-
 
 
         Label emailWord = new Label("البريد الإلكتروني");

@@ -8,4 +8,8 @@ module org.example.main {
 
     opens org.example.main to javafx.fxml;
     exports org.example.main;
+    exports auth;
+    opens auth to javafx.fxml;
+    exports login.pages;
+    opens login.pages to javafx.fxml;
 }
