@@ -22,6 +22,7 @@ public class PasswordCheck {
             }
         }
 
+
         return hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
     }
 
