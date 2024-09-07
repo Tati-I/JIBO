@@ -75,9 +75,9 @@
     -fx-transition: all 0.3s;
 }
 
-#homeBtn:hover, #requestServiceBtn:hover, #myServicesBtn:hover, #profileBtn:hover, #settingsBtn:hover {
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
+#servicesButton:hover, #myLocationsButton:hover, #categoryButton:hover, #favoriteButton:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 0);
+    -fx-translate-y: -2;
 }
 
 .button:selected {
@@ -219,35 +219,58 @@
 }
 #servicesButton {
     -fx-background-color: rgba(122, 122, 122, 0.6);
-    -fx-background-radius: 10px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-cursor: hand}
+    -fx-padding: 25 10;
+}
 
 #myLocationsButton {
-    -fx-background-color: rgba(60, 189, 130, 0.38);
-    -fx-background-radius: 10px;
+    -fx-background-color: rgba(60,189,130,0.64);
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-cursor: hand
 }
 
 #categoryButton {
     -fx-background-color: rgba(235, 135, 0, 0.56);
-    -fx-background-radius: 10px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-cursor: hand
 }
 
 #favoriteButton {
     -fx-background-color: rgba(0, 22, 255, 0.44);
-    -fx-background-radius: 10px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-cursor: hand
 }
+
+/* Button hover effects */
+#favoriteButton:hover {
+    -fx-background-color: rgba(19, 38, 216, 0.56);
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+#categoryButton:hover{
+    -fx-background-color: rgba(235, 135, 0, 0.64);
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+#myLocationsButton:hover{
+    -fx-background-color: rgba(60, 189, 130, 0.72);
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+#servicesButton:hover{
+    -fx-background-color: rgba(122, 122, 122, 0.66);
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 25 10;
+}
+
+
