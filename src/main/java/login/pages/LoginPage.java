@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,20 +21,21 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import org.example.main.RightSideBar;
 import org.example.main.RootScreen;
 
 import java.util.Objects;
 
 public class LoginPage extends Application {
-    private static Pane pane;
     private Stage primaryStage;
 
+    private static Pane pane;
     private static Button loginButton;
     private static Button signUpButton;
     private static ImageView passwordIconView;
     private static Image visibleIcon;
     private static Image hiddenIcon;
-    private static  boolean isPasswordVisible = false;
+    private static boolean isPasswordVisible = false;
     private static TextField visiblePasswordField;
     private static PasswordField passwordField;
 
@@ -43,95 +45,27 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage stage) {
-
+        // استدعاء كائن
+        RightSideBar rightSideBar = new RightSideBar(null);
+        //وضع icon
         primaryStage = stage;
-
-
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
-        AnchorPane root = new AnchorPane();
-        root.setStyle("-fx-background-color: linear-gradient( #3675bd , #002750 )");
-
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
-        ImageView logoView = new ImageView(logo);
-        logoView.setFitHeight(350);
-        logoView.setFitWidth(350);
-
-        AnchorPane.setTopAnchor(logoView, 20.0);
-        AnchorPane.setLeftAnchor(logoView, 160.0);
-        AnchorPane.setRightAnchor(logoView, 150.0);
-        AnchorPane.setBottomAnchor(logoView, 220.0);
-
+        stage.getIcons().add(rightSideBar.loadImage("icon.png"));
+        //الحاوية الرئيسية
+        AnchorPane mainContainer = new AnchorPane();
+        mainContainer.setStyle("-fx-background-color: linear-gradient( #3675bd , #002750 )");
 
         visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
         hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
 
-        Image clockIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/Clock.png")).toExternalForm());
-
-        Image eventsIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/events.png")).toExternalForm());
-
-        Image multiuserIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/multiuser.png")).toExternalForm());
-
-        Image serviceRequsetIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/serviceRequest.png")).toExternalForm());
-
-        ImageView clockView = new ImageView(clockIcon);
-        clockView.setFitHeight(28);
-        clockView.setFitWidth(28);
-
-        ImageView eventsView = new ImageView(eventsIcon);
-        eventsView.setFitHeight(28);
-        eventsView.setFitWidth(28);
-
-        ImageView multiuserView = new ImageView(multiuserIcon);
-        multiuserView.setFitHeight(24);
-        multiuserView.setFitWidth(24);
-
-        ImageView serviceRequsetView = new ImageView(serviceRequsetIcon);
-        serviceRequsetView.setFitHeight(28);
-        serviceRequsetView.setFitWidth(28);
-
-
         pane = new Pane();
         createLoginView();
+        HBox rightAndLeft = new HBox();
+        rightAndLeft.setAlignment(Pos.CENTER);
+        rightAndLeft.getChildren().addAll(leftView(),pane);
 
-        VBox paneVbox = new VBox();
-        paneVbox.getChildren().add(pane);
+        mainContainer.getChildren().addAll(rightAndLeft);
 
-
-        Label mainText = new Label("كل ما تحتاجه لخدماتك، في مكان واحد");
-        mainText.setFont(Font.font("Arial", FontWeight.BOLD, 32));
-        mainText.setStyle("-fx-text-fill: #FFFFFF;");
-
-
-        Label secondaryText1 = new Label("إدارة الخدمات بكل سهولة ومرونة.",serviceRequsetView);
-        Label secondaryText2 = new Label("الدعم متاح على مدار الساعة لضمان تجربة سلسة.",clockView);
-        Label secondaryText3 = new Label("استفد من أحدث الأدوات لتقديم أو طلب الخدمات.",eventsView);
-        Label secondaryText4 = new Label("انضم إلى مجتمع من المستخدمين المحترفين والمتخصصين.",multiuserView);
-
-
-        secondaryText1.setFont(Font.font("Arial", 16));
-        secondaryText2.setFont(Font.font("Arial", 16));
-        secondaryText3.setFont(Font.font("Arial", 16));
-        secondaryText4.setFont(Font.font("Arial", 16));
-
-
-        secondaryText1.setStyle("-fx-text-fill: #c2c1c1;");
-        secondaryText2.setStyle("-fx-text-fill: #c2c1c1;");
-        secondaryText3.setStyle("-fx-text-fill: #c2c1c1;");
-        secondaryText4.setStyle("-fx-text-fill: #c2c1c1;");
-
-
-        VBox vbox = new VBox(10, mainText, secondaryText1, secondaryText2, secondaryText3, secondaryText4);
-        vbox.setPadding(new Insets(300,0,0,130));
-        vbox.setStyle("-fx-background-color: transparent");
-        vbox.setSpacing(15);
-
-        AnchorPane.setTopAnchor(paneVbox, null);
-        AnchorPane.setRightAnchor(paneVbox, 50.0);
-        AnchorPane.setTopAnchor(paneVbox, 150.0);
-        AnchorPane.setLeftAnchor(paneVbox, null);
-        root.getChildren().addAll(logoView, paneVbox,vbox);
-
-        Scene scene = new Scene(root, 1200, 780);
+        Scene scene = new Scene(mainContainer, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
         stage.setTitle("Jibo");
@@ -142,12 +76,62 @@ public class LoginPage extends Application {
 
     }
 
+    public Pane leftView() {
+        RightSideBar rightSideBar = new RightSideBar(null);
+
+        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
+        ImageView logoView = new ImageView(logo);
+
+        ImageView clockView = new ImageView(rightSideBar.loadImage("Clock.png"));
+        clockView.setFitHeight(28);
+        clockView.setFitWidth(28);
+
+        ImageView eventsView = new ImageView(rightSideBar.loadImage("events.png"));
+        eventsView.setFitHeight(28);
+        eventsView.setFitWidth(28);
+
+        ImageView multiuserView = new ImageView(rightSideBar.loadImage("multiuser.png"));
+        multiuserView.setFitHeight(24);
+        multiuserView.setFitWidth(24);
+
+        ImageView serviceRequestView = new ImageView(rightSideBar.loadImage("services.png"));
+        serviceRequestView.setFitHeight(28);
+        serviceRequestView.setFitWidth(28);
+
+        Label mainText = new Label("كل ما تحتاجه لخدماتك، في مكان واحد");
+        mainText.setFont(Font.font("Arial", FontWeight.BOLD, 32));
+        mainText.setStyle("-fx-text-fill: #FFFFFF;");
+
+        Label secondaryText1 = new Label("إدارة الخدمات بكل سهولة ومرونة.", serviceRequestView);
+        Label secondaryText2 = new Label("الدعم متاح على مدار الساعة لضمان تجربة سلسة.", clockView);
+        Label secondaryText3 = new Label("استفد من أحدث الأدوات لتقديم أو طلب الخدمات.", eventsView);
+        Label secondaryText4 = new Label("انضم إلى مجتمع من المستخدمين المحترفين والمتخصصين.", multiuserView);
+
+        secondaryText1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        secondaryText2.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        secondaryText3.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        secondaryText4.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
+        secondaryText1.setStyle("-fx-text-fill: #FFFFFF;");
+        secondaryText2.setStyle("-fx-text-fill: #FFFFFF;");
+        secondaryText3.setStyle("-fx-text-fill: #FFFFFF;");
+        secondaryText4.setStyle("-fx-text-fill: #FFFFFF;");
+
+        VBox textsvbox = new VBox(15);
+        textsvbox.getChildren().addAll(mainText,secondaryText1, secondaryText2, secondaryText3, secondaryText4);
+
+        VBox mainVbox = new VBox(30);
+        mainVbox.setAlignment(Pos.CENTER);
+        mainVbox.getChildren().addAll(logoView,textsvbox);
+        mainVbox.setPadding(new Insets(40,15,15,100));
+        return mainVbox;
+    }
+
     public void createLoginView() {
-
-
         pane.getChildren().clear();
         pane.setStyle("-fx-background-color: white; -fx-background-radius: 27px;");
         pane.setPrefSize(525, 470);
+        pane.setMaxHeight(470);
 
         Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBO");
         WelcomeMsg.setLayoutX(140);
@@ -192,10 +176,10 @@ public class LoginPage extends Application {
             signUpButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 10px; -fx-background-color: white; -fx-background-radius: 10px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
             loginButton.setStyle("-fx-background-color: #f1f2f4; -fx-background-radius: 10px;-fx-border-radius: 10px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
             SignUpPage signUpPage = new SignUpPage();
-            signUpPage.display(pane, loginButton, signUpButton, this, loginRect, WelcomeMsg, bioMsg);
+            signUpPage.display(pane, loginButton, signUpButton, loginRect, WelcomeMsg, bioMsg,this);
         });
 
-       loginButton.setOnAction(_ -> {
+        loginButton.setOnAction(_ -> {
             loginTransition.setToX(0);
             loginTransition.play();
             signUpTransition.setToX(0);
@@ -280,7 +264,6 @@ public class LoginPage extends Application {
         errorLabelPassword.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
 
 
-
         Login.setOnMouseEntered(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
 
         Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
@@ -321,11 +304,10 @@ public class LoginPage extends Application {
         });
 
 
-
         pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, visiblePasswordField, Login, privacy, emailIconView, passwordIconView, errorLabelEmail, errorLabelPassword);
     }
 
-    public static void showPassword(){
+    public static void showPassword() {
         if (isPasswordVisible) {
             passwordField.setText(visiblePasswordField.getText());
             visiblePasswordField.setVisible(false);
