@@ -1,6 +1,7 @@
 package login.pages;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +15,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
@@ -46,22 +49,45 @@ public class LoginPage extends Application {
 
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/icon.png"))));
         AnchorPane root = new AnchorPane();
-        root.setStyle("-fx-background-color: linear-gradient( #4ca1af 0%, #0c0d2c 75%)");
+        root.setStyle("-fx-background-color: linear-gradient( #3675bd , #002750 )");
 
         Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
         ImageView logoView = new ImageView(logo);
-        logoView.setFitHeight(250);
-        logoView.setFitWidth(250);
-        logoView.setLayoutX(230);
-        logoView.setLayoutY(-60);
-        AnchorPane.setTopAnchor(logoView, 0.0);
-        AnchorPane.setLeftAnchor(logoView, 0.0);
-        AnchorPane.setRightAnchor(logoView, 0.0);
-        AnchorPane.setBottomAnchor(logoView, 0.0);
+        logoView.setFitHeight(350);
+        logoView.setFitWidth(350);
+
+        AnchorPane.setTopAnchor(logoView, 20.0);
+        AnchorPane.setLeftAnchor(logoView, 160.0);
+        AnchorPane.setRightAnchor(logoView, 150.0);
+        AnchorPane.setBottomAnchor(logoView, 220.0);
 
 
         visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
         hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+
+        Image clockIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/Clock.png")).toExternalForm());
+
+        Image eventsIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/events.png")).toExternalForm());
+
+        Image multiuserIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/multiuser.png")).toExternalForm());
+
+        Image serviceRequsetIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/serviceRequest.png")).toExternalForm());
+
+        ImageView clockView = new ImageView(clockIcon);
+        clockView.setFitHeight(28);
+        clockView.setFitWidth(28);
+
+        ImageView eventsView = new ImageView(eventsIcon);
+        eventsView.setFitHeight(28);
+        eventsView.setFitWidth(28);
+
+        ImageView multiuserView = new ImageView(multiuserIcon);
+        multiuserView.setFitHeight(24);
+        multiuserView.setFitWidth(24);
+
+        ImageView serviceRequsetView = new ImageView(serviceRequsetIcon);
+        serviceRequsetView.setFitHeight(28);
+        serviceRequsetView.setFitWidth(28);
 
 
         pane = new Pane();
@@ -70,11 +96,40 @@ public class LoginPage extends Application {
         VBox paneVbox = new VBox();
         paneVbox.getChildren().add(pane);
 
+
+        Label mainText = new Label("كل ما تحتاجه لخدماتك، في مكان واحد");
+        mainText.setFont(Font.font("Arial", FontWeight.BOLD, 32));
+        mainText.setStyle("-fx-text-fill: #FFFFFF;");
+
+
+        Label secondaryText1 = new Label("إدارة الخدمات بكل سهولة ومرونة.",serviceRequsetView);
+        Label secondaryText2 = new Label("الدعم متاح على مدار الساعة لضمان تجربة سلسة.",clockView);
+        Label secondaryText3 = new Label("استفد من أحدث الأدوات لتقديم أو طلب الخدمات.",eventsView);
+        Label secondaryText4 = new Label("انضم إلى مجتمع من المستخدمين المحترفين والمتخصصين.",multiuserView);
+
+
+        secondaryText1.setFont(Font.font("Arial", 16));
+        secondaryText2.setFont(Font.font("Arial", 16));
+        secondaryText3.setFont(Font.font("Arial", 16));
+        secondaryText4.setFont(Font.font("Arial", 16));
+
+
+        secondaryText1.setStyle("-fx-text-fill: #c2c1c1;");
+        secondaryText2.setStyle("-fx-text-fill: #c2c1c1;");
+        secondaryText3.setStyle("-fx-text-fill: #c2c1c1;");
+        secondaryText4.setStyle("-fx-text-fill: #c2c1c1;");
+
+
+        VBox vbox = new VBox(10, mainText, secondaryText1, secondaryText2, secondaryText3, secondaryText4);
+        vbox.setPadding(new Insets(300,0,0,130));
+        vbox.setStyle("-fx-background-color: transparent");
+        vbox.setSpacing(15);
+
         AnchorPane.setTopAnchor(paneVbox, null);
-        AnchorPane.setRightAnchor(paneVbox, 50.0); // 50px from the right edge
+        AnchorPane.setRightAnchor(paneVbox, 50.0);
         AnchorPane.setTopAnchor(paneVbox, 150.0);
         AnchorPane.setLeftAnchor(paneVbox, null);
-        root.getChildren().addAll(logoView, paneVbox);
+        root.getChildren().addAll(logoView, paneVbox,vbox);
 
         Scene scene = new Scene(root, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
