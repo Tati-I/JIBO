@@ -36,6 +36,7 @@ public class RightSideBar {
         // شعار التطبيق
         ImageView logoImageView = createLogo();
         VBox logoContainer = new VBox(logoImageView);
+        logoContainer.setPadding(new Insets(30,0 , 100, 0));
         logoContainer.setAlignment(Pos.CENTER);
 
         // إنشاء حاوية لأزرار القائمة
@@ -63,6 +64,8 @@ public class RightSideBar {
     private ImageView createLogo() {
         Image logo = loadImage("logo1.png");
         ImageView logoImageView = new ImageView(logo);
+        logoImageView.setFitHeight(100);
+        logoImageView.setFitWidth(100);
         logoImageView.setPreserveRatio(true);
         logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.90));
         return logoImageView;
