@@ -23,10 +23,10 @@ public class RequestServicesPane {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
         // إنشاء لوحة المحتوى الرئيسية
-        Pane contentPane = new Pane();
-        contentPane.setId("contentPane");
-        contentPane.prefWidthProperty().bind(leftSidePane.widthProperty());
-        contentPane.prefHeightProperty().bind(leftSidePane.heightProperty());
+        Pane requestServicePane = new Pane();
+        requestServicePane.setId("requestServicePane");
+        requestServicePane.prefWidthProperty().bind(leftSidePane.widthProperty());
+        requestServicePane.prefHeightProperty().bind(leftSidePane.heightProperty());
 
         // إنشاء زر الانتقال إلى الملف الشخصي
         Button goToProfile = goToProfile();
@@ -72,7 +72,7 @@ public class RequestServicesPane {
         };
 
         for (String[] shortcut : shortcuts) {
-            Button shortcutButton = createShortcutButton(shortcut[0], shortcut[1], shortcut[2], contentPane, rightSideBar);
+            Button shortcutButton = createShortcutButton(shortcut[0], shortcut[1], shortcut[2], requestServicePane, rightSideBar);
             categoryButtonsBox.getChildren().add(shortcutButton);
         }
 
@@ -137,17 +137,17 @@ public class RequestServicesPane {
         mainContainer.getChildren().addAll(topButtons,shortCuts,categoryButtonsBox, topFields,line, scrollPane);//اضافتهم بالترتيب
 
         //تأثير عند فتح الصفحة
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), contentPane);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), requestServicePane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-        contentPane.getChildren().addAll(mainContainer);
-        leftSidePane.getChildren().add(contentPane);
+        requestServicePane.getChildren().addAll(mainContainer);
+        leftSidePane.getChildren().add(requestServicePane);
         return leftSidePane;
     }
 
-    private Button createShortcutButton(String text, String imagePath, String category, Pane contentPane, RightSideBar rightSideBar) {
+    private Button createShortcutButton(String text, String imagePath, String category, Pane requestServicePane, RightSideBar rightSideBar) {
         ImageView imageView = new ImageView(rightSideBar.loadImage(imagePath));
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
@@ -157,7 +157,7 @@ public class RequestServicesPane {
         button.setContentDisplay(ContentDisplay.TOP);
         button.setAlignment(Pos.CENTER);
         button.setPrefHeight(350);
-        button.prefWidthProperty().bind(contentPane.widthProperty());
+        button.prefWidthProperty().bind(requestServicePane.widthProperty());
         button.setId(category);
 
         return button;

@@ -53,17 +53,19 @@ public class HomeScreen {
     }
 
     private HBox createHeader() {
-        HBox header = new HBox(20);
+        HBox header = new HBox(10);
         header.setAlignment(Pos.CENTER);
 
 
         Label welcomeLabel = new Label("مرحباً بك في Jibo");
+        welcomeLabel.setId("welcomeLabel");
         welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
-        welcomeLabel.setStyle("-fx-text-fill: #2c3e50;");
 
-        ImageView logoView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo.png"))));
-        logoView.setFitHeight(60);
-        logoView.setFitWidth(60);
+        ImageView logoView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logoBlack.png"))));
+
+
+        logoView.setFitHeight(75);
+        logoView.setFitWidth(75);
 
         header.getChildren().addAll(logoView, welcomeLabel);
         return header;
@@ -132,7 +134,8 @@ public class HomeScreen {
         featuredBox.setAlignment(Pos.CENTER);
 
         Label featuredLabel = new Label("الخدمات المميزة");
-        featuredLabel.setStyle("-fx-prompt-text-fill: #2c3e50;-fx-font-size: 24;-fx-font-family: Arial");
+        featuredLabel.setStyle("-fx-font-size: 20");
+        featuredLabel.setId("featuredLabel");
 
         HBox servicesBox = new HBox(20);
         servicesBox.setAlignment(Pos.CENTER);

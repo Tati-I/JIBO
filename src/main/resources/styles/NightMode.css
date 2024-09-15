@@ -1,6 +1,6 @@
 /* الخلفية العامة */
 .root {
-    -fx-background-color: #1e1e1e;
+    -fx-background-color: #151515;
 }
 
 /* مربع البحث */
@@ -79,7 +79,9 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 0);
     -fx-translate-y: -2;
 }
-
+#welcomeLabel,#featuredLabel{
+    -fx-text-fill: #ffffff;
+}
 .button:selected {
     -fx-background-color: white;
     -fx-text-fill: #2c3e50;
@@ -159,7 +161,7 @@
 }
 
 #applianceRepairPane {
-    -fx-background-color: rgba(255, 192, 203, 0.1);
+    -fx-background-color: rgba(255, 0, 45, 0.04);
 }
 
 #titleLabel {
@@ -213,8 +215,8 @@
     -fx-background-radius: 5;
 }
 
-#contentPane {
-    -fx-background-color: linear-gradient(to bottom right, #2e2e2e, #1e1e1e);
+#requestServicePane,#homePane,#myProfilePane,#ServicePane,#settingPane {
+    -fx-background-color: rgb(39, 42, 42);
     -fx-background-radius: 0 20 20 0;
 }
 #servicesButton {

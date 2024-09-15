@@ -1,10 +1,12 @@
 package org.example.main;
 
+import javafx.animation.FadeTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.util.Objects;
 
@@ -18,12 +20,13 @@ public class SettingPage {
         leftSidePane.getChildren().clear();
 
         Pane SettingPane = new Pane();
-        SettingPane.setPrefSize(934, 784);
         SettingPane.setId("settingPane");
+        SettingPane.prefWidthProperty().bind(leftSidePane.widthProperty());
+        SettingPane.prefHeightProperty().bind(leftSidePane.heightProperty());
 
         ToggleButton toggleButton = new ToggleButton();
-        toggleButton.setLayoutX(20);
-        toggleButton.setLayoutY(20);
+        toggleButton.setLayoutX(400);
+        toggleButton.setLayoutY(300);
         toggleButton.setPrefSize(60, 30);
         toggleButton.getStyleClass().add("mode-toggle-button");
 
@@ -34,6 +37,11 @@ public class SettingPage {
         imageView.setFitWidth(20);
         imageView.setFitHeight(20);
         toggleButton.setGraphic(imageView);
+
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500),SettingPane);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+        fadeIn.play();
 
 
         if (isNightMode) {

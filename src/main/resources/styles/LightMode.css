@@ -84,6 +84,11 @@
     -fx-background-color: rgba(0, 0, 0, 0.07);
 }
 
+#servicesButton:hover, #myLocationsButton:hover, #categoryButton:hover, #favoriteButton:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 0);
+    -fx-translate-y: -2;
+}
+
 .button:selected {
     -fx-background-color: #eaf0f6;
     -fx-text-fill: #003366;
@@ -91,7 +96,7 @@
 
 /* الأنماط العامة للأزرار */
 #nowService, #previousService, #myRate {
-    -fx-background-color: #eaf0f6;
+    -fx-background-color: rgba(173, 209, 245, 0.2);
     -fx-text-fill: #003366;
     -fx-font-size: 14px;
     -fx-background-radius: 5px;
@@ -101,12 +106,12 @@
 
 /* تأثير hover */
 #nowService:hover, #previousService:hover, #myRate:hover {
-    -fx-background-color: #d0e1f9;
+    -fx-background-color: #d0d2f9;
 }
 
 /* زر تسجيل الخروج */
 #logoutBtn {
-    -fx-background-color: #4a90e2;
+    -fx-background-color: #da2d2d;
     -fx-text-fill: white;
     -fx-background-radius: 10;
     -fx-font-size: 14px;
@@ -115,7 +120,7 @@
 }
 
 #logoutBtn:hover {
-    -fx-background-color: #2477e1;
+    -fx-background-color: #da2d2d;
 }
 
 /* عنوان الخدمات الشائعة */
@@ -140,31 +145,31 @@
 }
 
 #electricPane {
-    -fx-background-color: rgba(74, 144, 226, 0.1);
+    -fx-background-color: rgba(74, 144, 226, 0.13);
 }
 
 #waterPane {
-    -fx-background-color: rgba(41, 182, 246, 0.1);
+    -fx-background-color: rgba(41, 182, 246, 0.16);
 }
 
 #tailorPane {
-    -fx-background-color: rgba(255, 192, 203, 0.1);
+    -fx-background-color: rgba(255, 192, 203, 0.29);
 }
 
 #woodmenPane {
-    -fx-background-color: rgba(255, 235, 59, 0.1);
+    -fx-background-color: rgba(255, 235, 59, 0.18);
 }
 
 #cleaningPane {
-    -fx-background-color: rgba(74, 144, 226, 0.05);
+    -fx-background-color: rgba(74, 144, 226, 0.2);
 }
 
 #securityPane {
-    -fx-background-color: rgba(41, 182, 246, 0.05);
+    -fx-background-color: rgba(41, 182, 246, 0.15);
 }
 
 #applianceRepairPane {
-    -fx-background-color: rgba(255, 192, 203, 0.05);
+    -fx-background-color: rgba(255, 192, 203, 0.21);
 }
 
 #titleLabel {
@@ -218,8 +223,8 @@
     -fx-background-radius: 5;
 }
 
-#contentPane {
-    -fx-background-color: linear-gradient(to bottom right, #ffffff, #f0f0f0);
+#requestServicePane,#homePane,#myProfilePane,#ServicePane,#settingPane {
+    -fx-background-color: rgba(187, 234, 255, 0.13);
     -fx-background-radius: 0 20 20 0;
 }
 #servicesButton {
@@ -249,6 +254,9 @@
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
+}
+#welcomeLabel,#featuredLabel{
+    -fx-text-fill: #000000;
 }
 
 /* Button hover effects */

@@ -30,13 +30,13 @@ public class RightSideBar {
 
         // إنشاء حاوية للعناصر
         VBox mainContainer = new VBox();
-        mainContainer.setPadding(new Insets(20, 10, 20, 10));
+        mainContainer.setPadding(new Insets(0, 10, 20, 10));
         mainContainer.setAlignment(Pos.TOP_CENTER);
 
         // شعار التطبيق
         ImageView logoImageView = createLogo();
         VBox logoContainer = new VBox(logoImageView);
-        logoContainer.setPadding(new Insets(30,0 , 100, 0));
+        logoContainer.setPadding(new Insets(50,0 , 100, 0));
         logoContainer.setAlignment(Pos.CENTER);
 
         // إنشاء حاوية لأزرار القائمة
@@ -64,8 +64,8 @@ public class RightSideBar {
     private ImageView createLogo() {
         Image logo = loadImage("logo1.png");
         ImageView logoImageView = new ImageView(logo);
-        logoImageView.setFitHeight(100);
-        logoImageView.setFitWidth(100);
+        logoImageView.setFitHeight(120);
+        logoImageView.setFitWidth(120);
         logoImageView.setPreserveRatio(true);
         logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.90));
         return logoImageView;
@@ -175,7 +175,7 @@ public class RightSideBar {
             profileBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
             profileBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
             MyProfile myProfile = new MyProfile();
-            myProfile.myProfilePane(leftSidePane);
+            myProfile.showMyProfilePage(leftSidePane);
 
             // استدعاء الصفحة الخاصة بـ Profile
         });
