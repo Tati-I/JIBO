@@ -3,12 +3,14 @@ package org.example.main;
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
 import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -50,7 +52,9 @@ public class RightSideBar {
         logoutContainer.setPadding(new Insets(150, 0, 0, 0));
 
         // إضافة جميع العناصر إلى الحاوية الرئيسية
-        mainContainer.getChildren().addAll(logoContainer, menuContainer, logoutContainer);
+        VBox smallRightBarContainer = menu();
+
+        mainContainer.getChildren().addAll(smallRightBarContainer,logoContainer, menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية responsive
         mainContainer.prefWidthProperty().bind(rightSideBar.widthProperty());
@@ -71,19 +75,27 @@ public class RightSideBar {
         return logoImageView;
     }
 
+    private VBox menu (){
+        VBox menuContainer = new VBox();
+        Button smallRightBar = createRightSideBarButton("homeBtn","","menu-bar.png");
+        smallRightBar.setPrefSize(24,24);
+        menuContainer.getChildren().addAll(smallRightBar);
+        menuContainer.setAlignment(Pos.TOP_RIGHT);
+        return menuContainer;
+    }
+
     // دالة إنشاء حاوية أزرار القائمة
     private VBox createMenuContainer(Pane leftSidePane) {
         VBox menuContainer = new VBox(10);
         menuContainer.setAlignment(Pos.TOP_CENTER);
 
-        Button homeBtn = createRightSideBarButton("homeBtn", "الصفحة الرئيسية");
-        Button requestServiceBtn = createRightSideBarButton("requestServiceBtn", "طلب خدمة");
-        Button myServicesBtn = createRightSideBarButton("myServicesBtn", "خدماتي");
-        Button profileBtn = createRightSideBarButton("profileBtn", "ملفي الشخصي");
-        Button settingsBtn = createRightSideBarButton("settingsBtn", "إعدادات");
+        Button homeBtn = createRightSideBarButton("homeBtn", "الصفحة الرئيسية","home-button.png");
+        Button requestServiceBtn = createRightSideBarButton("requestServiceBtn", "طلب خدمة","add.png");
+        Button myServicesBtn = createRightSideBarButton("myServicesBtn", "خدماتي","customer-service.png");
+        Button profileBtn = createRightSideBarButton("profileBtn", "ملفي الشخصي","user.png");
+        Button settingsBtn = createRightSideBarButton("settingsBtn", "إعدادات","settings.png");
 
         menuContainer.getChildren().addAll(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn);
-
         // ربط الأزرار بالوظائف المناسبة
         requestLeftPanes(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn, leftSidePane);
 
@@ -91,11 +103,13 @@ public class RightSideBar {
     }
 
     // دالة إنشاء زر في الشريط الجانبي الأيمن
-    private Button createRightSideBarButton(String id, String name) {
-        Button rightSideBarButton = new Button(name);
+    private Button createRightSideBarButton(String id, String name,String iconPath) {
+        ImageView imageView = new ImageView(loadImage(iconPath));
+        Button rightSideBarButton = new Button(name,imageView);
         rightSideBarButton.setId(id);
         rightSideBarButton.setPrefWidth(220);
-        rightSideBarButton.setStyle("-fx-alignment: center");
+        rightSideBarButton.setAlignment(Pos.TOP_LEFT);
+        rightSideBarButton.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         rightSideBarButton.setOnMouseEntered(_ -> createUpAnimateButton(rightSideBarButton));
         rightSideBarButton.setOnMouseExited(_ -> createDownAnimateButton(rightSideBarButton));
         return rightSideBarButton;
