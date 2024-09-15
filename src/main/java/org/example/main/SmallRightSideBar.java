@@ -10,25 +10,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.util.Objects;
 
-public class RightSideBar {
+public class SmallRightSideBar {
     // تحديد مسار الموارد للصور
     private static final String RESOURCES_PATH = "/Pictures/";
-    static Pane rightSideBar;
+    private Pane smallRightBar;
+
 
     // المُنشئ الذي يقوم بإنشاء الشريط الجانبي الأيمن
-    public RightSideBar(Pane leftSideBar) {
-        createRightSideBar(leftSideBar);
+    public SmallRightSideBar(Pane sideBar) {
+        sideBar.getChildren().clear();
+
+        createSmallRightBar(sideBar);
     }
 
     // دالة إنشاء الشريط الجانبي الأيمن
-    private void createRightSideBar(Pane leftSidePane) {
-        rightSideBar = new Pane();
-        rightSideBar.setId("rightSideBar");
+    private void createSmallRightBar(Pane leftSidePane) {
+        smallRightBar = new Pane();
+        smallRightBar.setId("rightSideBar");
 
         // إنشاء حاوية للعناصر
         VBox mainContainer = new VBox();
@@ -56,14 +58,14 @@ public class RightSideBar {
 
 
 
-        mainContainer.getChildren().addAll(smallRightBarContainer,logoContainer, menuContainer, logoutContainer);
+        mainContainer.getChildren().addAll(smallRightBarContainer,logoContainer,menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية responsive
-        mainContainer.prefWidthProperty().bind(rightSideBar.widthProperty());
-        mainContainer.prefHeightProperty().bind(rightSideBar.heightProperty());
+        mainContainer.prefWidthProperty().bind(smallRightBar.widthProperty());
+        mainContainer.prefHeightProperty().bind(smallRightBar.heightProperty());
 
         // إضافة الحاوية الرئيسية إلى الشريط الجانبي الأيمن
-        rightSideBar.getChildren().add(mainContainer);
+        smallRightBar.getChildren().add(mainContainer);
     }
 
     // دالة إنشاء شعار التطبيق
@@ -73,23 +75,20 @@ public class RightSideBar {
         logoImageView.setFitHeight(120);
         logoImageView.setFitWidth(120);
         logoImageView.setPreserveRatio(true);
-        logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.90));
+        logoImageView.fitWidthProperty().bind(smallRightBar.widthProperty().multiply(0.90));
         return logoImageView;
     }
 
     private VBox menu (){
         VBox menuContainer = new VBox();
-        Button smallRightBar = createRightSideBarButton("homeBtn","","menu-bar.png");
+        Button menu = createsmallRightBarButton("homeBtn","","menu-bar.png");
 
-        smallRightBar.setPrefSize(24,24);
-        menuContainer.getChildren().addAll(smallRightBar);
+        menu.setPrefSize(24,24);
+        menuContainer.getChildren().addAll(menu);
         menuContainer.setAlignment(Pos.TOP_RIGHT);
-        smallRightBar.setOnAction(_ ->{
-           // rightSideBar.getChildren().clear();
-            SmallRightSideBar smallRightSideBar = new SmallRightSideBar(rightSideBar);
-            smallRightSideBar.getsmallRightBar();
-            //rightSideBar.getChildren().clear();
-
+        menu.setOnAction(_ ->{
+            RightSideBar rightSideBar = new RightSideBar(menuContainer);
+            rightSideBar.getRightSideBar();
         });
         return menuContainer;
     }
@@ -99,11 +98,11 @@ public class RightSideBar {
         VBox menuContainer = new VBox(10);
         menuContainer.setAlignment(Pos.TOP_CENTER);
 
-        Button homeBtn = createRightSideBarButton("homeBtn", "الصفحة الرئيسية","home-button.png");
-        Button requestServiceBtn = createRightSideBarButton("requestServiceBtn", "طلب خدمة","add.png");
-        Button myServicesBtn = createRightSideBarButton("myServicesBtn", "خدماتي","customer-service.png");
-        Button profileBtn = createRightSideBarButton("profileBtn", "ملفي الشخصي","user.png");
-        Button settingsBtn = createRightSideBarButton("settingsBtn", "إعدادات","settings.png");
+        Button homeBtn = createsmallRightBarButton("homeBtn", "الصفحة الرئيسية","home-button.png");
+        Button requestServiceBtn = createsmallRightBarButton("requestServiceBtn", "طلب خدمة","add.png");
+        Button myServicesBtn = createsmallRightBarButton("myServicesBtn", "خدماتي","customer-service.png");
+        Button profileBtn = createsmallRightBarButton("profileBtn", "ملفي الشخصي","user.png");
+        Button settingsBtn = createsmallRightBarButton("settingsBtn", "إعدادات","settings.png");
 
         menuContainer.getChildren().addAll(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn);
         // ربط الأزرار بالوظائف المناسبة
@@ -113,21 +112,21 @@ public class RightSideBar {
     }
 
     // دالة إنشاء زر في الشريط الجانبي الأيمن
-    private Button createRightSideBarButton(String id, String name,String iconPath) {
+    private Button createsmallRightBarButton(String id, String name,String iconPath) {
         ImageView imageView = new ImageView(loadImage(iconPath));
-        Button rightSideBarButton = new Button(name,imageView);
-        rightSideBarButton.setId(id);
-        rightSideBarButton.setPrefWidth(220);
-        rightSideBarButton.setAlignment(Pos.TOP_LEFT);
-        rightSideBarButton.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-        rightSideBarButton.setOnMouseEntered(_ -> createUpAnimateButton(rightSideBarButton));
-        rightSideBarButton.setOnMouseExited(_ -> createDownAnimateButton(rightSideBarButton));
-        return rightSideBarButton;
+        Button smallRightBarButton = new Button(name,imageView);
+        smallRightBarButton.setId(id);
+        smallRightBarButton.setPrefWidth(220);
+        smallRightBarButton.setAlignment(Pos.TOP_LEFT);
+        smallRightBarButton.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        smallRightBarButton.setOnMouseEntered(_ -> createUpAnimateButton(smallRightBarButton));
+        smallRightBarButton.setOnMouseExited(_ -> createDownAnimateButton(smallRightBarButton));
+        return smallRightBarButton;
     }
 
     // دالة إنشاء زر تسجيل الخروج
     private Button createLogoutButton() {
-        Button logoutBtn = new Button("تسجيل الخروج");
+        Button logoutBtn = new Button("تسجيل الخروجfcgdgfd");
         logoutBtn.setId("logoutBtn");
         logoutBtn.setPrefWidth(220);
         logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
@@ -157,8 +156,8 @@ public class RightSideBar {
     }
 
     // دالة للحصول على الشريط الجانبي الأيمن
-    public Pane getRightSideBar() {
-        return rightSideBar;
+    public Pane getsmallRightBar() {
+        return smallRightBar;
     }
 
     // دالة لربط الأزرار بالوظائف المناسبة في الجانب الأيسر

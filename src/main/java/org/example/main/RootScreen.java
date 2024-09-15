@@ -20,6 +20,10 @@ public class RootScreen {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
         Pane rightSideBarPane = rightSideBar.getRightSideBar();
 
+        SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
+        Pane smallRighrSideBarPane = smallRightSideBar.getsmallRightBar();
+
+
         // إنشاء كائن من الشاشة الرئيسية
         HomeScreen homeScreen = new HomeScreen();
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
@@ -27,15 +31,15 @@ public class RootScreen {
         // التأكد من أن homePane مرتبط بعناصر أخرى مثل requestServicesPane بشكل صحيح
 
         // إضافة شريط الجانب الأيمن والشاشة الرئيسية إلى اللوحة الرئيسية
-        root.getChildren().addAll(rightSideBarPane, homePane);
+        root.getChildren().addAll(smallRighrSideBarPane, homePane);
 
         // جعل العناصر responsive
-        rightSideBarPane.prefWidthProperty().bind(root.widthProperty().multiply(0.22));
-        rightSideBarPane.prefHeightProperty().bind(root.heightProperty());
+        smallRighrSideBarPane.prefWidthProperty().bind(root.widthProperty().multiply(0.22));
+        smallRighrSideBarPane.prefHeightProperty().bind(root.heightProperty());
 
-        AnchorPane.setRightAnchor(rightSideBarPane, 0.0);
-        AnchorPane.setTopAnchor(rightSideBarPane, 0.0);
-        AnchorPane.setBottomAnchor(rightSideBarPane, 0.0);
+        AnchorPane.setRightAnchor(smallRighrSideBarPane, 0.0);
+        AnchorPane.setTopAnchor(smallRighrSideBarPane, 0.0);
+        AnchorPane.setBottomAnchor(smallRighrSideBarPane, 0.0);
 
         homePane.prefWidthProperty().bind(root.widthProperty().multiply(0.78));
         homePane.prefHeightProperty().bind(root.heightProperty());

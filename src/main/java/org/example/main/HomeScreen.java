@@ -43,7 +43,7 @@ public class HomeScreen {
         homePane.prefHeightProperty().bind(leftSidePane.heightProperty());
         homePane.prefWidthProperty().bind(leftSidePane.widthProperty());
 
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), mainContainer);
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), homePane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
