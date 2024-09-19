@@ -1,64 +1,76 @@
 package org.example.main;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.Objects;
 
 public class RootScreen {
-    // الدالة الرئيسية لبدء تشغيل الواجهة
+    private BorderPane root;
+    private HBox contentArea;
+    private Pane leftSidePane;
+    private Pane rightSideBarPane;
+    private Pane smallRightSideBarPane;
+
     public void start() {
-        // إنشاء لوحة الجانب الأيسر
-        Pane leftSidePane = new Pane();
+        initializeLayout();
+        setupSidebars();
+        setupHomeScreen();
+        setupScene();
+    }
 
-        // إنشاء اللوحة الرئيسية للتطبيق
-        AnchorPane root = new AnchorPane();
+    private void initializeLayout() {
+        root = new BorderPane();
+        contentArea = new HBox();
+        leftSidePane = new Pane();
+        root.setCenter(contentArea);
+    }
 
-        // إنشاء شريط الجانب الأيمن وربطه بلوحة الجانب الأيسر
+    private void setupSidebars() {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
-        Pane rightSideBarPane = rightSideBar.getRightSideBar();
+        rightSideBarPane = rightSideBar.getRightSideBar();
 
         SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
-        Pane smallRighrSideBarPane = smallRightSideBar.getsmallRightBar();
+        smallRightSideBarPane = smallRightSideBar.getsmallRightBar();
 
+        contentArea.getChildren().add(smallRightSideBarPane);
 
-        // إنشاء كائن من الشاشة الرئيسية
+        smallRightSideBar.getMenuButton().setOnAction(e -> toggleSidebar());
+        rightSideBar.getMenuButton().setOnAction(e -> toggleSidebar());
+    }
+
+    private void toggleSidebar() {
+        if (contentArea.getChildren().contains(smallRightSideBarPane)) {
+            contentArea.getChildren().remove(smallRightSideBarPane);
+            contentArea.getChildren().add(rightSideBarPane);
+        } else {
+            contentArea.getChildren().remove(rightSideBarPane);
+            contentArea.getChildren().add(smallRightSideBarPane);
+        }
+    }
+
+    private void setupHomeScreen() {
         HomeScreen homeScreen = new HomeScreen();
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
+        contentArea.getChildren().addFirst(homePane);
 
-        // التأكد من أن homePane مرتبط بعناصر أخرى مثل requestServicesPane بشكل صحيح
+        homePane.prefWidthProperty().bind(contentArea.widthProperty().subtract(smallRightSideBarPane.widthProperty()));
+        homePane.prefHeightProperty().bind(contentArea.heightProperty());
+    }
 
-        // إضافة شريط الجانب الأيمن والشاشة الرئيسية إلى اللوحة الرئيسية
-        root.getChildren().addAll(smallRighrSideBarPane, homePane);
-
-        // جعل العناصر responsive
-        smallRighrSideBarPane.prefWidthProperty().bind(root.widthProperty().multiply(0.22));
-        smallRighrSideBarPane.prefHeightProperty().bind(root.heightProperty());
-
-        AnchorPane.setRightAnchor(smallRighrSideBarPane, 0.0);
-        AnchorPane.setTopAnchor(smallRighrSideBarPane, 0.0);
-        AnchorPane.setBottomAnchor(smallRighrSideBarPane, 0.0);
-
-        homePane.prefWidthProperty().bind(root.widthProperty().multiply(0.78));
-        homePane.prefHeightProperty().bind(root.heightProperty());
-
-        AnchorPane.setLeftAnchor(homePane, 0.0);
-        AnchorPane.setTopAnchor(homePane, 0.0);
-        AnchorPane.setBottomAnchor(homePane, 0.0);
-
-        // إنشاء المشهد وإضافة ملف الأنماط
+    private void setupScene() {
         Scene scene = new Scene(root, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
-        // إعداد النافذة الرئيسية وعرضها
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Jibo");
-        primaryStage.getIcons().add(rightSideBar.loadImage("icon.png"));
+        primaryStage.getIcons().add(new RightSideBar(new Pane()).loadImage("icon.png"));
         primaryStage.setScene(scene);
-        primaryStage.setMinWidth(1100);  // الحد الأدنى لعرض النافذة
-        primaryStage.setMinHeight(700); // الحد الأدنى لارتفاع النافذة
+        primaryStage.setMinWidth(1100);
+        primaryStage.setMinHeight(700);
         primaryStage.show();
     }
 }

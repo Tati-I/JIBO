@@ -111,7 +111,7 @@
 
 /* زر تسجيل الخروج */
 #logoutBtn {
-    -fx-background-color: #da2d2d;
+    -fx-background-color: #4a8fe1;
     -fx-text-fill: white;
     -fx-background-radius: 10;
     -fx-font-size: 14px;
@@ -120,7 +120,7 @@
 }
 
 #logoutBtn:hover {
-    -fx-background-color: #da2d2d;
+    -fx-background-color: #468ee3;
 }
 
 /* عنوان الخدمات الشائعة */

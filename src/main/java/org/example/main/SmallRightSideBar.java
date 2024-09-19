@@ -19,6 +19,11 @@ public class SmallRightSideBar {
     private static final String RESOURCES_PATH = "/Pictures/";
     private Pane smallRightBar;
 
+    private Button menuButton;
+
+    public Button getMenuButton() {
+        return menuButton;
+    }
 
     // المُنشئ الذي يقوم بإنشاء الشريط الجانبي الأيمن
     public SmallRightSideBar(Pane sideBar) {
@@ -37,28 +42,25 @@ public class SmallRightSideBar {
         mainContainer.setPadding(new Insets(0, 10, 20, 10));
         mainContainer.setAlignment(Pos.TOP_CENTER);
 
-        // شعار التطبيق
-        ImageView logoImageView = createLogo();
-        VBox logoContainer = new VBox(logoImageView);
-        logoContainer.setPadding(new Insets(50,0 , 100, 0));
-        logoContainer.setAlignment(Pos.CENTER);
-
         // إنشاء حاوية لأزرار القائمة
         VBox menuContainer = createMenuContainer(leftSidePane);
         menuContainer.setAlignment(Pos.TOP_CENTER);
 
+        mainContainer.prefHeightProperty().bind(mainContainer.heightProperty());
         // زر تسجيل الخروج
         Button logoutBtn = createLogoutButton();
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
-        logoutContainer.setPadding(new Insets(150, 0, 0, 0));
+
+        logoutContainer.prefHeightProperty().bind(mainContainer.heightProperty());
 
         // إضافة جميع العناصر إلى الحاوية الرئيسية
         VBox smallRightBarContainer = menu();
+        smallRightBarContainer.setAlignment(Pos.TOP_CENTER);
 
+        smallRightBarContainer.prefHeightProperty().bind(mainContainer.heightProperty());
 
-
-        mainContainer.getChildren().addAll(smallRightBarContainer,logoContainer,menuContainer, logoutContainer);
+        mainContainer.getChildren().addAll(smallRightBarContainer,menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية responsive
         mainContainer.prefWidthProperty().bind(smallRightBar.widthProperty());
@@ -68,57 +70,39 @@ public class SmallRightSideBar {
         smallRightBar.getChildren().add(mainContainer);
     }
 
-    // دالة إنشاء شعار التطبيق
-    private ImageView createLogo() {
-        Image logo = loadImage("logo1.png");
-        ImageView logoImageView = new ImageView(logo);
-        logoImageView.setFitHeight(120);
-        logoImageView.setFitWidth(120);
-        logoImageView.setPreserveRatio(true);
-        logoImageView.fitWidthProperty().bind(smallRightBar.widthProperty().multiply(0.90));
-        return logoImageView;
-    }
-
-    private VBox menu (){
+    private VBox menu() {
         VBox menuContainer = new VBox();
-        Button menu = createsmallRightBarButton("homeBtn","","menu-bar.png");
-
-        menu.setPrefSize(24,24);
-        menuContainer.getChildren().addAll(menu);
+        menuButton = createsmallRightBarButton("homeBtn","menu-bar.png");
+        menuButton.setPrefSize(24, 24);
+        menuContainer.getChildren().addAll(menuButton);
         menuContainer.setAlignment(Pos.TOP_RIGHT);
-        menu.setOnAction(_ ->{
-            RightSideBar rightSideBar = new RightSideBar(menuContainer);
-            rightSideBar.getRightSideBar();
-        });
         return menuContainer;
     }
 
     // دالة إنشاء حاوية أزرار القائمة
     private VBox createMenuContainer(Pane leftSidePane) {
         VBox menuContainer = new VBox(10);
-        menuContainer.setAlignment(Pos.TOP_CENTER);
 
-        Button homeBtn = createsmallRightBarButton("homeBtn", "الصفحة الرئيسية","home-button.png");
-        Button requestServiceBtn = createsmallRightBarButton("requestServiceBtn", "طلب خدمة","add.png");
-        Button myServicesBtn = createsmallRightBarButton("myServicesBtn", "خدماتي","customer-service.png");
-        Button profileBtn = createsmallRightBarButton("profileBtn", "ملفي الشخصي","user.png");
-        Button settingsBtn = createsmallRightBarButton("settingsBtn", "إعدادات","settings.png");
+        Button homeBtn = createsmallRightBarButton("homeBtn","home-button.png");
+        Button requestServiceBtn = createsmallRightBarButton("requestServiceBtn","add.png");
+        Button myServicesBtn = createsmallRightBarButton("myServicesBtn","customer-service.png");
+        Button profileBtn = createsmallRightBarButton("profileBtn","user.png");
+        Button settingsBtn = createsmallRightBarButton("settingsBtn","settings.png");
 
         menuContainer.getChildren().addAll(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn);
         // ربط الأزرار بالوظائف المناسبة
         requestLeftPanes(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn, leftSidePane);
 
+        menuContainer.setAlignment(Pos.TOP_RIGHT);
         return menuContainer;
     }
 
     // دالة إنشاء زر في الشريط الجانبي الأيمن
-    private Button createsmallRightBarButton(String id, String name,String iconPath) {
+    private Button createsmallRightBarButton(String id ,String iconPath) {
         ImageView imageView = new ImageView(loadImage(iconPath));
-        Button smallRightBarButton = new Button(name,imageView);
+        Button smallRightBarButton = new Button("",imageView);
         smallRightBarButton.setId(id);
-        smallRightBarButton.setPrefWidth(220);
-        smallRightBarButton.setAlignment(Pos.TOP_LEFT);
-        smallRightBarButton.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        smallRightBarButton.setPrefWidth(24);
         smallRightBarButton.setOnMouseEntered(_ -> createUpAnimateButton(smallRightBarButton));
         smallRightBarButton.setOnMouseExited(_ -> createDownAnimateButton(smallRightBarButton));
         return smallRightBarButton;
@@ -126,9 +110,9 @@ public class SmallRightSideBar {
 
     // دالة إنشاء زر تسجيل الخروج
     private Button createLogoutButton() {
-        Button logoutBtn = new Button("تسجيل الخروجfcgdgfd");
+        Button logoutBtn = new Button("-");
         logoutBtn.setId("logoutBtn");
-        logoutBtn.setPrefWidth(220);
+        logoutBtn.setPrefWidth(40);
         logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
         logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
         return logoutBtn;

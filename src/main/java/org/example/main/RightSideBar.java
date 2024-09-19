@@ -19,7 +19,12 @@ public class RightSideBar {
     // تحديد مسار الموارد للصور
     private static final String RESOURCES_PATH = "/Pictures/";
     static Pane rightSideBar;
+    private Button menuButton;
 
+
+    public Button getMenuButton() {
+        return menuButton;
+    }
     // المُنشئ الذي يقوم بإنشاء الشريط الجانبي الأيمن
     public RightSideBar(Pane leftSideBar) {
         createRightSideBar(leftSideBar);
@@ -28,6 +33,7 @@ public class RightSideBar {
     // دالة إنشاء الشريط الجانبي الأيمن
     private void createRightSideBar(Pane leftSidePane) {
         rightSideBar = new Pane();
+        rightSideBar.setPrefWidth(400);
         rightSideBar.setId("rightSideBar");
 
         // إنشاء حاوية للعناصر
@@ -38,30 +44,33 @@ public class RightSideBar {
         // شعار التطبيق
         ImageView logoImageView = createLogo();
         VBox logoContainer = new VBox(logoImageView);
-        logoContainer.setPadding(new Insets(50,0 , 100, 0));
-        logoContainer.setAlignment(Pos.CENTER);
+        logoContainer.setAlignment(Pos.TOP_CENTER);
+
+        logoContainer.prefHeightProperty().bind(mainContainer.heightProperty());
 
         // إنشاء حاوية لأزرار القائمة
         VBox menuContainer = createMenuContainer(leftSidePane);
         menuContainer.setAlignment(Pos.TOP_CENTER);
 
+        mainContainer.prefHeightProperty().bind(mainContainer.heightProperty());
         // زر تسجيل الخروج
         Button logoutBtn = createLogoutButton();
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
-        logoutContainer.setPadding(new Insets(150, 0, 0, 0));
+
+        logoutContainer.prefHeightProperty().bind(mainContainer.heightProperty());
 
         // إضافة جميع العناصر إلى الحاوية الرئيسية
         VBox smallRightBarContainer = menu();
+        smallRightBarContainer.setAlignment(Pos.TOP_RIGHT);
 
-
+        smallRightBarContainer.prefHeightProperty().bind(mainContainer.heightProperty());
 
         mainContainer.getChildren().addAll(smallRightBarContainer,logoContainer, menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية responsive
         mainContainer.prefWidthProperty().bind(rightSideBar.widthProperty());
         mainContainer.prefHeightProperty().bind(rightSideBar.heightProperty());
-
         // إضافة الحاوية الرئيسية إلى الشريط الجانبي الأيمن
         rightSideBar.getChildren().add(mainContainer);
     }
@@ -73,24 +82,16 @@ public class RightSideBar {
         logoImageView.setFitHeight(120);
         logoImageView.setFitWidth(120);
         logoImageView.setPreserveRatio(true);
-        logoImageView.fitWidthProperty().bind(rightSideBar.widthProperty().multiply(0.90));
         return logoImageView;
     }
 
-    private VBox menu (){
+    private VBox menu() {
         VBox menuContainer = new VBox();
-        Button smallRightBar = createRightSideBarButton("homeBtn","","menu-bar.png");
+        menuButton = createRightSideBarButton("homeBtn","","menu-bar.png");
 
-        smallRightBar.setPrefSize(24,24);
-        menuContainer.getChildren().addAll(smallRightBar);
-        menuContainer.setAlignment(Pos.TOP_RIGHT);
-        smallRightBar.setOnAction(_ ->{
-           // rightSideBar.getChildren().clear();
-            SmallRightSideBar smallRightSideBar = new SmallRightSideBar(rightSideBar);
-            smallRightSideBar.getsmallRightBar();
-            //rightSideBar.getChildren().clear();
-
-        });
+        menuButton.setStyle("-fx-background-color: transparent;");
+        menuButton.setPrefSize(24, 24);
+        menuContainer.getChildren().addAll(menuButton);
         return menuContainer;
     }
 
