@@ -121,7 +121,7 @@ public class SmallRightSideBar {
 
     // دالة إنشاء حركة تكبير الزر عند تمرير الماوس
     public static void createUpAnimateButton(Button button) {
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), button);
+        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(199), button);
         scaleUp.setToX(1.1);
         scaleUp.setToY(1.1);
         scaleUp.play();
