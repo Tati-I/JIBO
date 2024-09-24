@@ -130,7 +130,7 @@ public class RightSideBar {
     private Button createLogoutButton() {
         Button logoutBtn = new Button("تسجيل الخروج");
         logoutBtn.setId("logoutBtn");
-        logoutBtn.setPrefWidth(220);
+        logoutBtn.setPrefWidth(200);
         logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
         logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
         return logoutBtn;

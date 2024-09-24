@@ -81,7 +81,7 @@ public class HomeScreen {
                 {"طلب خدمة", "request_services.png"},
                 {"خدماتي", "services.png"},
                 {"الملف الشخصي", "personal.png"},
-                {"الإعدادات", "settings.png"}
+                {"الإعدادات", "setting.png"}
         };
 
         for (int i = 0; i < actions.length; i++) {
@@ -143,9 +143,10 @@ public class HomeScreen {
         String[] services = {"كهربائي", "سبّاك", "خياط", "نجار"};
         for (String service : services) {
             Button serviceButton = new Button(service);
-            serviceButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 20;");
-            serviceButton.setOnMouseEntered(_ -> serviceButton.setStyle("-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 20; -fx-cursor: hand;"));
-            serviceButton.setOnMouseExited(_ -> serviceButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20; -fx-background-radius: 20;"));
+            serviceButton.setId("favoriteServiceBtn");
+            serviceButton.setOnMouseEntered(_-> SmallRightSideBar.createUpAnimateButton(serviceButton) );
+            serviceButton.setOnMouseExited(_-> SmallRightSideBar.createDownAnimateButton(serviceButton) );
+
             servicesBox.getChildren().add(serviceButton);
         }
 

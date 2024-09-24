@@ -78,7 +78,7 @@ public class SignUpPage {
         nameField.setStyle(personUiStyle);
 
         // Name icon
-        Image nameIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/user.png")).toExternalForm());
+        Image nameIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/name.png")).toExternalForm());
         ImageView nameIconView = new ImageView(nameIcon);
         nameIconView.setFitWidth(20);
         nameIconView.setFitHeight(20);

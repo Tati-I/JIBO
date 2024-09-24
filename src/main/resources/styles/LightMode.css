@@ -74,7 +74,6 @@
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-cursor: hand;
-    -fx-transition: all 0.3s;
 }
 
 
@@ -111,16 +110,17 @@
 
 /* زر تسجيل الخروج */
 #logoutBtn {
-    -fx-background-color: #4a8fe1;
+    -fx-background-color: transparent;
     -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 15;
     -fx-background-radius: 10;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
 }
 
 #logoutBtn:hover {
-    -fx-background-color: #468ee3;
+    -fx-background-color: #dc334a;
 }
 
 /* عنوان الخدمات الشائعة */
@@ -284,4 +284,18 @@
     -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-padding: 25 10;
+}
+#favoriteServiceBtn{
+    -fx-background-color: rgb(24, 131, 213);
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+#favoriteServiceBtn:hover {
+    -fx-background-color: #0e59ab;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-background-radius: 10;
+
+
 }

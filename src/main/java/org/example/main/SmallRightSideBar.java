@@ -48,7 +48,7 @@ public class SmallRightSideBar {
 
         mainContainer.prefHeightProperty().bind(mainContainer.heightProperty());
         // زر تسجيل الخروج
-        Button logoutBtn = createLogoutButton();
+        Button logoutBtn = createLogoutButton("","logout.png");
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
 
@@ -109,17 +109,18 @@ public class SmallRightSideBar {
     }
 
     // دالة إنشاء زر تسجيل الخروج
-    private Button createLogoutButton() {
-        Button logoutBtn = new Button("-");
+    private Button createLogoutButton(String id,String iconPath) {
+        ImageView imageView = new ImageView(loadImage(iconPath));
+        Button logoutBtn = new Button("",imageView);
         logoutBtn.setId("logoutBtn");
-        logoutBtn.setPrefWidth(40);
+        logoutBtn.setPrefWidth(24);
         logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
         logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
         return logoutBtn;
     }
 
     // دالة إنشاء حركة تكبير الزر عند تمرير الماوس
-    private void createUpAnimateButton(Button button) {
+    public static void createUpAnimateButton(Button button) {
         ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), button);
         scaleUp.setToX(1.1);
         scaleUp.setToY(1.1);
@@ -127,7 +128,7 @@ public class SmallRightSideBar {
     }
 
     // دالة إنشاء حركة تصغير الزر عند إزالة الماوس
-    private void createDownAnimateButton(Button button) {
+    public static void createDownAnimateButton(Button button) {
         ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), button);
         scaleDown.setToX(1);
         scaleDown.setToY(1);
