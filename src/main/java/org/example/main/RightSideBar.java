@@ -167,7 +167,7 @@ public class RightSideBar {
         // مصفوفة تحتوي جميع الأزرار
         homeBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            homeBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+            homeBtn.setStyle("-fx-background-color: rgba(255,255,255,0.12);-fx-text-fill: white");
             homeBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true); // تفعيل حالة التحديد
 
 
@@ -177,7 +177,7 @@ public class RightSideBar {
 
         requestServiceBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            requestServiceBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+            requestServiceBtn.setStyle("-fx-background-color: rgba(255,255,255,0.12);-fx-text-fill: white");
             requestServiceBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
 
             RequestServicesPane requestServicesPane = new RequestServicesPane();
@@ -186,7 +186,7 @@ public class RightSideBar {
 
         myServicesBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            myServicesBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+            myServicesBtn.setStyle("-fx-background-color: rgba(255,255,255,0.12);-fx-text-fill: white");
             myServicesBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
 
             MyServices myServices = new MyServices();
@@ -197,7 +197,7 @@ public class RightSideBar {
 
         profileBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            profileBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+            profileBtn.setStyle("-fx-background-color: rgba(255,255,255,0.12);-fx-text-fill: white");
             profileBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
             MyProfile myProfile = new MyProfile();
             myProfile.showMyProfilePage(leftSidePane);
@@ -207,7 +207,7 @@ public class RightSideBar {
 
         settingsBtn.setOnMouseClicked(_ -> {
             resetButtonStyles(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn); // إعادة ضبط الأنماط
-            settingsBtn.setStyle("-fx-background-color: #fff;-fx-text-fill: black");
+            settingsBtn.setStyle("-fx-background-color: rgba(255,255,255,0.12);-fx-text-fill: white");
             settingsBtn.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
             SettingPage settingPage = new SettingPage();
             settingPage.SettingPane(leftSidePane);
