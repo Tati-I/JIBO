@@ -10,39 +10,56 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import java.util.Objects;
 
 public class HomeScreen {
+    public VBox rightLayout;
+
     public Pane RequestHomePane(Pane leftSidePane) {
         leftSidePane.getChildren().clear();
 
         Pane homePane = new Pane();
         homePane.setId("homePane");
 
-        VBox mainContainer = new VBox(20);
-        mainContainer.setAlignment(Pos.TOP_CENTER);
-        mainContainer.setPadding(new Insets(30, 50, 30, 50));
-        mainContainer.prefWidthProperty().bind(homePane.widthProperty());
-        mainContainer.prefHeightProperty().bind(homePane.heightProperty());
+        rightLayout = new VBox();
+        rightLayout.setAlignment(Pos.CENTER);
 
-        // text
-        HBox header = createHeader();
-
-        // Quick Actions
-        GridPane quickActions = createQuickActions();
+        // Bind width and height of rightLayout to leftSidePane
+        rightLayout.prefWidthProperty().bind(leftSidePane.widthProperty());
+        rightLayout.prefHeightProperty().bind(leftSidePane.heightProperty());
 
         // Featured Services
         VBox featuredServices = createFeaturedServices();
+        rightLayout.getChildren().addAll(featuredServices);
 
-        mainContainer.getChildren().addAll(header, quickActions, featuredServices);
-        homePane.getChildren().add(mainContainer);
-        homePane.prefHeightProperty().bind(leftSidePane.heightProperty());
-        homePane.prefWidthProperty().bind(leftSidePane.widthProperty());
+        // Text
+        VBox leftHead = leftLayoutElements();
 
+        VBox leftLayout = new VBox();
+        leftLayout.getChildren().addAll(leftHead);
+        leftLayout.prefHeightProperty().bind(leftSidePane.heightProperty());
+        leftLayout.prefWidthProperty().bind(leftSidePane.widthProperty());
+
+        // Create HBox and add layouts
+        HBox layouts = new HBox(20);
+        layouts.getChildren().addAll(leftLayout, rightLayout);
+        layouts.prefHeightProperty().bind(leftSidePane.heightProperty());
+        layouts.prefWidthProperty().bind(leftSidePane.widthProperty());
+
+        // Allow leftLayout to take space according to its content
+        HBox.setHgrow(leftLayout, Priority.ALWAYS);
+        HBox.setHgrow(rightLayout, Priority.ALWAYS);
+
+        // Add layouts to homePane
+        homePane.getChildren().add(layouts);
+
+        // Add fade transition
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), homePane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
@@ -52,105 +69,133 @@ public class HomeScreen {
         return leftSidePane;
     }
 
+    private VBox leftLayoutElements() {
+        VBox mainContainer = new VBox(20);
+        mainContainer.setPadding(new Insets(30, 0, 10, 50));
+        mainContainer.setStyle("-fx-background-color: transparent;");
+
+        HBox header = createHeader();
+        header.setPadding(new Insets(0, 0, 35, 0));
+
+        Label title = new Label();
+        title.setText("Your Work Guide\n");
+        title.setStyle("-fx-text-fill: Black;-fx-font-weight: bold;-fx-font-size:20");
+
+        Label title1 = new Label();
+        title1.setText("Explore\nmust-see\nservices");
+        title1.setStyle("-fx-text-fill: Black;-fx-font-weight: bold;-fx-font-size:60;-fx-font-family: Arial");
+
+        Label title2 = new Label("Escape to Work : Unlock a World of\nservices");
+        title2.setStyle("-fx-text-fill: #373737;-fx-font-weight: bold;-fx-font-size: 14");
+
+        VBox titles = new VBox(20);
+        titles.getChildren().addAll(title, title1, title2);
+        titles.setAlignment(Pos.TOP_LEFT);
+
+        mainContainer.getChildren().addAll(header, titles);
+        return mainContainer;
+    }
+
     private HBox createHeader() {
-        HBox header = new HBox(10);
-        header.setAlignment(Pos.CENTER);
+        HBox header = new HBox();
+        header.setAlignment(Pos.TOP_LEFT);
 
-
-        Label welcomeLabel = new Label("مرحباً بك في Jibo");
+        Label welcomeLabel = new Label("Jibo");
+        welcomeLabel.setPadding(new Insets(12, 0, 0, 0));
         welcomeLabel.setId("welcomeLabel");
-        welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 30));
 
         ImageView logoView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logoBlack.png"))));
-
-
-        logoView.setFitHeight(75);
-        logoView.setFitWidth(75);
+        logoView.setFitHeight(62);
+        logoView.setFitWidth(62);
 
         header.getChildren().addAll(logoView, welcomeLabel);
         return header;
     }
 
-    private GridPane createQuickActions() {
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(20);
-        grid.setAlignment(Pos.CENTER);
-
-        String[][] actions = {
-                {"طلب خدمة", "request_services.png"},
-                {"خدماتي", "services.png"},
-                {"الملف الشخصي", "personal.png"},
-                {"الإعدادات", "setting.png"}
-        };
-
-        for (int i = 0; i < actions.length; i++) {
-            VBox actionBox = createActionBox(actions[i][0], actions[i][1]);
-            grid.add(actionBox, i % 2, i / 2);
-        }
-
-        return grid;
-    }
-
-    private VBox createActionBox(String title, String iconName) {
-        VBox box = new VBox(10);
-        box.setAlignment(Pos.CENTER);
-        box.setPadding(new Insets(60));
-        box.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-        box.setPrefSize(200, 150);
-
-        ImageView icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/" + iconName))));
-        icon.setFitHeight(50);
-        icon.setFitWidth(50);
-
-        Label label = new Label(title);
-        label.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-
-        box.getChildren().addAll(icon, label);
-
-        DropShadow shadow = new DropShadow();
-        shadow.setRadius(10.0);
-        shadow.setOffsetX(3.0);
-        shadow.setOffsetY(3.0);
-        shadow.setColor(Color.color(0.4, 0.4, 0.4, 0.2));
-        box.setEffect(shadow);
-
-        box.setOnMouseEntered(_ -> {
-            box.setStyle("-fx-background-color: #f8f8f8; -fx-background-radius: 15; -fx-cursor: hand;");
-            box.setScaleX(1.05);
-            box.setScaleY(1.05);
-        });
-        box.setOnMouseExited(_ -> {
-            box.setStyle("-fx-background-color: white; -fx-background-radius: 15;");
-            box.setScaleX(1);
-            box.setScaleY(1);
-        });
-
-        return box;
-    }
-
     private VBox createFeaturedServices() {
         VBox featuredBox = new VBox(20);
         featuredBox.setAlignment(Pos.CENTER);
+        featuredBox.setPadding(new Insets(30, 50, 10, 0));
 
-        Label featuredLabel = new Label("الخدمات المميزة");
-        featuredLabel.setStyle("-fx-font-size: 20");
-        featuredLabel.setId("featuredLabel");
+        // Large square
+        Pane largeSquare = new Pane();
+        largeSquare.setPrefSize(480, 400);
+        largeSquare.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc;-fx-background-radius: 15; -fx-border-radius: 15;");
+        largeSquare.prefWidthProperty().bind(featuredBox.widthProperty());
 
-        HBox servicesBox = new HBox(20);
-        servicesBox.setAlignment(Pos.CENTER);
+        ImageView largeImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/wwa.jpg"))));
+        largeImageView.fitWidthProperty().bind(largeSquare.widthProperty());
+        largeImageView.fitHeightProperty().bind(largeSquare.heightProperty());
+        largeImageView.setOpacity(0.9);
 
-        String[] services = {"كهربائي", "سبّاك", "خياط", "نجار"};
-        for (String service : services) {
-            Button serviceButton = new Button(service);
-            serviceButton.setId("favoriteServiceBtn");
-            serviceButton.setOnMouseEntered(_-> SmallRightSideBar.createUpAnimateButton(serviceButton) );
-            serviceButton.setOnMouseExited(_-> SmallRightSideBar.createDownAnimateButton(serviceButton) );
+        Rectangle clip = new Rectangle();
+        clip.setWidth(largeImageView.getFitWidth());
+        clip.setHeight(largeImageView.getFitHeight());
+        clip.setArcWidth(30); // Adjust this value to control the roundness of the corners
+        clip.setArcHeight(30);
 
-            servicesBox.getChildren().add(serviceButton);
+// Bind the clip size to the ImageView size
+        clip.widthProperty().bind(largeImageView.fitWidthProperty());
+        clip.heightProperty().bind(largeImageView.fitHeightProperty());
+
+// Set the clip to the ImageView
+        largeImageView.setClip(clip);
+
+        // Create a button
+        Button discoverServicesButton = new Button("اكتشف الخدمات");
+        discoverServicesButton.setStyle("-fx-background-color: #e8edf0; -fx-text-fill: #000000;-fx-font-weight: bold; -fx-font-size: 16;-fx-background-radius: 15; -fx-padding: 10 20;");
+        HBox.setHgrow(discoverServicesButton, Priority.ALWAYS);
+
+        // Create a label for service request time
+        Label serviceTimeLabel = new Label("الوقت لطلب\nخدمة بشكل سهل\nوأحترافي");
+        serviceTimeLabel.setStyle("-fx-font-size: 35; -fx-text-fill: black;-fx-font-family: Arial;-fx-font-weight: bold");
+        serviceTimeLabel.setTextAlignment(TextAlignment.RIGHT);
+
+        // Position the button and label in the large square
+        VBox largeSquareContent = new VBox(155);
+        largeSquareContent.setAlignment(Pos.TOP_RIGHT);
+        largeSquareContent.setPadding(new Insets(20, 20, 10, 20)); // Add padding to position the button
+        largeSquareContent.getChildren().addAll(serviceTimeLabel, discoverServicesButton);
+        largeSquareContent.prefWidthProperty().bind(largeSquare.widthProperty());
+        largeSquare.getChildren().addAll(largeImageView,largeSquareContent);
+
+        // Top small squares
+        HBox smallSquaresBoxTop = new HBox(20);
+        smallSquaresBoxTop.setAlignment(Pos.CENTER);
+        for (int i = 1; i <= 2; i++) {
+            Pane smallSquare = createSmallSquare("مربع " + i);
+            smallSquaresBoxTop.getChildren().add(smallSquare);
         }
 
-        featuredBox.getChildren().addAll(featuredLabel, servicesBox);
+        VBox smallSquaresVBox = new VBox(10, smallSquaresBoxTop);
+
+        // Bottom small squares
+        HBox smallSquaresBoxBottom = new HBox(20);
+        smallSquaresBoxBottom.setAlignment(Pos.CENTER);
+        for (int i = 3; i <= 4; i++) {
+            Pane smallSquare = createSmallSquare("مربع " + i);
+            smallSquaresBoxBottom.getChildren().add(smallSquare);
+        }
+
+        VBox bottomSquaresVBox = new VBox(10, smallSquaresBoxBottom);
+
+        featuredBox.getChildren().addAll(largeSquare, smallSquaresVBox, bottomSquaresVBox);
+
         return featuredBox;
+    }
+
+
+    private Pane createSmallSquare(String labelText) {
+        Pane smallSquare = new Pane();
+        smallSquare.setPrefSize(240, 200);
+        smallSquare.setStyle("-fx-background-color: #d0d0d0; -fx-border-color: #aaaaaa; -fx-border-radius: 10;");
+
+        Label smallLabel = new Label(labelText);
+        smallLabel.setStyle("-fx-font-size: 16; -fx-text-fill: black;");
+        smallLabel.setAlignment(Pos.CENTER);
+        smallLabel.setPrefSize(240, 200);
+        smallSquare.getChildren().add(smallLabel);
+        return smallSquare;
     }
 }

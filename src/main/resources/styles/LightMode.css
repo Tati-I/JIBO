@@ -141,36 +141,10 @@
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 0);
-    -fx-padding: 15;
+    -fx-padding: 25 20 25 20;
 }
 
-#electricPane {
-    -fx-background-color: rgba(74, 144, 226, 0.13);
-}
 
-#waterPane {
-    -fx-background-color: rgba(41, 182, 246, 0.16);
-}
-
-#tailorPane {
-    -fx-background-color: rgba(255, 192, 203, 0.29);
-}
-
-#woodmenPane {
-    -fx-background-color: rgba(255, 235, 59, 0.18);
-}
-
-#cleaningPane {
-    -fx-background-color: rgba(74, 144, 226, 0.2);
-}
-
-#securityPane {
-    -fx-background-color: rgba(41, 182, 246, 0.15);
-}
-
-#applianceRepairPane {
-    -fx-background-color: rgba(255, 192, 203, 0.21);
-}
 
 #titleLabel {
     -fx-font-size: 18px;
@@ -229,6 +203,7 @@
 }
 #servicesButton {
     -fx-background-color: rgba(122, 122, 122, 0.6);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -237,6 +212,7 @@
 
 #myLocationsButton {
     -fx-background-color: rgba(60,189,130,0.64);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -244,6 +220,7 @@
 
 #categoryButton {
     -fx-background-color: rgba(235, 135, 0, 0.56);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -251,6 +228,7 @@
 
 #favoriteButton {
     -fx-background-color: rgba(0, 22, 255, 0.44);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
@@ -262,24 +240,28 @@
 /* Button hover effects */
 #favoriteButton:hover {
     -fx-background-color: rgba(19, 38, 216, 0.56);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
 #categoryButton:hover{
     -fx-background-color: rgba(235, 135, 0, 0.64);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
 #myLocationsButton:hover{
     -fx-background-color: rgba(60, 189, 130, 0.72);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
 #servicesButton:hover{
     -fx-background-color: rgba(122, 122, 122, 0.66);
+    -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
