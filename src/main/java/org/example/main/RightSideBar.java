@@ -66,7 +66,7 @@ public class RightSideBar {
 
         smallRightBarContainer.prefHeightProperty().bind(mainContainer.heightProperty());
 
-        mainContainer.getChildren().addAll(smallRightBarContainer,logoContainer, menuContainer, logoutContainer);
+        mainContainer.getChildren().addAll(smallRightBarContainer, menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية responsive
         mainContainer.prefWidthProperty().bind(rightSideBar.widthProperty());

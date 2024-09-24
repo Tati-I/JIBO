@@ -1,7 +1,6 @@
 package login.pages;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -59,12 +58,13 @@ public class LoginPage extends Application {
 
         pane = new Pane();
         createLoginView();
-        HBox rightAndLeft = new HBox();
+        HBox rightAndLeft = new HBox(50);
         rightAndLeft.setAlignment(Pos.CENTER);
         rightAndLeft.getChildren().addAll(leftView(),pane);
+        rightAndLeft.prefWidthProperty().bind(mainContainer.widthProperty());
+        rightAndLeft.prefHeightProperty().bind(mainContainer.heightProperty());
 
         mainContainer.getChildren().addAll(rightAndLeft);
-
         Scene scene = new Scene(mainContainer, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
@@ -81,6 +81,7 @@ public class LoginPage extends Application {
 
         Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
         ImageView logoView = new ImageView(logo);
+
 
         ImageView clockView = new ImageView(rightSideBar.loadImage("Clock.png"));
         clockView.setFitHeight(28);
@@ -121,9 +122,8 @@ public class LoginPage extends Application {
         textsvbox.getChildren().addAll(mainText,secondaryText1, secondaryText2, secondaryText3, secondaryText4);
 
         VBox mainVbox = new VBox(30);
-        mainVbox.setAlignment(Pos.CENTER);
         mainVbox.getChildren().addAll(logoView,textsvbox);
-        mainVbox.setPadding(new Insets(40,15,15,100));
+        mainVbox.setAlignment(Pos.CENTER_LEFT);
         return mainVbox;
     }
 
