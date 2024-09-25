@@ -69,8 +69,8 @@ public class RootScreen {
         primaryStage.setTitle("Jibo");
         primaryStage.getIcons().add(new RightSideBar(new Pane()).loadImage("icon.png"));
         primaryStage.setScene(scene);
-        primaryStage.setMinWidth(1100);
         primaryStage.setMinHeight(700);
+        primaryStage.setMinWidth(820);
         primaryStage.show();
     }
 }

@@ -42,6 +42,8 @@
 
 .radio-button:hover {
     -fx-background-color: #d0e1f9;
+    -fx-radius: 10px;
+
 }
 
 .radio-button .radio {
@@ -56,6 +58,8 @@
     -fx-background-color: #0056b3;
     -fx-border-color: #4a90e2;
     -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+
 }
 
 /* الشريط الجانبي الأيمن */
@@ -70,6 +74,7 @@
     -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-font-size: 16px;
+    -fx-font-weight: bold;
     -fx-padding: 15 15 15 15;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
@@ -95,9 +100,10 @@
 
 /* الأنماط العامة للأزرار */
 #nowService, #previousService, #myRate {
-    -fx-background-color: rgba(173, 209, 245, 0.2);
-    -fx-text-fill: #003366;
-    -fx-font-size: 14px;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
     -fx-background-radius: 5px;
     -fx-cursor: hand;
     -fx-padding: 10 0 10 0;
@@ -105,7 +111,7 @@
 
 /* تأثير hover */
 #nowService:hover, #previousService:hover, #myRate:hover {
-    -fx-background-color: #d0d2f9;
+    -fx-background-color: rgba(80, 80, 80, 0.5);
 }
 
 /* زر تسجيل الخروج */
@@ -127,7 +133,7 @@
 #trendService, #shortCuts {
     -fx-font-size: 28px;
     -fx-font-weight: bold;
-    -fx-text-fill: #003366;
+    -fx-text-fill: black;
 }
 
 /* الخط الفاصل */
@@ -160,17 +166,17 @@
 
 /* زر الطلب */
 #requestButton {
-    -fx-background-color: #4a90e2;
-    -fx-text-fill: white;
+    -fx-background-color: #fabd4b;
+    -fx-text-fill: black;
     -fx-font-weight: bold;
     -fx-background-radius: 20;
-    -fx-font-size: 16px;
+    -fx-font-size: 20px;
     -fx-padding: 35 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
 }
 
 #requestButton:hover {
-    -fx-background-color: #003366;
+    -fx-background-color: #006605;
 }
 
 /* معلومات إضافية */
@@ -193,7 +199,7 @@
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #4a90e2;
+    -fx-background-color: linear-gradient(#5c5c5c, #2e2e2e);
     -fx-background-radius: 5;
 }
 
@@ -219,7 +225,7 @@
 }
 
 #categoryButton {
-    -fx-background-color: rgba(235, 135, 0, 0.56);
+    -fx-background-color: rgb(250, 189, 75);
     -fx-background-radius: 20px;
     -fx-text-fill: white;
     -fx-font-size: 20px;
