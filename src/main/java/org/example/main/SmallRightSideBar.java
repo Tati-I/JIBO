@@ -40,13 +40,13 @@ public class SmallRightSideBar {
         // إنشاء حاوية للعناصر
         VBox mainContainer = new VBox();
         mainContainer.setPadding(new Insets(0, 10, 20, 10));
-        mainContainer.setAlignment(Pos.TOP_CENTER);
+        mainContainer.setAlignment(Pos.CENTER);
 
         // إنشاء حاوية لأزرار القائمة
         VBox menuContainer = createMenuContainer(leftSidePane);
-        menuContainer.setAlignment(Pos.TOP_CENTER);
+        menuContainer.setAlignment(Pos.CENTER);
+        menuContainer.prefWidthProperty().bind(mainContainer.widthProperty());
 
-        mainContainer.prefHeightProperty().bind(mainContainer.heightProperty());
         // زر تسجيل الخروج
         Button logoutBtn = createLogoutButton("","logout.png");
         VBox logoutContainer = new VBox(logoutBtn);
@@ -73,7 +73,6 @@ public class SmallRightSideBar {
     private VBox menu() {
         VBox menuContainer = new VBox();
         menuButton = createsmallRightBarButton("homeBtn","menu-bar.png");
-        menuButton.setPrefSize(24, 24);
         menuContainer.getChildren().addAll(menuButton);
         menuContainer.setAlignment(Pos.TOP_RIGHT);
         return menuContainer;
@@ -93,7 +92,7 @@ public class SmallRightSideBar {
         // ربط الأزرار بالوظائف المناسبة
         requestLeftPanes(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn, leftSidePane);
 
-        menuContainer.setAlignment(Pos.TOP_RIGHT);
+        menuContainer.setAlignment(Pos.CENTER);
         return menuContainer;
     }
 
@@ -102,7 +101,6 @@ public class SmallRightSideBar {
         ImageView imageView = new ImageView(loadImage(iconPath));
         Button smallRightBarButton = new Button("",imageView);
         smallRightBarButton.setId(id);
-        smallRightBarButton.setPrefWidth(24);
         smallRightBarButton.setOnMouseEntered(_ -> createUpAnimateButton(smallRightBarButton));
         smallRightBarButton.setOnMouseExited(_ -> createDownAnimateButton(smallRightBarButton));
         return smallRightBarButton;
@@ -113,7 +111,6 @@ public class SmallRightSideBar {
         ImageView imageView = new ImageView(loadImage(iconPath));
         Button logoutBtn = new Button("",imageView);
         logoutBtn.setId("logoutBtn");
-        logoutBtn.setPrefWidth(24);
         logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
         logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
         return logoutBtn;
