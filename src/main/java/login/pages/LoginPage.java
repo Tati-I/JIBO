@@ -20,7 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
-import org.example.main.RightSideBar;
+import bar.right.RightSideBar;
 import org.example.main.RootScreen;
 
 import java.util.Objects;
@@ -270,18 +270,10 @@ public class LoginPage extends Application {
 
         Login.setOnMouseClicked(_ -> {
 
-            String adminEmail = "admin";
-            String adminPassword = "admin";
             String email = emailField.getText();
             String password = passwordField.getText();
             //
             /*
-            if (email.equals(adminEmail) && password.equals(adminPassword)) {
-                primaryStage.close();
-                PersonalHomePage homePage = new PersonalHomePage();
-                homePage.start(new Stage());
-            }
-
 
                 if (EmailCheck.isValidEmail(email)) {
                     errorLabelEmail.setVisible(false);

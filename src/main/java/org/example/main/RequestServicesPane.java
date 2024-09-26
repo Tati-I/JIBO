@@ -1,5 +1,6 @@
 package org.example.main;
 
+import bar.right.RightSideBar;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;

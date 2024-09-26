@@ -288,6 +288,10 @@
 
 }
 
+#mainContainer{
+    -fx-padding: 10 0 10 0 ;
+}
+
 /* MyProfile.css */
 
 #myProfilePane {
@@ -318,7 +322,6 @@
 .edit-button:hover {
     -fx-background-color: transparent;
     -fx-text-fill: #000000;
-    -fx-transform: scale(1.05);
     -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.45), 15, 0.4, 0, 7);
 }
 
@@ -326,7 +329,6 @@
     -fx-background-color: transparent;
     -fx-text-fill: #000000;
     -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.7), 15, 0.6, 0, 5);
-    -fx-transform: scale(0.98);
 }
 
 

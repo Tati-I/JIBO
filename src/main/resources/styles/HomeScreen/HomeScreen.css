@@ -1,10 +1,18 @@
+* {
+    -fx-font-family: 'Arial', sans-serif;
+}
+#leftLayout{
+    -fx-padding: 10 0 10 20;
+}
 #leftContainer {
     -fx-background-color: rgba(128, 128, 128, 0.08);
-    -fx-background-radius: 0 10 10 0;
+    -fx-background-radius: 15 15 0 0;
     -fx-padding: 30 30 10 50;
+
 }
-#title,#title1,#title2,#welcomeLabel,#discoverServicesButton,#serviceTimeLabel,#smallLabel,#smallLabel1,#recentTransactionsButton,#recentTransactionsButton1,#yearLabel,#locationLabel,#transactionsLabel,#transactionsCount{
-    -fx-text-fill: Black;-fx-font-weight: bold;-fx-font-family : Arial;
+#title, #title1, #title2, #welcomeLabel, #discoverServicesButton, #serviceTimeLabel, #smallLabel, #smallLabel1, #recentTransactionsButton, #recentTransactionsButton1, #yearLabel, #locationLabel, #transactionsLabel, #transactionsCount {
+    -fx-text-fill: Black;
+    -fx-font-weight: bold;
 }
 #title{
    -fx-font-size: 20px
@@ -19,7 +27,7 @@
     -fx-font-size: 30px;-fx-padding: 12 0 0 0;
 }
 #featuredBox{
-    -fx-padding: 30 50 10 30;
+    -fx-padding: 10 20 10 30;
 }
 #largeSquare{
     -fx-background-color: #f0f0f0;-fx-background-radius: 15;
@@ -30,12 +38,18 @@
     -fx-font-size: 16;
     -fx-padding: 10 20;
     -fx-cursor: hand;
+    -fx-transition: -fx-background-color 0.3s ease;
+
 }
 #discoverServicesButton:hover{
     -fx-background-color: white;
 }
+#discoverServicesButton:pressed {
+    -fx-translate-y: 1px;
+}
 #serviceTimeLabel{
     -fx-font-size: 35; -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 2, 0, 0, 1);
 }
 #largeSquareContent{
     -fx-padding: 20;
@@ -55,10 +69,15 @@
 }
 #smallLabel1{
     -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 2, 0, 0, 1);
 }
 #discoverButton,#discoverButton1{
     -fx-background-radius: 50%;
     -fx-cursor: hand;
+    -fx-transition: -fx-background-color 0.3s ease;
+}
+#discoverButton:pressed, #discoverButton1:pressed {
+    -fx-translate-y: 1px;
 }
 #discoverButton:hover{
     -fx-background-color: #e67819;
@@ -84,6 +103,9 @@
 #recentTransactionsButton:hover,#recentTransactionsButton1:hover{
     -fx-background-color: rgba(0, 0, 0, 0.24);
 }
+#recentTransactionsButton:pressed, #recentTransactionsButton1:pressed {
+    -fx-translate-y: 1px;
+}
 #recentTransactionsButton1{
     -fx-background-color: transparent;-fx-background-radius: 15px;
     -fx-border-color: #ffffff;-fx-border-width: 2px;-fx-border-radius: 15px;
@@ -97,6 +119,9 @@
 #locationLabel{
     -fx-font-size: 20px;
     -fx-text-fill: white;
+}
+#locationButton1:pressed {
+    -fx-translate-y: 1px;
 }
 #transactionsLabel{
     -fx-font-size: 16px;
@@ -115,9 +140,25 @@
 }
 #leftSquare{
     -fx-background-color: #c5c5c5;
+    -fx-background-radius: 0 0 15 15;
 }
 #search{
     -fx-background-radius: 15px;
     -fx-border-color: gray;
     -fx-prompt-text-fill: gray;
+}
+#search:focused {
+    -fx-border-color: #272727;
+    -fx-border-width: 2px;
+}
+
+#smallSquare:hover ImageView, #smallSquare3:hover ImageView, #smallSquare4:hover ImageView {
+    -fx-opacity: 0.8;
+}
+
+#profile{
+    -fx-padding: 25;
+    -fx-background-radius: 15px;-fx-background-color: #e0e5e8;
+    -fx-border-color: black;-fx-border-radius: 15px;
+    -fx-cursor: hand;
 }

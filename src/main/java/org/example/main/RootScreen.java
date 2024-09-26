@@ -1,5 +1,7 @@
 package org.example.main;
 
+import bar.right.RightSideBar;
+import bar.right.SmallRightSideBar;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -32,9 +34,13 @@ public class RootScreen {
     private void setupSidebars() {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
         rightSideBarPane = rightSideBar.getRightSideBar();
+        rightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.35));
+        rightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
         smallRightSideBarPane = smallRightSideBar.getsmallRightBar();
+        smallRightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.065));
+        smallRightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         contentArea.getChildren().add(smallRightSideBarPane);
 
@@ -62,7 +68,7 @@ public class RootScreen {
     }
 
     private void setupScene() {
-        Scene scene = new Scene(root, 1200, 780);
+        Scene scene = new Scene(root, 1200, 860);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
         Stage primaryStage = new Stage();

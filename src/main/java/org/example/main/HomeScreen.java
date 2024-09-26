@@ -14,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
-import login.pages.SignUpPage;
 
 import java.util.Objects;
 
@@ -46,8 +45,9 @@ public class HomeScreen {
 
         // Text
         leftLayout = new VBox();
+        leftLayout.setId("leftLayout");
 
-        VBox leftHead = leftLayoutElements();
+        Pane leftHead = leftLayoutElements();
         leftHead.prefWidthProperty().bind(leftLayout.widthProperty());
         leftHead.prefHeightProperty().bind(leftLayout.heightProperty());
 
@@ -492,11 +492,6 @@ public class HomeScreen {
         smallSquare.setId("leftSquare");
         VBox layout = new VBox();
 
-        DropShadow shadow = new DropShadow();
-        shadow.setRadius(5.0);
-        shadow.setColor(Color.GRAY);
-        smallSquare.setEffect(shadow);
-
         VBox topLeftBox = new VBox();
         // Create a transparent button for recent transactions
         Button recentTransactionsButton = new Button("ملفي الشخصي");
@@ -525,26 +520,18 @@ public class HomeScreen {
         top.getChildren().addAll(topLeftBox, topRightBox);
         top.setPadding(new Insets(10));
         // Create a VBox for transactions count
-        String name ="";
-        try {
-           name = SignUpPage.nameField.getText();
-        }
-        catch (NullPointerException e){
-            System.out.println(e.getMessage());
-        }
 
-        Label transactionsLabel = new Label(name);
-        transactionsLabel.setId("transactionsLabel");
-        VBox transactionsBox = new VBox();
-        transactionsBox.getChildren().addAll(transactionsLabel);
-        transactionsLabel.setAlignment(Pos.TOP_LEFT);
+        Label name = new Label("IBRAHEEM MOKHALALATI");
+        name.setId("transactionsLabel");
+        VBox nameBox = new VBox();
+        nameBox.getChildren().addAll(name);
+        nameBox.setAlignment(Pos.CENTER_LEFT);
 
-        Label transactionsCount = new Label("1M+");
-        transactionsCount.setId("transactionsCount");
-
-        VBox middleLeftBox = new VBox();
+        Button profile = new Button();
+        profile.setId("profile");
+        HBox middleLeftBox = new HBox(20);
         middleLeftBox.setAlignment(Pos.TOP_LEFT);
-        middleLeftBox.getChildren().addAll(transactionsBox, transactionsCount);
+        middleLeftBox.getChildren().addAll(profile,nameBox);
         middleLeftBox.prefHeightProperty().bind(layout.heightProperty());
         middleLeftBox.prefWidthProperty().bind(layout.widthProperty());
         middleLeftBox.setPadding(new Insets(10));

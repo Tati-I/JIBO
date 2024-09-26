@@ -12,4 +12,6 @@ module org.example.main {
     opens auth to javafx.fxml;
     exports login.pages;
     opens login.pages to javafx.fxml;
+    exports bar.right;
+    opens bar.right to javafx.fxml;
 }
