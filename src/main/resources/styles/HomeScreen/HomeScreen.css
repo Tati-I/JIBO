@@ -1,0 +1,123 @@
+#leftContainer {
+    -fx-background-color: rgba(128, 128, 128, 0.08);
+    -fx-background-radius: 0 10 10 0;
+    -fx-padding: 30 30 10 50;
+}
+#title,#title1,#title2,#welcomeLabel,#discoverServicesButton,#serviceTimeLabel,#smallLabel,#smallLabel1,#recentTransactionsButton,#recentTransactionsButton1,#yearLabel,#locationLabel,#transactionsLabel,#transactionsCount{
+    -fx-text-fill: Black;-fx-font-weight: bold;-fx-font-family : Arial;
+}
+#title{
+   -fx-font-size: 20px
+}
+#title1{
+    -fx-font-size: 60px
+}
+#title2{
+    -fx-font-size: 14px;-fx-text-fill: #373737
+}
+#welcomeLabel{
+    -fx-font-size: 30px;-fx-padding: 12 0 0 0;
+}
+#featuredBox{
+    -fx-padding: 30 50 10 30;
+}
+#largeSquare{
+    -fx-background-color: #f0f0f0;-fx-background-radius: 15;
+    -fx-border-color: #cccccc; -fx-border-radius: 15
+}
+#discoverServicesButton{
+    -fx-background-color: #e8edf0;-fx-background-radius: 15;
+    -fx-font-size: 16;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+}
+#discoverServicesButton:hover{
+    -fx-background-color: white;
+}
+#serviceTimeLabel{
+    -fx-font-size: 35; -fx-text-fill: white;
+}
+#largeSquareContent{
+    -fx-padding: 20;
+}
+#smallSquare,#smallSquare3,#smallSquare4{
+    -fx-border-color: #aaaaaa; -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+#smallSquare3{
+    -fx-background-color: #fcbe4b;
+}
+#smallSquare4{
+    -fx-background-color: #ad9ea4;
+}
+#smallLabel,#smallLabel1{
+    -fx-font-size: 30
+}
+#smallLabel1{
+    -fx-text-fill: white;
+}
+#discoverButton,#discoverButton1{
+    -fx-background-radius: 50%;
+    -fx-cursor: hand;
+}
+#discoverButton:hover{
+    -fx-background-color: #e67819;
+}
+#discoverButton{
+    -fx-background-color:#d37120;
+    -fx-padding: 30;
+}
+#discoverButton1:hover{
+    -fx-background-color: #e6e6e6;
+}
+#discoverButton1{
+    -fx-background-color:#ffffff;
+    -fx-padding: 10;
+}
+#recentTransactionsButton{
+    -fx-background-color: transparent;-fx-background-radius: 15px;
+    -fx-border-color: black;-fx-border-width: 2px;-fx-border-radius: 15px;
+    -fx-padding: 10;
+    -fx-font-size: 15px;
+    -fx-cursor: hand;
+}
+#recentTransactionsButton:hover,#recentTransactionsButton1:hover{
+    -fx-background-color: rgba(0, 0, 0, 0.24);
+}
+#recentTransactionsButton1{
+    -fx-background-color: transparent;-fx-background-radius: 15px;
+    -fx-border-color: #ffffff;-fx-border-width: 2px;-fx-border-radius: 15px;
+    -fx-padding: 10;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+#yearLabel{
+    -fx-font-size: 20px
+}
+#locationLabel{
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}
+#transactionsLabel{
+    -fx-font-size: 16px;
+}
+#transactionsCount{
+    -fx-font-size: 60px;
+}
+#locationButton1{
+    -fx-background-color: #474747;
+    -fx-padding: 10;
+    -fx-background-radius: 50%;
+    -fx-cursor: hand;
+}
+#locationButton1:hover{
+    -fx-background-color: #272727;
+}
+#leftSquare{
+    -fx-background-color: #c5c5c5;
+}
+#search{
+    -fx-background-radius: 15px;
+    -fx-border-color: gray;
+    -fx-prompt-text-fill: gray;
+}

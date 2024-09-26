@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class SignUpPage {
     // to use in all methods+
-    private TextField emailField,nameField;
+    public static TextField emailField,nameField;
     private PasswordField passwordField;
     private Label errorLabelEmail;
     private Label errorLabelPassword;

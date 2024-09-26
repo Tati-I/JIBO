@@ -5,23 +5,25 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import login.pages.SignUpPage;
 
 import java.util.Objects;
 
 public class HomeScreen {
     public VBox rightLayout;
+    public VBox leftLayout;
 
     public Pane RequestHomePane(Pane leftSidePane) {
+
         leftSidePane.getChildren().clear();
 
         Pane homePane = new Pane();
@@ -43,15 +45,19 @@ public class HomeScreen {
         rightLayout.getChildren().addAll(featuredServices);
 
         // Text
-        VBox leftLayout = new VBox();
+        leftLayout = new VBox();
 
         VBox leftHead = leftLayoutElements();
         leftHead.prefWidthProperty().bind(leftLayout.widthProperty());
         leftHead.prefHeightProperty().bind(leftLayout.heightProperty());
 
-        leftLayout.getChildren().addAll(leftHead);
+        Pane leftSquare = leftSquare();
+        leftSquare.prefWidthProperty().bind(leftLayout.widthProperty());
+        leftSquare.prefHeightProperty().bind(leftLayout.heightProperty().multiply(0.6));
+
+        leftLayout.getChildren().addAll(leftHead,leftSquare);
         leftLayout.prefHeightProperty().bind(homePane.heightProperty());
-        leftLayout.prefWidthProperty().bind(homePane.widthProperty());
+        leftLayout.prefWidthProperty().bind(homePane.widthProperty().multiply(0.8));
 
         // Create HBox and add layouts
         HBox layouts = new HBox(20);
@@ -71,6 +77,7 @@ public class HomeScreen {
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
+        homePane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/HomeScreen/HomeScreen.css")).toExternalForm());
 
         leftSidePane.getChildren().add(homePane);
         return leftSidePane;
@@ -78,8 +85,7 @@ public class HomeScreen {
 
     private VBox leftLayoutElements() {
         VBox mainContainer = new VBox(20);
-        mainContainer.setPadding(new Insets(30, 0, 10, 50));
-        mainContainer.setStyle("-fx-background-color: transparent;");
+        mainContainer.setId("leftContainer");
 
         HBox header = createHeader();
         header.prefHeightProperty().bind(mainContainer.heightProperty().multiply(0.4));
@@ -89,14 +95,14 @@ public class HomeScreen {
 
         Label title = new Label();
         title.setText("Your Work Guide\n");
-        title.setStyle("-fx-text-fill: Black;-fx-font-weight: bold;-fx-font-size:20");
+        title.setId("title");
 
         Label title1 = new Label();
         title1.setText("Explore\nmust-see\nservices");
-        title1.setStyle("-fx-text-fill: Black;-fx-font-weight: bold;-fx-font-size:60;-fx-font-family: Arial");
+        title1.setId("title1");
 
         Label title2 = new Label("Escape to Work : Unlock a World of\nservices");
-        title2.setStyle("-fx-text-fill: #373737;-fx-font-weight: bold;-fx-font-size: 14");
+        title2.setId("title2");
 
         titles.getChildren().addAll(title, title1, title2);
         titles.prefHeightProperty().bind(mainContainer.heightProperty());
@@ -112,10 +118,10 @@ public class HomeScreen {
         header.setAlignment(Pos.TOP_LEFT);
 
         Label welcomeLabel = new Label("Jibo");
-        welcomeLabel.setPadding(new Insets(12, 0, 0, 0));
         welcomeLabel.setId("welcomeLabel");
-        welcomeLabel.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+
         ImageView logoView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logoBlack.png"))));
+        logoView.setId("logoView");
         logoView.setFitHeight(62);
         logoView.setFitWidth(62);
 
@@ -132,11 +138,11 @@ public class HomeScreen {
     private VBox createFeaturedServices() {
         VBox featuredBox = new VBox(20);
         featuredBox.setAlignment(Pos.CENTER);
-        featuredBox.setPadding(new Insets(30, 50, 10, 0));
+        featuredBox.setId("featuredBox");
 
         // Large square
         Pane largeSquare = new Pane();
-        largeSquare.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc;-fx-background-radius: 15; -fx-border-radius: 15;");
+        largeSquare.setId("largeSquare");
         largeSquare.prefWidthProperty().bind(featuredBox.widthProperty());
         largeSquare.prefHeightProperty().bind(featuredBox.heightProperty().multiply(1.2));
 
@@ -147,12 +153,10 @@ public class HomeScreen {
         Rectangle clip = new Rectangle();
         clip.setWidth(largeImageView.getFitWidth());
         clip.setHeight(largeImageView.getFitHeight());
-        clip.setArcWidth(30); // Adjust this value to control the roundness of the corners
+        clip.setArcWidth(30);
         clip.setArcHeight(30);
-
         clip.widthProperty().bind(largeImageView.fitWidthProperty());
         clip.heightProperty().bind(largeImageView.fitHeightProperty());
-
         largeImageView.setClip(clip);
 
         DropShadow shadow = new DropShadow();
@@ -162,30 +166,31 @@ public class HomeScreen {
 
         // Create a button
         Button discoverServicesButton = new Button("اكتشف الخدمات");
-        discoverServicesButton.setStyle("-fx-background-color: #e8edf0; -fx-text-fill: #000000;-fx-font-weight: bold; -fx-font-size: 16;-fx-background-radius: 15; -fx-padding: 10 20;");
-        HBox.setHgrow(discoverServicesButton, Priority.ALWAYS);
+        discoverServicesButton.setId("discoverServicesButton");
 
         // Create a label for service request time
         Label serviceTimeLabel = new Label("الوقت لطلب\nخدمة بشكل سهل\nوأحترافي");
-        serviceTimeLabel.setStyle("-fx-font-size: 35; -fx-text-fill: white;-fx-font-family: Arial;-fx-font-weight: bold");
+        serviceTimeLabel.setId("serviceTimeLabel");
         serviceTimeLabel.setTextAlignment(TextAlignment.RIGHT);
 
         ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png"))));
         imageView.setFitHeight(62);
         imageView.setFitWidth(62);
 
+        HBox logoBox = new HBox();
+        logoBox.setAlignment(Pos.TOP_LEFT);
+        logoBox.getChildren().addAll(imageView);
+
         VBox largeSquareContent = new VBox();
-        largeSquareContent.setPadding(new Insets(20, 20, 20, 20)); // Add padding to position elements
+        largeSquareContent.setId("largeSquareContent");
         largeSquareContent.prefWidthProperty().bind(largeSquare.widthProperty());
         largeSquareContent.prefHeightProperty().bind(largeSquare.heightProperty());
 
         HBox serviceTimeLabelHbox = new HBox();
         serviceTimeLabelHbox.setAlignment(Pos.TOP_RIGHT); // Align text to the right
-        serviceTimeLabelHbox.getChildren().addAll(imageView, serviceTimeLabel);
+        serviceTimeLabelHbox.getChildren().addAll(serviceTimeLabel);
 
-        HBox.setHgrow(serviceTimeLabel, Priority.ALWAYS);
-
-        largeSquareContent.getChildren().add(serviceTimeLabelHbox);
+        largeSquareContent.getChildren().addAll(logoBox,serviceTimeLabelHbox);
 
         HBox buttonContainer = new HBox();
         buttonContainer.setAlignment(Pos.BOTTOM_RIGHT); // Align button to bottom-left
@@ -230,8 +235,7 @@ public class HomeScreen {
     private Pane createSmallSquare1() {
         // Create small square pane
         Pane smallSquare = new Pane();
-        smallSquare.setStyle("-fx-background-color: #d0d0d0; -fx-border-color: #aaaaaa; -fx-border-radius: 15; -fx-background-radius: 15;");
-
+        smallSquare.setId("smallSquare");
         // Create ImageView for the square
         ImageView squareImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/ddd.jpg"))));
         squareImageView.fitWidthProperty().bind(smallSquare.widthProperty());
@@ -259,7 +263,7 @@ public class HomeScreen {
         labelBox.setAlignment(Pos.CENTER_RIGHT);
 
         Label smallLabel = new Label("  الخدمات\n  التي قيدت\n  التنفيذ");
-        smallLabel.setStyle("-fx-font-size: 24; -fx-text-fill: #000000; -fx-font-weight: bold;");
+        smallLabel.setId("smallLabel");
         smallLabel.setTextAlignment(TextAlignment.RIGHT);
         labelBox.getChildren().addAll(smallLabel);
 
@@ -269,25 +273,19 @@ public class HomeScreen {
         buttonImg.setPreserveRatio(false);
 
         Button discoverButton = new Button("",buttonImg);
-        discoverButton.setStyle("-fx-background-color: #d37120; -fx-text-fill: #ffffff; -fx-background-radius: 50%; -fx-padding: 10;");
-
-        VBox smallSquareContent = new VBox();
+        discoverButton.setId("discoverButton");
 
         // Make the button responsive to the size of the smallSquareContent and labelBox
+        HBox smallSquareContent = new HBox();
 
-        discoverButton.prefWidthProperty().bind(smallSquareContent.widthProperty().multiply(0.3)); // Adjust width relative to smallSquareContent (30%)
-        discoverButton.prefHeightProperty().bind(discoverButton.prefWidthProperty()); // Keep button height proportional to its width
-
-        // Create a VBox to hold the button and align it to the bottom left
         smallSquareContent.setPadding(new Insets(10)); // Add padding to position elements inside the small square
         smallSquareContent.setAlignment(Pos.CENTER_LEFT);
         smallSquareContent.prefHeightProperty().bind(smallSquare.heightProperty());
         smallSquareContent.prefWidthProperty().bind(smallSquare.widthProperty());
         smallSquareContent.getChildren().add(discoverButton);
 
-        // Ensure button does not exceed the size of labelBox
-        smallSquareContent.maxHeightProperty().bind(labelBox.heightProperty());
-        smallSquareContent.maxWidthProperty().bind(labelBox.widthProperty());
+        discoverButton.prefWidthProperty().bind(smallSquareContent.widthProperty().multiply(0.3)); // Adjust width relative to smallSquareContent (30%)
+        discoverButton.prefHeightProperty().bind(discoverButton.prefWidthProperty()); // Keep button height proportional to its width
 
         // Add label, image, and button to the pane
         smallSquare.getChildren().addAll(squareImageView, labelBox, smallSquareContent);
@@ -297,7 +295,7 @@ public class HomeScreen {
     private Pane createSmallSquare2() {
         // Create small square pane
         Pane smallSquare = new Pane();
-        smallSquare.setStyle("-fx-background-color: #d0d0d0; -fx-border-color: #aaaaaa; -fx-border-radius: 15; -fx-background-radius: 15;");
+        smallSquare.setId("smallSquare");
 
         // Create ImageView for the square
         ImageView squareImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/greenPhoto.jpeg"))));
@@ -326,7 +324,7 @@ public class HomeScreen {
         labelBox.setAlignment(Pos.CENTER_RIGHT);
 
         Label smallLabel = new Label("  خيارات البحث\n  عن عمل");
-        smallLabel.setStyle("-fx-font-size: 24; -fx-text-fill: White; -fx-font-weight: bold;");
+        smallLabel.setId("smallLabel1");
         smallLabel.setTextAlignment(TextAlignment.RIGHT);
         labelBox.getChildren().addAll(smallLabel);
 
@@ -336,8 +334,7 @@ public class HomeScreen {
         buttonImg.setPreserveRatio(false);
 
         Button discoverButton = new Button("",buttonImg);
-        discoverButton.setStyle("-fx-background-color: #ffffff; -fx-text-fill: #ffffff; -fx-background-radius: 50%; -fx-padding: 10;");
-
+        discoverButton.setId("discoverButton1");
         VBox smallSquareContent = new VBox();
 
         // Make the button responsive to the size of the smallSquareContent and labelBox
@@ -365,8 +362,8 @@ public class HomeScreen {
     private Pane createSmallSquare3() {
         // Create small square pane
         Pane smallSquare = new Pane();
+        smallSquare.setId("smallSquare3");
         VBox layout = new VBox();
-        smallSquare.setStyle("-fx-background-color: #fcbe4b; -fx-border-color: #aaaaaa; -fx-border-radius: 15; -fx-background-radius: 15;");
 
         DropShadow shadow = new DropShadow();
         shadow.setRadius(5.0);
@@ -376,7 +373,7 @@ public class HomeScreen {
         VBox topLeftBox = new VBox();
         // Create a transparent button for recent transactions
         Button recentTransactionsButton = new Button("المعاملات الأخيرة");
-        recentTransactionsButton.setStyle("-fx-background-color: transparent; -fx-border-color: black;-fx-border-width: 2px;-fx-background-radius: 15px;-fx-border-radius: 15px");
+        recentTransactionsButton.setId("recentTransactionsButton");
 
         // Create a VBox to hold the year label and the button
         topLeftBox.setAlignment(Pos.TOP_LEFT);
@@ -388,7 +385,7 @@ public class HomeScreen {
 
         // Create label for the current year
         Label yearLabel = new Label("2024"); // استخدم السنة الحالية
-        yearLabel.setStyle("-fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 16px");
+        yearLabel.setId("yearLabel");
 
         topRightBox.setAlignment(Pos.TOP_RIGHT);
         topRightBox.getChildren().addAll(yearLabel);
@@ -400,13 +397,13 @@ public class HomeScreen {
         top.setPadding(new Insets(10));
         // Create a VBox for transactions count
         Label transactionsLabel = new Label("عدد الماملين");
-        transactionsLabel.setStyle("-fx-text-fill: black;-fx-font-weight: bold;");
+        transactionsLabel.setId("transactionsLabel");
         VBox transactionsBox = new VBox();
         transactionsBox.getChildren().addAll(transactionsLabel);
         transactionsLabel.setAlignment(Pos.TOP_LEFT);
 
         Label transactionsCount = new Label("1M+");
-        transactionsCount.setStyle("-fx-text-fill: black;-fx-font-weight: bold;-fx-font-size: 60px");
+        transactionsCount.setId("transactionsCount");
 
         VBox middleLeftBox = new VBox();
         middleLeftBox.setAlignment(Pos.TOP_LEFT);
@@ -430,7 +427,7 @@ public class HomeScreen {
         // Create small square pane
         Pane smallSquare = new Pane();
         VBox layout = new VBox();
-        smallSquare.setStyle("-fx-background-color: #ad9ea4; -fx-border-color: #aaaaaa; -fx-border-radius: 15; -fx-background-radius: 15;");
+        smallSquare.setId("smallSquare4");
 
         DropShadow shadow = new DropShadow();
         shadow.setRadius(5.0);
@@ -440,7 +437,7 @@ public class HomeScreen {
         VBox topLeftBox = new VBox();
         // Create a transparent button for recent transactions
         Button recentTransactionsButton = new Button("اضافة/ازالة عنوان");
-        recentTransactionsButton.setStyle("-fx-text-fill: white; -fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px; -fx-background-radius: 15px; -fx-border-radius: 15px");
+        recentTransactionsButton.setId("recentTransactionsButton1");
 
         // Create a VBox to hold the year label and the button
         topLeftBox.setAlignment(Pos.TOP_LEFT);
@@ -449,11 +446,11 @@ public class HomeScreen {
 
         VBox topRightBox = new VBox();
         // Create label for the current year
-        Label yearLabel = new Label("عناويتي");
-        yearLabel.setStyle("-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px");
+        Label locationLabel = new Label("عناويتي");
+        locationLabel.setId("locationLabel");
 
         topRightBox.setAlignment(Pos.TOP_RIGHT);
-        topRightBox.getChildren().addAll(yearLabel);
+        topRightBox.getChildren().addAll(locationLabel);
         topRightBox.prefHeightProperty().bind(layout.prefWidthProperty());
         topRightBox.prefWidthProperty().bind(layout.widthProperty());
 
@@ -464,11 +461,23 @@ public class HomeScreen {
         top.prefWidthProperty().bind(layout.widthProperty());
 
         // Create circular button
-        ImageView buttonImg = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/menu.png"))));
+        ImageView buttonImg = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/location1.png"))));
         buttonImg.setPreserveRatio(true);
 
+        HBox locationBox = new HBox();
+
+        Button locationButton = new Button("",buttonImg);
+        locationButton.setId("locationButton1");
+        locationButton.prefWidthProperty().bind(locationBox.widthProperty());
+        locationButton.prefHeightProperty().bind(locationButton.heightProperty());
+
+        locationBox.setAlignment(Pos.CENTER);
+        locationBox.getChildren().addAll(locationButton);
+        locationBox.prefHeightProperty().bind(layout.heightProperty());
+        locationBox.prefWidthProperty().bind(layout.widthProperty().multiply(0.5));
+
         // Create a layout to hold all elements
-        layout.getChildren().addAll(top);
+        layout.getChildren().addAll(top, locationBox);
         layout.prefHeightProperty().bind(smallSquare.heightProperty());
         layout.prefWidthProperty().bind(smallSquare.widthProperty());
 
@@ -477,5 +486,78 @@ public class HomeScreen {
         return smallSquare;
     }
 
+    private Pane leftSquare() {
+        // Create small square pane
+        Pane smallSquare = new Pane();
+        smallSquare.setId("leftSquare");
+        VBox layout = new VBox();
+
+        DropShadow shadow = new DropShadow();
+        shadow.setRadius(5.0);
+        shadow.setColor(Color.GRAY);
+        smallSquare.setEffect(shadow);
+
+        VBox topLeftBox = new VBox();
+        // Create a transparent button for recent transactions
+        Button recentTransactionsButton = new Button("ملفي الشخصي");
+        recentTransactionsButton.setId("recentTransactionsButton");
+
+        // Create a VBox to hold the year label and the button
+        topLeftBox.setAlignment(Pos.TOP_LEFT);
+        topLeftBox.getChildren().addAll(recentTransactionsButton);
+        topLeftBox.prefHeightProperty().bind(layout.heightProperty());
+        topLeftBox.prefWidthProperty().bind(layout.widthProperty());
+
+        VBox topRightBox = new VBox();
+
+        // Create label for the current year
+        TextField search = new TextField();
+        search.setPromptText("البحث عن خدمة...");
+        search.setId("search");
+        search.setAlignment(Pos.TOP_RIGHT);
+
+        topRightBox.setAlignment(Pos.TOP_RIGHT);
+        topRightBox.getChildren().addAll(search);
+        topRightBox.prefHeightProperty().bind(layout.prefWidthProperty());
+        topRightBox.prefWidthProperty().bind(layout.widthProperty());
+
+        HBox top = new HBox();
+        top.getChildren().addAll(topLeftBox, topRightBox);
+        top.setPadding(new Insets(10));
+        // Create a VBox for transactions count
+        String name ="";
+        try {
+           name = SignUpPage.nameField.getText();
+        }
+        catch (NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+
+        Label transactionsLabel = new Label(name);
+        transactionsLabel.setId("transactionsLabel");
+        VBox transactionsBox = new VBox();
+        transactionsBox.getChildren().addAll(transactionsLabel);
+        transactionsLabel.setAlignment(Pos.TOP_LEFT);
+
+        Label transactionsCount = new Label("1M+");
+        transactionsCount.setId("transactionsCount");
+
+        VBox middleLeftBox = new VBox();
+        middleLeftBox.setAlignment(Pos.TOP_LEFT);
+        middleLeftBox.getChildren().addAll(transactionsBox, transactionsCount);
+        middleLeftBox.prefHeightProperty().bind(layout.heightProperty());
+        middleLeftBox.prefWidthProperty().bind(layout.widthProperty());
+        middleLeftBox.setPadding(new Insets(10));
+
+        // Create a layout to hold all elements
+
+        layout.getChildren().addAll(top, middleLeftBox);
+        layout.prefHeightProperty().bind(smallSquare.heightProperty());
+        layout.prefWidthProperty().bind(smallSquare.widthProperty());
+
+        // Add label, image, and layout to the pane
+        smallSquare.getChildren().addAll(layout);
+        return smallSquare;
+    }
 
 }
