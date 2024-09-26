@@ -287,3 +287,114 @@
 
 
 }
+
+/* MyProfile.css */
+
+#myProfilePane {
+    -fx-background-color: #f8f9fa;
+}
+
+.topHeader-title{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-padding: 10 800 0 0;
+}
+
+.edit-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-border-color: linear-gradient(to bottom right, #98fa04, #ff6e00, #f5f100);
+    -fx-border-radius: 30px;
+    -fx-border-width: 2px;
+    -fx-padding: 8px 16px;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.2), 10, 0.3, 0, 5);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-transform: scale(1.05);
+    -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.45), 15, 0.4, 0, 7);
+}
+
+.edit-button:pressed {
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.7), 15, 0.6, 0, 5);
+    -fx-transform: scale(0.98);
+}
+
+
+.info-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-spacing: 10;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 0 0 10 0;
+}
+
+.field-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #6c757d;
+}
+
+.field-value {
+    -fx-text-fill: #212529;
+}
+
+/* Profile header styles */
+.profile-header {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-spacing: 20;
+}
+.top-header{
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-spacing: 10;
+
+}
+
+.profile-pic {
+    -fx-fit-height: 80px;
+    -fx-fit-width: 80px;
+    -fx-clip: "circle(20px at center)";
+}
+
+.profile-info {
+    -fx-spacing: 5;
+}
+
+.profile-name {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+ .profile-location {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6c757d;
+}
+
+/* GridPane styles */
+.info-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 10;
+}

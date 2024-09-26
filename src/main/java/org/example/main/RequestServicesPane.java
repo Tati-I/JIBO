@@ -306,8 +306,7 @@ public class RequestServicesPane {
 
         pane.setOnMouseEntered(_ -> {
             ScaleTransition scaleUp = new ScaleTransition(Duration.millis(100), pane);
-            scaleUp.setToX(1.02);
-            scaleUp.setToY(1.02);
+
             scaleUp.play();
         });
         pane.setOnMouseExited(_ -> {
