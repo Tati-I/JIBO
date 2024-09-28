@@ -400,3 +400,6 @@
     -fx-hgap: 20;
     -fx-vgap: 10;
 }
+.grid{
+    -fx-font-weight: bold;-fx-font-size: 16px;-fx-background-radius: 15;-fx-font-family: Arial;
+}

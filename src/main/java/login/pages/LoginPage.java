@@ -1,5 +1,9 @@
 package login.pages;
 
+import auth.EmailCheck;
+import auth.FileBasedAuthenticationSystem;
+import auth.PasswordCheck;
+import auth.User;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,6 +41,7 @@ public class LoginPage extends Application {
     private static boolean isPasswordVisible = false;
     private static TextField visiblePasswordField;
     private static PasswordField passwordField;
+    public static User loggedInUser;
 
     public static void main(String[] args) {
         launch();
@@ -272,27 +277,19 @@ public class LoginPage extends Application {
 
             String email = emailField.getText();
             String password = passwordField.getText();
-            //
-            /*
 
-                if (EmailCheck.isValidEmail(email)) {
-                    errorLabelEmail.setVisible(false);
-                    System.out.println("right");
-                } else {
-                    errorLabelEmail.setVisible(true);
-                }
-
-                if (PasswordCheck.isValidPassword(password)) {
-                    errorLabelPassword.setVisible(false);
-                    System.out.println("right");
-                } else {
-                    errorLabelPassword.setVisible(true);
-                }
-
-             */
-            RootScreen rootScreen = new RootScreen();
-            rootScreen.start();
-            primaryStage.close();
+            loggedInUser = FileBasedAuthenticationSystem.loginUser(email, password);
+            if (loggedInUser != null) {
+                System.out.println("تم تسجيل الدخول بنجاح");
+                RootScreen rootScreen = new RootScreen();
+                rootScreen.start();
+                primaryStage.close();
+            } else {
+                // تسجيل الدخول فشل
+                System.out.println("خطأ في الإيميل أو كلمة المرور");
+                errorLabelEmail.setVisible(true);
+                errorLabelPassword.setVisible(true);
+            }
         });
 
 

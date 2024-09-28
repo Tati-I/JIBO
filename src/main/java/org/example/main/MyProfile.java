@@ -11,11 +11,16 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import login.pages.LoginPage;
 
 import java.io.File;
 import java.util.Objects;
 
 public class MyProfile {
+    String name = LoginPage.loggedInUser.getUsername();
+    String email = LoginPage.loggedInUser.getEmail();
+    String phoneNum = LoginPage.loggedInUser.getNumPhone();
+    String type = LoginPage.loggedInUser.getUserType();
     public Pane showMyProfilePage(Pane leftSidePane) {
         leftSidePane.getChildren().clear();
 
@@ -115,7 +120,7 @@ public class MyProfile {
 
         // Profile Info Section
         VBox profileInfo = new VBox(5);
-        Label nameLabel = new Label("احمد قصاب");
+        Label nameLabel = new Label(name);
         Label titleLabel = new Label("مطور العاب");
         Label locationLabel = new Label("الموقع");
         profileInfo.getChildren().addAll(nameLabel, titleLabel, locationLabel);
@@ -139,21 +144,26 @@ public class MyProfile {
         Label sectionTitle = new Label("المعلومات الشخصية");
         sectionTitle.getStyleClass().add("section-title");
 
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(10);
 
-        addField(grid, 0, "الاسم", "احمد");
-        addField(grid, 1, "الكنية", "قصاب");
-        addField(grid, 2, "الايميل", "abcd1234@gmail.com");
-        addField(grid, 3, "رقم الهاتف", "1234567890");
-        addField(grid, 4, "السيرة الذاتية", "انا مهندس حاسوب ومصمم");
+        VBox grid = new VBox(15);
+        grid.setAlignment(Pos.CENTER_LEFT);
+        grid.getStyleClass().add("grid");
+        grid.prefWidthProperty().bind(section.widthProperty());
+
+        grid.prefHeightProperty().bind(section.heightProperty());
+
+        Label nameLabel = new Label("الأسم : "+name);
+        Label emailLabel = new Label("البريد الألكتروني : "+email);
+        Label phoneLabel = new Label("رقم الهاتف : "+phoneNum);
+        Label accountType = new Label("نوغ الحساب : "+type);
+        grid.getChildren().addAll(nameLabel, emailLabel, phoneLabel,accountType);
 
         Button editButton = new Button("تعديل");
         editButton.getStyleClass().add("edit-button");
 
         HBox titleBox = new HBox(sectionTitle, editButton);
-        titleBox.setAlignment(Pos.CENTER_LEFT);
+        titleBox.setAlignment(Pos.TOP_LEFT);
+        titleBox.prefWidthProperty().bind(section.widthProperty());
         titleBox.setSpacing(10);
 
 

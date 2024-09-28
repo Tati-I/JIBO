@@ -16,8 +16,9 @@ import java.util.Objects;
 
 public class SignUpPage {
     // to use in all methods+
-    public static TextField emailField,nameField;
+    private TextField emailField,nameField;
     private PasswordField passwordField;
+    private TextField phoneNumField;
     private Label errorLabelEmail;
     private Label errorLabelPassword;
     private RadioButton personType,workerType;
@@ -124,7 +125,7 @@ public class SignUpPage {
         phoneNumLabel.setStyle(textStyle);
 
         // Phone number field
-        TextField phoneNumField = new TextField();
+        phoneNumField = new TextField();
         phoneNumField.setPromptText("رقم الهاتف");
         phoneNumField.setPrefSize(495, 40);
         phoneNumField.setLayoutX(15);
@@ -202,20 +203,16 @@ public class SignUpPage {
             String email = emailField.getText();
             String password = passwordField.getText();
             String userType = personType.isSelected() ? "personal" : "worker";
-
+            String phoneNum = phoneNumField.getText();
             if (EmailCheck.isValidEmail(email) && PasswordCheck.isValidPassword(password)) {
-                if (FileBasedAuthenticationSystem.registerUser(username, password, email, userType) &&EmailCheck.isValidEmail(email) && PasswordCheck.isValidPassword(password) ) {
-                    errorLabelEmail.setVisible(false);
-                    // إظهار رسالة نجاح وربما الانتقال إلى صفحة تسجيل الدخول
-                    System.out.println("تم تسجيل المستخدم بنجاح");
-                    loginPage.createLoginView();
-                } else {
-                    // إظهار رسالة خطأ
-                    errorLabelEmail.setText("فشل التسجيل. ربما البريد الإلكتروني مستخدم بالفعل أو كلمة المرور ضعيفة");
-                    errorLabelEmail.setVisible(true);
-                    System.out.println("فشل التسجيل. ربما البريد الإلكتروني مستخدم بالفعل");
-                }
-            } else {
+                FileBasedAuthenticationSystem.registerUser(username, password, email, userType,phoneNum);
+                errorLabelEmail.setVisible(false);
+                System.out.println("تم تسجيل المستخدم بنجاح");
+                loginPage.createLoginView();
+            }
+            else {
+                errorLabelEmail.setText("فشل التسجيل. ربما البريد الإلكتروني مستخدم بالفعل أو خاطئ");
+                System.out.println("فشل التسجيل. ربما البريد الإلكتروني مستخدم بالفعل");
                 errorLabelEmail.setVisible(!EmailCheck.isValidEmail(email));
                 errorLabelPassword.setVisible(!PasswordCheck.isValidPassword(password));
             }

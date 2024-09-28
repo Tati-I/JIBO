@@ -1,5 +1,6 @@
 package bar.right;
 
+import auth.FileBasedAuthenticationSystem;
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
@@ -9,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import login.pages.LoginPage;
 import org.example.main.*;
 
 import java.util.Objects;
@@ -51,11 +53,10 @@ public class SmallRightSideBar {
         menuContainer.prefWidthProperty().bind(mainContainer.widthProperty());
 
         // زر تسجيل الخروج
-        Button logoutBtn = createLogoutButton("","logout.png");
+        Button logoutBtn = createLogoutButton("", "logout.png");
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
         logoutContainer.prefHeightProperty().bind(mainContainer.heightProperty());
-
         // إضافة جميع العناصر إلى الحاوية الرئيسية
 
         mainContainer.getChildren().addAll(smallRightBarContainer,menuContainer, logoutContainer);

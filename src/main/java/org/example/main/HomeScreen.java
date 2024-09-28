@@ -1,5 +1,7 @@
 package org.example.main;
 
+import auth.User;
+import bar.right.RightSideBar;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
+import login.pages.LoginPage;
 
 import java.util.Objects;
 
@@ -38,7 +41,7 @@ public class HomeScreen {
         rightLayout.prefHeightProperty().bind(homePane.heightProperty());
 
         // Featured Services
-        VBox featuredServices = createFeaturedServices();
+        VBox featuredServices = createFeaturedServices(leftSidePane);
         featuredServices.prefWidthProperty().bind(rightLayout.widthProperty());
         featuredServices.prefHeightProperty().bind(rightLayout.heightProperty());
         rightLayout.getChildren().addAll(featuredServices);
@@ -51,7 +54,7 @@ public class HomeScreen {
         leftHead.prefWidthProperty().bind(leftLayout.widthProperty());
         leftHead.prefHeightProperty().bind(leftLayout.heightProperty());
 
-        Pane leftSquare = leftSquare();
+        Pane leftSquare = leftSquare(leftSidePane);
         leftSquare.prefWidthProperty().bind(leftLayout.widthProperty());
         leftSquare.prefHeightProperty().bind(leftLayout.heightProperty().multiply(0.6));
 
@@ -135,7 +138,7 @@ public class HomeScreen {
         return header;
     }
 
-    private VBox createFeaturedServices() {
+    private VBox createFeaturedServices(Pane leftSidePane) {
         VBox featuredBox = new VBox(20);
         featuredBox.setAlignment(Pos.CENTER);
         featuredBox.setId("featuredBox");
@@ -167,6 +170,11 @@ public class HomeScreen {
         // Create a button
         Button discoverServicesButton = new Button("اكتشف الخدمات");
         discoverServicesButton.setId("discoverServicesButton");
+
+        discoverServicesButton.setOnAction(_ ->{
+            RequestServicesPane requestServicesPane = new RequestServicesPane();
+            requestServicesPane.showServicesPage(leftSidePane);
+        });
 
         // Create a label for service request time
         Label serviceTimeLabel = new Label("الوقت لطلب\nخدمة بشكل سهل\nوأحترافي");
@@ -486,7 +494,7 @@ public class HomeScreen {
         return smallSquare;
     }
 
-    private Pane leftSquare() {
+    private Pane leftSquare(Pane leftSide) {
         // Create small square pane
         Pane smallSquare = new Pane();
         smallSquare.setId("leftSquare");
@@ -521,7 +529,9 @@ public class HomeScreen {
         top.setPadding(new Insets(10));
         // Create a VBox for transactions count
 
-        Label name = new Label("IBRAHEEM MOKHALALATI");
+        String username = LoginPage.loggedInUser.getUsername();
+
+        Label name = new Label(username);
         name.setId("transactionsLabel");
         VBox nameBox = new VBox();
         nameBox.getChildren().addAll(name);
@@ -536,6 +546,10 @@ public class HomeScreen {
         middleLeftBox.prefWidthProperty().bind(layout.widthProperty());
         middleLeftBox.setPadding(new Insets(10));
 
+        recentTransactionsButton.setOnAction(_ ->{
+            MyProfile myProfile = new MyProfile();
+            myProfile.showMyProfilePage(leftSide);
+        });
         // Create a layout to hold all elements
 
         layout.getChildren().addAll(top, middleLeftBox);
