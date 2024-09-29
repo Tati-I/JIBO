@@ -68,7 +68,7 @@ public class RootScreen {
     }
 
     private void setupScene() {
-        Scene scene = new Scene(root, 1200, 860);
+        Scene scene = new Scene(root, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
         Stage primaryStage = new Stage();

@@ -5,12 +5,10 @@ import auth.FileBasedAuthenticationSystem;
 import auth.PasswordCheck;
 import auth.User;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import bar.right.RightSideBar;
 import org.example.main.RootScreen;
@@ -49,12 +48,57 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage stage) {
-        // استدعاء كائن
+        showSplashScreen();
+
+    }
+    private void showSplashScreen() {
+        Stage splashStage = new Stage();
+        splashStage.initStyle(StageStyle.UNDECORATED);
+
+        // Create a splash screen layout
+        VBox splashLayout = new VBox();
+        splashLayout.setAlignment(Pos.CENTER);
+        splashLayout.setStyle("-fx-background-color: linear-gradient(#3675bd, #002750);");
+
+        // Add logo or app name to splash screen
+        Image logoImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
+        ImageView logoView = new ImageView(logoImage);
+        logoView.setFitWidth(200);
+        logoView.setFitHeight(200);
+
+        Label appNameLabel = new Label("JIBO");
+        appNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
+        appNameLabel.setTextFill(Color.WHITE);
+
+        ProgressBar loadingBar = new ProgressBar();
+        loadingBar.setPrefWidth(200);
+
+        splashLayout.getChildren().addAll(logoView, appNameLabel, loadingBar);
+
+        Scene splashScene = new Scene(splashLayout, 1200, 780);
+        splashStage.setScene(splashScene);
+        splashStage.show();
+
+        // Simulate loading process
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000); // 3 seconds delay
+                Platform.runLater(() -> {
+                    splashStage.close();
+                    showMainStage();
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void showMainStage() {
+        primaryStage = new Stage();
+
         RightSideBar rightSideBar = new RightSideBar(null);
-        //وضع icon
-        primaryStage = stage;
-        stage.getIcons().add(rightSideBar.loadImage("icon.png"));
-        //الحاوية الرئيسية
+        primaryStage.getIcons().add(rightSideBar.loadImage("icon.png"));
+
         AnchorPane mainContainer = new AnchorPane();
         mainContainer.setStyle("-fx-background-color: linear-gradient( #3675bd , #002750 )");
 
@@ -65,7 +109,7 @@ public class LoginPage extends Application {
         createLoginView();
         HBox rightAndLeft = new HBox(50);
         rightAndLeft.setAlignment(Pos.CENTER);
-        rightAndLeft.getChildren().addAll(leftView(),pane);
+        rightAndLeft.getChildren().addAll(leftView(), pane);
         rightAndLeft.prefWidthProperty().bind(mainContainer.widthProperty());
         rightAndLeft.prefHeightProperty().bind(mainContainer.heightProperty());
 
@@ -73,12 +117,11 @@ public class LoginPage extends Application {
         Scene scene = new Scene(mainContainer, 1200, 780);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
-        stage.setTitle("Jibo");
-        stage.setMinWidth(920);  // الحد الأدنى لعرض النافذة
-        stage.setMinHeight(700); // الحد الأدنى لارتفاع النافذة
-        stage.setScene(scene);
-        stage.show();
-
+        primaryStage.setTitle("Jibo");
+        primaryStage.setMinWidth(920);
+        primaryStage.setMinHeight(700);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public Pane leftView() {
@@ -275,15 +318,19 @@ public class LoginPage extends Application {
 
         Login.setOnMouseClicked(_ -> {
 
+
             String email = emailField.getText();
             String password = passwordField.getText();
 
             loggedInUser = FileBasedAuthenticationSystem.loginUser(email, password);
+
+
             if (loggedInUser != null) {
                 System.out.println("تم تسجيل الدخول بنجاح");
-                RootScreen rootScreen = new RootScreen();
-                rootScreen.start();
                 primaryStage.close();
+                RootScreen rootScreen;
+                rootScreen = new RootScreen();
+                rootScreen.start();
             } else {
                 // تسجيل الدخول فشل
                 System.out.println("خطأ في الإيميل أو كلمة المرور");

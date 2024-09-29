@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import login.pages.LoginPage;
@@ -73,6 +74,7 @@ public class MyProfile {
 
     private HBox createTopHeader(){
         HBox topHeader = new HBox();
+
         topHeader.getStyleClass().add("top-header");
         VBox label = new VBox();
         Label profileLabel = new Label("ملفي الشخصي");
@@ -80,7 +82,7 @@ public class MyProfile {
         profileLabel.setAlignment(Pos.CENTER_RIGHT);
         label.getChildren().add(profileLabel);
 
-        topHeader.getChildren().add(label);
+        topHeader.getChildren().addAll(label);
         return topHeader;
     }
 
