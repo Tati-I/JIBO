@@ -1,21 +1,23 @@
 package login.pages;
 
-import auth.EmailCheck;
 import auth.FileBasedAuthenticationSystem;
-import auth.PasswordCheck;
+
 import auth.User;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -53,39 +55,94 @@ public class LoginPage extends Application {
     }
     private void showSplashScreen() {
         Stage splashStage = new Stage();
-        splashStage.initStyle(StageStyle.UNDECORATED);
+        splashStage.initStyle(StageStyle.TRANSPARENT);
 
         // Create a splash screen layout
-        VBox splashLayout = new VBox();
-        splashLayout.setAlignment(Pos.CENTER);
-        splashLayout.setStyle("-fx-background-color: linear-gradient(#3675bd, #002750);");
+        StackPane splashLayout = new StackPane();
+        splashLayout.setStyle("-fx-background-color: transparent;");
 
-        // Add logo or app name to splash screen
+        // Create a background with gradient and rounded corners
+        Rectangle background = new Rectangle(1000, 700);
+        background.setArcWidth(30);
+        background.setArcHeight(30);
+       background.setFill(new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#1a237e")),
+                new Stop(1, Color.web("#4a148c"))));
+
+
+
+        // Add a subtle pattern overlay
+        ImageView patternOverlay = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/spaceBackground.jpg"))));
+        patternOverlay.setOpacity(0.1);
+        patternOverlay.setFitWidth(1000);
+        patternOverlay.setFitHeight(700);
+
+        // Add logo
         Image logoImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
         ImageView logoView = new ImageView(logoImage);
         logoView.setFitWidth(200);
         logoView.setFitHeight(200);
 
+        // Add app name with a modern font and drop shadow
         Label appNameLabel = new Label("JIBO");
-        appNameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
         appNameLabel.setTextFill(Color.WHITE);
+        appNameLabel.setEffect(new DropShadow(10, Color.BLACK));
 
-        ProgressBar loadingBar = new ProgressBar();
-        loadingBar.setPrefWidth(200);
+        // Add a stylish tagline
+        Label taglineLabel = new Label("Your Personal Craftsman");
 
-        splashLayout.getChildren().addAll(logoView, appNameLabel, loadingBar);
+        taglineLabel.setTextFill(Color.LIGHTGRAY);
 
-        Scene splashScene = new Scene(splashLayout, 1200, 780);
+        // Create a custom loading indicator
+        ProgressIndicator loadingIndicator = new ProgressIndicator();
+        loadingIndicator.setStyle("-fx-progress-color: white;");
+        loadingIndicator.setPrefSize(50, 50);
+
+        // Arrange elements in a VBox
+        VBox content = new VBox(20);
+        content.setAlignment(Pos.CENTER);
+        content.getChildren().addAll(logoView, appNameLabel, taglineLabel, loadingIndicator);
+
+        // Add all elements to the layout
+        splashLayout.getChildren().addAll(background, patternOverlay, content);
+
+        // Add a fade-in animation
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), splashLayout);
+        fadeIn.setFromValue(0);
+        fadeIn.setToValue(1);
+        fadeIn.setCycleCount(1);
+
+        // Add a subtle pulse animation to the logo
+        ScaleTransition pulse = new ScaleTransition(Duration.seconds(2), logoView);
+        pulse.setByX(0.1);
+        pulse.setByY(0.1);
+        pulse.setCycleCount(TranslateTransition.INDEFINITE);
+        pulse.setAutoReverse(true);
+
+        Scene splashScene = new Scene(splashLayout, 1000, 700);
+        splashScene.setFill(Color.TRANSPARENT);
         splashStage.setScene(splashScene);
         splashStage.show();
+
+        // Play animations
+        fadeIn.play();
+        pulse.play();
 
         // Simulate loading process
         new Thread(() -> {
             try {
-                Thread.sleep(3000); // 3 seconds delay
+                Thread.sleep(5000); // Increased duration to 5 seconds to showcase the enhanced splash screen
                 Platform.runLater(() -> {
-                    splashStage.close();
-                    showMainStage();
+                    // Add fade-out animation
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), splashLayout);
+                    fadeOut.setFromValue(1);
+                    fadeOut.setToValue(0);
+                    fadeOut.setCycleCount(1);
+                    fadeOut.setOnFinished(e -> {
+                        splashStage.close();
+                        showMainStage();
+                    });
+                    fadeOut.play();
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
