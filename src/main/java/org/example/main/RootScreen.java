@@ -2,10 +2,12 @@ package org.example.main;
 
 import bar.right.RightSideBar;
 import bar.right.SmallRightSideBar;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -68,15 +70,29 @@ public class RootScreen {
     }
 
     private void setupScene() {
-        Scene scene = new Scene(root, 1200, 780);
+        // الحصول على أبعاد الشاشة الحالية
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        // حساب العرض والارتفاع بشكل نسبي مع أبعاد الشاشة
+        double width = screenBounds.getWidth() * 0.7;  // نسبة 80% من عرض الشاشة
+        double height = screenBounds.getHeight() * 0.8;  // نسبة 80% من ارتفاع الشاشة
+
+        Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Jibo");
         primaryStage.getIcons().add(new RightSideBar(new Pane()).loadImage("icon.png"));
-        primaryStage.setScene(scene);
+
+        // ضبط الحجم الأدنى للنافذة لضمان استجابة أفضل
         primaryStage.setMinHeight(700);
         primaryStage.setMinWidth(820);
+
+        // تعيين الحجم القياسي بناءً على أبعاد الشاشة
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }

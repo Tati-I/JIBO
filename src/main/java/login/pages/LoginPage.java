@@ -8,6 +8,7 @@ import javafx.animation.ScaleTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -21,6 +22,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.stage.StageStyle;
@@ -65,11 +67,10 @@ public class LoginPage extends Application {
         Rectangle background = new Rectangle(1000, 700);
         background.setArcWidth(30);
         background.setArcHeight(30);
-       background.setFill(new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#1a237e")),
-                new Stop(1, Color.web("#4a148c"))));
-
-
+        background.setFill(
+                new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#1a237e")), new Stop(1, Color.web("#4a148c")))
+        );
 
         // Add a subtle pattern overlay
         ImageView patternOverlay = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/spaceBackground.jpg"))));
@@ -159,27 +160,45 @@ public class LoginPage extends Application {
         AnchorPane mainContainer = new AnchorPane();
         mainContainer.setStyle("-fx-background-color: linear-gradient( #3675bd , #002750 )");
 
+        // إعداد الأيقونات
         visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
         hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
 
         pane = new Pane();
         createLoginView();
+
+        // ضبط العرض والارتفاع بشكل نسبي مع التباعد
         HBox rightAndLeft = new HBox(50);
         rightAndLeft.setAlignment(Pos.CENTER);
-        rightAndLeft.getChildren().addAll(leftView(), pane);
         rightAndLeft.prefWidthProperty().bind(mainContainer.widthProperty());
         rightAndLeft.prefHeightProperty().bind(mainContainer.heightProperty());
+        rightAndLeft.getChildren().addAll(leftView(), pane);
 
         mainContainer.getChildren().addAll(rightAndLeft);
-        Scene scene = new Scene(mainContainer, 1200, 780);
+
+        // الحصول على أبعاد الشاشة وتعيين حجم النافذة بشكل نسبي
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        double width = screenBounds.getWidth() * 0.7;  // نسبة 70% من عرض الشاشة
+        double height = screenBounds.getHeight() * 0.8;  // نسبة 80% من ارتفاع الشاشة
+
+        // إعداد المشهد وضبط الحجم مع الـ CSS
+        Scene scene = new Scene(mainContainer, width, height);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
 
+        // إعدادات المرحلة (Stage)
         primaryStage.setTitle("Jibo");
         primaryStage.setMinWidth(920);
         primaryStage.setMinHeight(700);
+
+        // ضبط الحجم بناءً على الشاشة
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
+
+        // عرض النافذة
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 
     public Pane leftView() {
         RightSideBar rightSideBar = new RightSideBar(null);
