@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import login.pages.LoginPage;
@@ -112,7 +111,7 @@ public class MyProfile {
         );
 
         // Set action to open FileChooser when profile picture is clicked
-        profilePic.setOnMouseClicked(e -> {
+        profilePic.setOnMouseClicked(_ -> {
             File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 Image newImage = new Image(selectedFile.toURI().toString());

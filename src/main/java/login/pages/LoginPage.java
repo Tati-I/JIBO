@@ -132,21 +132,21 @@ public class LoginPage extends Application {
         // Simulate loading process
         new Thread(() -> {
             try {
-                Thread.sleep(5000); // Increased duration to 5 seconds to showcase the enhanced splash screen
+                Thread.sleep(1000); // Increased duration to 5 seconds to showcase the enhanced splash screen
                 Platform.runLater(() -> {
                     // Add fade-out animation
                     FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), splashLayout);
                     fadeOut.setFromValue(1);
                     fadeOut.setToValue(0);
                     fadeOut.setCycleCount(1);
-                    fadeOut.setOnFinished(e -> {
+                    fadeOut.setOnFinished(_ -> {
                         splashStage.close();
                         showMainStage();
                     });
                     fadeOut.play();
                 });
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }).start();
     }

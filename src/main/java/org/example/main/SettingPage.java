@@ -68,7 +68,7 @@ public class SettingPage {
 
         scene = leftSidePane.getScene();
         if (scene == null) {
-            leftSidePane.sceneProperty().addListener((observable, oldValue, newValue) -> {
+            leftSidePane.sceneProperty().addListener((_, _, newValue) -> {
                 if (newValue != null) {
                     scene = newValue;
                     updateStyles(isNightMode);

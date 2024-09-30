@@ -19,7 +19,7 @@ public class MyServices {
         ServicePane.prefWidthProperty().bind(leftSidePane.widthProperty());
         ServicePane.prefHeightProperty().bind(leftSidePane.heightProperty());
 
-        Button button = new Button("dsfwerf");
+        Button button = new Button("");
         ServicePane.getChildren().add(button);
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/Moon.png")));

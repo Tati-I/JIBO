@@ -1,7 +1,6 @@
 package org.example.main;
 
-import auth.User;
-import bar.right.RightSideBar;
+
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

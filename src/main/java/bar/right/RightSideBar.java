@@ -146,10 +146,7 @@ public class RightSideBar {
 
     // دالة إنشاء حركة تصغير الزر عند إزالة الماوس
     private void createDownAnimateButton(Button button) {
-        ScaleTransition scaleDown = new ScaleTransition(Duration.millis(200), button);
-        scaleDown.setToX(1);
-        scaleDown.setToY(1);
-        scaleDown.play();
+        SmallRightSideBar.createDownAnimateButton(button);
     }
 
     // دالة تحميل الصور

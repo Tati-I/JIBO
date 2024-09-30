@@ -1,6 +1,5 @@
 package bar.right;
 
-import auth.FileBasedAuthenticationSystem;
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
@@ -10,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import login.pages.LoginPage;
 import org.example.main.*;
 
 import java.util.Objects;
@@ -53,7 +51,7 @@ public class SmallRightSideBar {
         menuContainer.prefWidthProperty().bind(mainContainer.widthProperty());
 
         // زر تسجيل الخروج
-        Button logoutBtn = createLogoutButton("", "logout.png");
+        Button logoutBtn = createLogoutButton();
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
         logoutContainer.prefHeightProperty().bind(mainContainer.heightProperty());
@@ -105,8 +103,8 @@ public class SmallRightSideBar {
     }
 
     // دالة إنشاء زر تسجيل الخروج
-    private Button createLogoutButton(String id,String iconPath) {
-        ImageView imageView = new ImageView(loadImage(iconPath));
+    private Button createLogoutButton() {
+        ImageView imageView = new ImageView(loadImage("logout.png"));
         Button logoutBtn = new Button("",imageView);
         logoutBtn.setId("logoutBtn");
         logoutBtn.setOnMouseEntered(_ -> createUpAnimateButton(logoutBtn));
@@ -136,7 +134,7 @@ public class SmallRightSideBar {
     }
 
     // دالة للحصول على الشريط الجانبي الأيمن
-    public Pane getsmallRightBar() {
+    public Pane getSmallRightBar() {
         return smallRightBar;
     }
 

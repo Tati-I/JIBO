@@ -40,14 +40,14 @@ public class RootScreen {
         rightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
-        smallRightSideBarPane = smallRightSideBar.getsmallRightBar();
+        smallRightSideBarPane = smallRightSideBar.getSmallRightBar();
         smallRightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.065));
         smallRightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         contentArea.getChildren().add(smallRightSideBarPane);
 
-        smallRightSideBar.getMenuButton().setOnAction(e -> toggleSidebar());
-        rightSideBar.getMenuButton().setOnAction(e -> toggleSidebar());
+        smallRightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
+        rightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
     }
 
     private void toggleSidebar() {
