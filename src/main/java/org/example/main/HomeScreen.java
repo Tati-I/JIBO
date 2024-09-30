@@ -1,7 +1,7 @@
 package org.example.main;
 
 
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,7 +24,6 @@ public class HomeScreen {
     public VBox leftLayout;
 
     public Pane RequestHomePane(Pane leftSidePane) {
-
         leftSidePane.getChildren().clear();
 
         Pane homePane = new Pane();
@@ -34,18 +33,14 @@ public class HomeScreen {
 
         rightLayout = new VBox();
         rightLayout.setAlignment(Pos.CENTER);
-
-        // Bind width and height of rightLayout to leftSidePane
         rightLayout.prefWidthProperty().bind(homePane.widthProperty());
         rightLayout.prefHeightProperty().bind(homePane.heightProperty());
 
-        // Featured Services
         VBox featuredServices = createFeaturedServices(leftSidePane);
         featuredServices.prefWidthProperty().bind(rightLayout.widthProperty());
         featuredServices.prefHeightProperty().bind(rightLayout.heightProperty());
         rightLayout.getChildren().addAll(featuredServices);
 
-        // Text
         leftLayout = new VBox();
         leftLayout.setId("leftLayout");
 
@@ -57,28 +52,38 @@ public class HomeScreen {
         leftSquare.prefWidthProperty().bind(leftLayout.widthProperty());
         leftSquare.prefHeightProperty().bind(leftLayout.heightProperty().multiply(0.6));
 
-        leftLayout.getChildren().addAll(leftHead,leftSquare);
+        leftLayout.getChildren().addAll(leftHead, leftSquare);
         leftLayout.prefHeightProperty().bind(homePane.heightProperty());
         leftLayout.prefWidthProperty().bind(homePane.widthProperty().multiply(0.8));
 
-        // Create HBox and add layouts
         HBox layouts = new HBox(20);
         layouts.getChildren().addAll(leftLayout, rightLayout);
         layouts.prefHeightProperty().bind(leftSidePane.heightProperty());
         layouts.prefWidthProperty().bind(leftSidePane.widthProperty());
 
-        // Allow leftLayout to take space according to its content
         HBox.setHgrow(leftLayout, Priority.ALWAYS);
         HBox.setHgrow(rightLayout, Priority.ALWAYS);
 
-        // Add layouts to homePane
         homePane.getChildren().add(layouts);
 
-        // Add fade transition
+        // Add fade-in animation
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), homePane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
+
+        // Add slide-in animation for layouts
+        TranslateTransition slideInLeft = new TranslateTransition(Duration.millis(500), leftLayout);
+        slideInLeft.setFromX(-100);
+        slideInLeft.setToX(0);
+
+        TranslateTransition slideInRight = new TranslateTransition(Duration.millis(500), rightLayout);
+        slideInRight.setFromX(100);
+        slideInRight.setToX(0);
+
+        ParallelTransition parallelTransition = new ParallelTransition(fadeIn, slideInLeft, slideInRight);
+        parallelTransition.play();
+
         homePane.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/HomeScreen/HomeScreen.css")).toExternalForm());
 
         leftSidePane.getChildren().add(homePane);
@@ -95,12 +100,10 @@ public class HomeScreen {
 
         VBox titles = new VBox(20);
 
-        Label title = new Label();
-        title.setText("Your Work Guide\n");
+        Label title = new Label("Your Work Guide\n");
         title.setId("title");
 
-        Label title1 = new Label();
-        title1.setText("Explore\nmust-see\nservices");
+        Label title1 = new Label("Explore\nmust-see\nservices");
         title1.setId("title1");
 
         Label title2 = new Label("Escape to Work : Unlock a World of\nservices");
@@ -127,6 +130,13 @@ public class HomeScreen {
         logoView.setFitHeight(62);
         logoView.setFitWidth(62);
 
+        // Add rotation animation to logo
+        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(5), logoView);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setCycleCount(Timeline.INDEFINITE);
+        rotateTransition.setInterpolator(Interpolator.EASE_BOTH);
+        rotateTransition.play();
+
         HBox content = new HBox();
         content.setAlignment(Pos.TOP_LEFT);
         content.getChildren().addAll(logoView, welcomeLabel);
@@ -142,19 +152,47 @@ public class HomeScreen {
         featuredBox.setAlignment(Pos.CENTER);
         featuredBox.setId("featuredBox");
 
-        // Large square
-        Pane largeSquare = new Pane();
-        largeSquare.setId("largeSquare");
+        Pane largeSquare = createLargeSquare(leftSidePane);
         largeSquare.prefWidthProperty().bind(featuredBox.widthProperty());
         largeSquare.prefHeightProperty().bind(featuredBox.heightProperty().multiply(1.2));
+
+        HBox smallSquaresBoxTop = new HBox(20);
+        smallSquaresBoxTop.setAlignment(Pos.CENTER);
+        smallSquaresBoxTop.prefWidthProperty().bind(featuredBox.widthProperty());
+        smallSquaresBoxTop.prefHeightProperty().bind(featuredBox.heightProperty());
+
+        Pane smallSquare1 = createSmallSquare1();
+        smallSquare1.prefWidthProperty().bind(smallSquaresBoxTop.widthProperty());
+
+        Pane smallSquare2 = createSmallSquare2();
+        smallSquare2.prefWidthProperty().bind(smallSquaresBoxTop.widthProperty());
+        smallSquaresBoxTop.getChildren().addAll(smallSquare1, smallSquare2);
+
+        HBox smallSquaresBoxBottom = new HBox(20);
+        smallSquaresBoxBottom.setAlignment(Pos.CENTER);
+        smallSquaresBoxBottom.prefWidthProperty().bind(featuredBox.widthProperty());
+        smallSquaresBoxBottom.prefHeightProperty().bind(featuredBox.heightProperty());
+
+        Pane smallSquare3 = createSmallSquare3();
+        smallSquare3.prefWidthProperty().bind(smallSquaresBoxBottom.widthProperty());
+
+        Pane smallSquare4 = createSmallSquare4();
+        smallSquare4.prefWidthProperty().bind(smallSquaresBoxBottom.widthProperty());
+        smallSquaresBoxBottom.getChildren().addAll(smallSquare3, smallSquare4);
+
+        featuredBox.getChildren().addAll(largeSquare, smallSquaresBoxTop, smallSquaresBoxBottom);
+        return featuredBox;
+    }
+
+    private Pane createLargeSquare(Pane leftSidePane) {
+        Pane largeSquare = new Pane();
+        largeSquare.setId("largeSquare");
 
         ImageView largeImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/aaaa.jpg"))));
         largeImageView.fitWidthProperty().bind(largeSquare.widthProperty());
         largeImageView.fitHeightProperty().bind(largeSquare.heightProperty());
 
         Rectangle clip = new Rectangle();
-        clip.setWidth(largeImageView.getFitWidth());
-        clip.setHeight(largeImageView.getFitHeight());
         clip.setArcWidth(30);
         clip.setArcHeight(30);
         clip.widthProperty().bind(largeImageView.fitWidthProperty());
@@ -166,16 +204,14 @@ public class HomeScreen {
         shadow.setColor(Color.GRAY);
         largeSquare.setEffect(shadow);
 
-        // Create a button
         Button discoverServicesButton = new Button("اكتشف الخدمات");
         discoverServicesButton.setId("discoverServicesButton");
 
-        discoverServicesButton.setOnAction(_ ->{
+        discoverServicesButton.setOnAction(_ -> {
             RequestServicesPane requestServicesPane = new RequestServicesPane();
             requestServicesPane.showServicesPage(leftSidePane);
         });
 
-        // Create a label for service request time
         Label serviceTimeLabel = new Label("الوقت لطلب\nخدمة بشكل سهل\nوأحترافي");
         serviceTimeLabel.setId("serviceTimeLabel");
         serviceTimeLabel.setTextAlignment(TextAlignment.RIGHT);
@@ -194,49 +230,21 @@ public class HomeScreen {
         largeSquareContent.prefHeightProperty().bind(largeSquare.heightProperty());
 
         HBox serviceTimeLabelHbox = new HBox();
-        serviceTimeLabelHbox.setAlignment(Pos.TOP_RIGHT); // Align text to the right
+        serviceTimeLabelHbox.setAlignment(Pos.TOP_RIGHT);
         serviceTimeLabelHbox.getChildren().addAll(serviceTimeLabel);
 
-        largeSquareContent.getChildren().addAll(logoBox,serviceTimeLabelHbox);
+        largeSquareContent.getChildren().addAll(logoBox, serviceTimeLabelHbox);
 
         HBox buttonContainer = new HBox();
-        buttonContainer.setAlignment(Pos.BOTTOM_RIGHT); // Align button to bottom-left
+        buttonContainer.setAlignment(Pos.BOTTOM_RIGHT);
         buttonContainer.getChildren().add(discoverServicesButton);
-        VBox.setVgrow(buttonContainer, Priority.ALWAYS); // Ensure button sticks to bottom
+        VBox.setVgrow(buttonContainer, Priority.ALWAYS);
 
         largeSquareContent.getChildren().add(buttonContainer);
 
         largeSquare.getChildren().addAll(largeImageView, largeSquareContent);
 
-        // Top small squares
-        HBox smallSquaresBoxTop = new HBox(20);
-        smallSquaresBoxTop.setAlignment(Pos.CENTER);
-        smallSquaresBoxTop.prefWidthProperty().bind(featuredBox.widthProperty());
-        smallSquaresBoxTop.prefHeightProperty().bind(featuredBox.heightProperty());
-
-        Pane smallSquare1 = createSmallSquare1();
-        smallSquare1.prefWidthProperty().bind(smallSquaresBoxTop.widthProperty());
-
-        Pane smallSquare2 = createSmallSquare2();
-        smallSquare2.prefWidthProperty().bind(smallSquaresBoxTop.widthProperty());
-        smallSquaresBoxTop.getChildren().addAll(smallSquare1,smallSquare2);
-
-        // Bottom small squares
-        HBox smallSquaresBoxBottom = new HBox(20);
-        smallSquaresBoxBottom.setAlignment(Pos.CENTER);
-        smallSquaresBoxBottom.prefWidthProperty().bind(featuredBox.widthProperty());
-        smallSquaresBoxBottom.prefHeightProperty().bind(featuredBox.heightProperty());
-
-        Pane smallSquare3 = createSmallSquare3();
-        smallSquare3.prefWidthProperty().bind(smallSquaresBoxBottom.widthProperty());
-
-        Pane smallSquare4 = createSmallSquare4();
-        smallSquare4.prefWidthProperty().bind(smallSquaresBoxBottom.widthProperty());
-        smallSquaresBoxBottom.getChildren().addAll(smallSquare3,smallSquare4);
-
-        featuredBox.getChildren().addAll(largeSquare, smallSquaresBoxTop, smallSquaresBoxBottom);
-
-        return featuredBox;
+        return largeSquare;
     }
 
     private Pane createSmallSquare1() {
