@@ -132,7 +132,7 @@ public class LoginPage extends Application {
         // Simulate loading process
         new Thread(() -> {
             try {
-                Thread.sleep(1000); // Increased duration to 5 seconds to showcase the enhanced splash screen
+                Thread.sleep(2000);
                 Platform.runLater(() -> {
                     // Add fade-out animation
                     FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), splashLayout);
