@@ -306,16 +306,18 @@
 
 /* Top Header */
 .top-header {
-    -fx-background-color: #f0f4fa;
+    -fx-background-color: #f9f9f9;
     -fx-border-radius: 30;
+
     -fx-background-radius: 30;
     -fx-font-family: 'Poppins', sans-serif;
     -fx-font-size: 18px;
 }
 /*right-panel*/
 .right-panel{
-    -fx-background-color: linear-gradient(#5c5c5c, #2e2e2e);
+    -fx-background-color: rgba(155, 113, 248, 0.5);
     -fx-background-radius: 15;
+
 }
 .about-you-area {
     -fx-border-color: #f9f9f9;

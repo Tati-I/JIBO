@@ -92,10 +92,10 @@ public class MyProfile {
     private HBox createMainContent() {
         HBox mainContent = new HBox(20);
         VBox leftPanel = createLeftPanel();
-        leftPanel.prefWidthProperty().bind(mainContent.widthProperty());
+        leftPanel.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.7));
         leftPanel.prefHeightProperty().bind(mainContent.heightProperty());
         VBox rightPanel = createRightPanel();
-        rightPanel.prefWidthProperty().bind(mainContent.widthProperty());
+        rightPanel.prefWidthProperty().bind(mainContent.widthProperty().multiply(0.3));
         rightPanel.prefHeightProperty().bind(mainContent.heightProperty());
 
         mainContent.getChildren().addAll(leftPanel, rightPanel);
@@ -105,23 +105,37 @@ public class MyProfile {
     // إنشاء اللوحة اليسرى
     private VBox createLeftPanel() {
         VBox leftPanel = new VBox(20);
+        VBox createPersonalInfoSection =createPersonalInfoSection();
+        VBox  createProfessionalInfoSection = createProfessionalInfoSection();
+        createPersonalInfoSection.prefHeightProperty().bind(leftPanel.heightProperty());
+        createProfessionalInfoSection.prefHeightProperty().bind(leftPanel.heightProperty());
+
         leftPanel.getChildren().addAll(
-                createPersonalInfoSection(),
-                createProfessionalInfoSection()
+                createPersonalInfoSection,
+                createProfessionalInfoSection
         );
         return leftPanel;
     }
 
     // إنشاء اللوحة اليمنى
     private VBox createRightPanel() {
-        VBox rightPanel = new VBox(20);
+        VBox rightPanel = new VBox(15);
+        VBox createProfileCard = createProfileCard();
+        VBox createLocationSection = createLocationSection();
+        VBox createAboutYouSection = createAboutYouSection();
         rightPanel.setPadding(new Insets(10));
         rightPanel.getStyleClass().add("right-panel");
+        createProfileCard.prefHeightProperty().bind(rightPanel.heightProperty());
+        createLocationSection.prefHeightProperty().bind(rightPanel.heightProperty());
+        createAboutYouSection.prefHeightProperty().bind(rightPanel.heightProperty());
+
+
         rightPanel.getChildren().addAll(
-                createProfileCard(),
-                createLocationSection(),
-                createAboutYouSection()
+                createProfileCard,
+                createLocationSection,
+                createAboutYouSection
         );
+
         return rightPanel;
     }
 
@@ -271,6 +285,9 @@ public class MyProfile {
 
         roleTags.getChildren().addAll(studentTag, freelancerTag);
 
+
+
+
         card.getChildren().addAll(profilePic, nameLabel, roleTags);
         return card;
     }
@@ -318,6 +335,7 @@ public class MyProfile {
     }
     private VBox createAboutYouSection() {
         VBox section = new VBox(10);
+        section.setPadding(new Insets(10));
         section.getStyleClass().add("info-section");
 
         Label sectionTitle = new Label("نبذة عني");
