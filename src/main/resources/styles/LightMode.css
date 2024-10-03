@@ -64,7 +64,7 @@
 
 /* الشريط الجانبي الأيمن */
 #rightSideBar {
-    -fx-background-color: linear-gradient(#5c5c5c, #2e2e2e);
+    -fx-background-color: linear-gradient(#838383, #494949);
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
 }
@@ -177,6 +177,11 @@
 
 #requestButton:hover {
     -fx-background-color: #006605;
+    -fx-text-fill: white;
+
+}
+#requestButton:pressed{
+    -fx-background-color: #035507;
 }
 
 /* معلومات إضافية */
