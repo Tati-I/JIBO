@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import login.pages.LoginPage;
@@ -17,51 +18,34 @@ import java.io.File;
 import java.util.Objects;
 
 public class MyProfile {
-    String name = LoginPage.loggedInUser.getUsername();
-    String email = LoginPage.loggedInUser.getEmail();
-    String phoneNum = LoginPage.loggedInUser.getNumPhone();
-    String type = LoginPage.loggedInUser.getUserType();
+    // معلومات المستخدم
+    private final String name = LoginPage.loggedInUser.getUsername();
+    private final String email = LoginPage.loggedInUser.getEmail();
+    private final String phoneNum = LoginPage.loggedInUser.getNumPhone();
+    private final String type = LoginPage.loggedInUser.getUserType();
+
+    // عرض صفحة الملف الشخصي
     public Pane showMyProfilePage(Pane leftSidePane) {
         leftSidePane.getChildren().clear();
 
-        // Create the main profile pane
-        VBox profilePane = new VBox(20);
-        profilePane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        VBox profilePane = createProfilePane();
+        Pane topHeaderPane = createTopHeader();
+        HBox mainContent = createMainContent();
 
-        profilePane.setId("myProfilePane");
+        profilePane.getChildren().addAll(topHeaderPane, mainContent);
         profilePane.prefWidthProperty().bind(leftSidePane.widthProperty());
         profilePane.prefHeightProperty().bind(leftSidePane.heightProperty());
-        profilePane.setPadding(new Insets(20));
-        profilePane.setAlignment(Pos.TOP_CENTER);
 
+        // ضبط topHeaderPane ليأخذ 40% من ارتفاع الشاشة
+        topHeaderPane.prefHeightProperty().bind(profilePane.heightProperty().multiply(0.2));
 
-        HBox topHeader = createTopHeader();
-        topHeader.prefHeightProperty().bind(leftSidePane.heightProperty().multiply(0.2));
-        topHeader.prefWidthProperty().bind(leftSidePane.prefWidthProperty());
+        // جعل mainContent يأخذ المساحة المتبقية (60% من ارتفاع الشاشة)
+        mainContent.prefHeightProperty().bind(profilePane.heightProperty().multiply(0.8));
 
+        topHeaderPane.prefWidthProperty().bind(profilePane.widthProperty());
+        mainContent.prefWidthProperty().bind(profilePane.widthProperty());
 
-
-        HBox profileHeader = createProfileHeader();
-        profileHeader.prefWidthProperty().bind(leftSidePane.widthProperty());
-        profileHeader.prefHeightProperty().bind(leftSidePane.heightProperty().multiply(0.3));
-
-        HBox infoBox = new HBox(20);
-        infoBox.prefWidthProperty().bind(leftSidePane.widthProperty());
-        infoBox.prefHeightProperty().bind(leftSidePane.heightProperty().multiply(0.6));
-
-        VBox personalInfo = createPersonalInfoSection();
-        personalInfo.prefWidthProperty().bind(leftSidePane.widthProperty().multiply(0.5));
-        personalInfo.prefHeightProperty().bind(leftSidePane.heightProperty());
-
-        VBox addressInfo = createAddressSection();
-        addressInfo.prefWidthProperty().bind(leftSidePane.widthProperty().multiply(0.5));
-        addressInfo.prefHeightProperty().bind(leftSidePane.heightProperty());
-
-        infoBox.getChildren().addAll(addressInfo, personalInfo);
-        infoBox.setStyle("-fx-background-color: #BBEAFF21");
-
-        profilePane.getChildren().addAll(topHeader, profileHeader,infoBox);
-
+        // إضافة تأثير تلاشي
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), profilePane);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
@@ -71,125 +55,194 @@ public class MyProfile {
         return leftSidePane;
     }
 
-    private HBox createTopHeader(){
+    // إنشاء شريط العنوان العلوي
+    private Pane createTopHeader() {
+        Pane topHeaderPane = new Pane();
         HBox topHeader = new HBox();
 
+        ImageView topHeaderImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/topHeaderBg.png"))));
+        topHeaderImageView.fitHeightProperty().bind(topHeaderPane.heightProperty());
+        topHeaderImageView.fitWidthProperty().bind(topHeaderPane.widthProperty());
+
+        Rectangle clip = new Rectangle();
+        clip.setArcWidth(30);
+        clip.setArcHeight(30);
+        clip.heightProperty().bind(topHeaderImageView.fitHeightProperty());
+        clip.widthProperty().bind(topHeaderImageView.fitWidthProperty());
+        topHeaderImageView.setClip(clip);
+
         topHeader.getStyleClass().add("top-header");
-        VBox label = new VBox();
-        Label profileLabel = new Label("ملفي الشخصي");
-        profileLabel.getStyleClass().add("topHeader-title");
-        profileLabel.setAlignment(Pos.CENTER_RIGHT);
-        label.getChildren().add(profileLabel);
+        topHeader.prefHeightProperty().bind(topHeaderPane.heightProperty());
+        topHeader.prefWidthProperty().bind(topHeaderPane.widthProperty());
 
-        topHeader.getChildren().addAll(label);
-        return topHeader;
+        topHeaderPane.getChildren().addAll(topHeader, topHeaderImageView);
+        return topHeaderPane;
     }
 
-    private HBox createProfileHeader() {
-        HBox header = new HBox();
-        header.setAlignment(Pos.CENTER_LEFT);
-        header.setPadding(new Insets(10));
-        header.getStyleClass().add("profile-header");
+    // إنشاء لوحة الملف الشخصي
+    private VBox createProfilePane() {
+        VBox profilePane = new VBox(20);
+        profilePane.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        profilePane.setId("myProfilePane");
+        profilePane.setPadding(new Insets(15));
+        return profilePane;
+    }
 
-        // Profile Picture Section
-        HBox profileBox = new HBox();
-        profileBox.setAlignment(Pos.CENTER_RIGHT);
+    // إنشاء المحتوى الرئيسي
+    private HBox createMainContent() {
+        HBox mainContent = new HBox(20);
+        VBox leftPanel = createLeftPanel();
+        leftPanel.prefWidthProperty().bind(mainContent.widthProperty());
+        leftPanel.prefHeightProperty().bind(mainContent.heightProperty());
+        VBox rightPanel = createRightPanel();
+        rightPanel.prefWidthProperty().bind(mainContent.widthProperty());
+        rightPanel.prefHeightProperty().bind(mainContent.heightProperty());
 
-        // ImageView for profile picture
-        ImageView profilePic = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/Pictures/aaa.jpg")).toExternalForm()));
-        profilePic.setFitHeight(40);
-        profilePic.setFitWidth(40);
-        Circle clip = new Circle(20, 20, 20); // Circle clip for rounded image
-        profilePic.setClip(clip);
-        profilePic.getStyleClass().add("profile-pic");
-        profileBox.getChildren().addAll(profilePic);
+        mainContent.getChildren().addAll(leftPanel, rightPanel);
+        return mainContent;
+    }
 
-        // FileChooser to choose a new profile picture
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+    // إنشاء اللوحة اليسرى
+    private VBox createLeftPanel() {
+        VBox leftPanel = new VBox(20);
+        leftPanel.getChildren().addAll(
+                createPersonalInfoSection(),
+                createProfessionalInfoSection()
         );
-
-        // Set action to open FileChooser when profile picture is clicked
-        profilePic.setOnMouseClicked(_ -> {
-            File selectedFile = fileChooser.showOpenDialog(null);
-            if (selectedFile != null) {
-                Image newImage = new Image(selectedFile.toURI().toString());
-                profilePic.setImage(newImage); // Update the ImageView with the new image
-            }
-        });
-
-        // Profile Info Section
-        VBox profileInfo = new VBox(5);
-        Label nameLabel = new Label(name);
-        Label titleLabel = new Label("مطور العاب");
-        Label locationLabel = new Label("الموقع");
-        profileInfo.getChildren().addAll(nameLabel, titleLabel, locationLabel);
-        profileInfo.setAlignment(Pos.CENTER);
-
-        // Edit button for profile info
-        Button editButton = new Button("تعديل");
-        editButton.getStyleClass().add("edit-button");
-
-        // Add all elements to the header
-        header.getChildren().addAll(profileBox, profileInfo, editButton);
-        return header;
+        return leftPanel;
     }
 
+    // إنشاء اللوحة اليمنى
+    private VBox createRightPanel() {
+        VBox rightPanel = new VBox(20);
+        rightPanel.setPadding(new Insets(10));
+        rightPanel.getStyleClass().add("right-panel");
+        rightPanel.getChildren().addAll(
+                createProfileCard(),
+                createLocationSection(),
+                createAboutYouSection()
+        );
+        return rightPanel;
+    }
 
-
+    // إنشاء قسم المعلومات الشخصية
     private VBox createPersonalInfoSection() {
         VBox section = new VBox(10);
+        section.setPadding(new Insets(10));
         section.getStyleClass().add("info-section");
 
-        Label sectionTitle = new Label("المعلومات الشخصية");
-        sectionTitle.getStyleClass().add("section-title");
-
-
-        VBox grid = new VBox(15);
-        grid.setAlignment(Pos.CENTER_LEFT);
-        grid.getStyleClass().add("grid");
-        grid.prefWidthProperty().bind(section.widthProperty());
-
-        grid.prefHeightProperty().bind(section.heightProperty());
-
-        Label nameLabel = new Label("الأسم : "+name);
-        Label emailLabel = new Label("البريد الألكتروني : "+email);
-        Label phoneLabel = new Label("رقم الهاتف : "+phoneNum);
-        Label accountType = new Label("نوغ الحساب : "+type);
-        grid.getChildren().addAll(nameLabel, emailLabel, phoneLabel,accountType);
-
-        Button editButton = new Button("تعديل");
-        editButton.getStyleClass().add("edit-button");
-
-        HBox titleBox = new HBox(sectionTitle, editButton);
-        titleBox.setAlignment(Pos.TOP_LEFT);
-        titleBox.prefWidthProperty().bind(section.widthProperty());
-        titleBox.setSpacing(10);
-
-
-        section.getChildren().addAll(titleBox, grid);
-        return section;
-    }
-
-    private VBox createAddressSection() {
-        VBox section = new VBox(10);
-        section.getStyleClass().add("info-section");
-
-        Label sectionTitle = new Label("العنوان");
+        Label sectionTitle = new Label("معلومات شخصية");
         sectionTitle.getStyleClass().add("section-title");
 
         GridPane grid = new GridPane();
         grid.setHgap(20);
         grid.setVgap(10);
 
-        addField(grid, 0, "المدينة", "اسطنبول");
-        addField(grid, 1, "الدولة", "تركيا");
-        addField(grid, 2, "رقم المنشئ", "5123648728");
-        addField(grid, 3, "رقم الشخصي", "324A3DR2B3");
+        // Create the text fields (assuming these are defined elsewhere in your class)
+        TextField nameField = new TextField(name);
+        TextField emailField = new TextField(email);
+        TextField phoneNumField = new TextField(phoneNum);
+        TextField typeField = new TextField(type);
 
+        // Make the fields non-editable by default
+        nameField.setEditable(false);
+        emailField.setEditable(false);
+        phoneNumField.setEditable(false);
+        typeField.setEditable(false);
+
+        // Add a 'blocked' style class for hover effect (defined in CSS)
+        nameField.getStyleClass().add("field-value");
+        emailField.getStyleClass().add("field-value");
+        phoneNumField.getStyleClass().add("field-value");
+        typeField.getStyleClass().add("field-value");
+
+        // Add fields to the grid
+        addField(grid, 0, "الأسم", nameField);
+        addField(grid, 1, "البريد الألكتروني", emailField);
+        addField(grid, 2, "رقم الهاتف", phoneNumField);
+        addField(grid, 3, "نوع الحساب", typeField);
+
+        // Create the edit button
         Button editButton = new Button("تعديل");
         editButton.getStyleClass().add("edit-button");
+
+        // Set an action to toggle the editability of the fields when clicking 'تعديل'
+        editButton.setOnAction(e -> {
+            boolean isEditable = nameField.isEditable();  // Check if currently editable
+            nameField.setEditable(!isEditable);
+            emailField.setEditable(!isEditable);
+            phoneNumField.setEditable(!isEditable);
+            typeField.setEditable(!isEditable);
+
+            // Optionally change the button text to reflect the action
+            if (isEditable) {
+                editButton.setText("تعديل");
+            } else {
+                editButton.setText("حفظ");
+            }
+        });
+
+        // Create a title box
+        HBox titleBox = new HBox(sectionTitle, editButton);
+        titleBox.setAlignment(Pos.CENTER_LEFT);
+        titleBox.setSpacing(10);
+
+        section.getChildren().addAll(titleBox, grid);
+        return section;
+    }
+
+
+    // إنشاء قسم المعلومات المهنية
+    private VBox createProfessionalInfoSection() {
+        VBox section = new VBox(10);
+        section.setPadding(new Insets(10));
+        section.getStyleClass().add("info-section");
+
+        Label sectionTitle = new Label("معلومات مهنية");
+        sectionTitle.getStyleClass().add("section-title");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(20);
+        grid.setVgap(10);
+
+        // Create the text fields (initially non-editable)
+        TextField departmentField = new TextField(); // empty field for "القسم"
+        departmentField.setEditable(false);
+
+        TextField teamField = new TextField("Product hunt");
+        teamField.setEditable(false);
+
+        TextField roleField = new TextField("UX UI Designer");
+        roleField.setEditable(false);
+
+        TextField startDateField = new TextField("Aug 15, 2018");
+        startDateField.setEditable(false);
+
+        // Add fields to the grid using the updated addField method
+        addField(grid, 0, "القسم", departmentField);
+        addField(grid, 1, "الفريق", teamField);
+        addField(grid, 2, "الدور", roleField);
+        addField(grid, 3, "تاريخ البدء", startDateField);
+
+        // Create the edit button
+        Button editButton = new Button("تعديل");
+        editButton.getStyleClass().add("edit-button");
+
+        // Toggle the editable state of the text fields when clicking 'تعديل'
+        editButton.setOnAction(e -> {
+            boolean isEditable = departmentField.isEditable();
+            departmentField.setEditable(!isEditable);
+            teamField.setEditable(!isEditable);
+            roleField.setEditable(!isEditable);
+            startDateField.setEditable(!isEditable);
+
+            // Optionally change the button text
+            if (isEditable) {
+                editButton.setText("تعديل");
+            } else {
+                editButton.setText("حفظ");
+            }
+        });
 
         HBox titleBox = new HBox(sectionTitle, editButton);
         titleBox.setAlignment(Pos.CENTER_LEFT);
@@ -199,13 +252,112 @@ public class MyProfile {
         return section;
     }
 
-    private void addField(GridPane grid, int row, String label, String value) {
+
+    // إنشاء بطاقة الملف الشخصي
+    private VBox createProfileCard() {
+        VBox card = new VBox(10);
+        card.setPadding(new Insets(10));
+        card.getStyleClass().add("profile-card");
+
+        ImageView profilePic = createProfilePicture();
+        Label nameLabel = new Label(name);
+        nameLabel.getStyleClass().add("profile-name");
+
+        HBox roleTags = new HBox(10);
+        Label studentTag = new Label("طالب");
+        Label freelancerTag = new Label("مستقل");
+        studentTag.getStyleClass().add("role-tag");
+        freelancerTag.getStyleClass().add("role-tag");
+
+        roleTags.getChildren().addAll(studentTag, freelancerTag);
+
+        card.getChildren().addAll(profilePic, nameLabel, roleTags);
+        return card;
+    }
+
+    // إنشاء صورة الملف الشخصي
+    private ImageView createProfilePicture() {
+        ImageView profilePic = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/Pictures/aaa.jpg")).toExternalForm()));
+        profilePic.setFitHeight(100);
+        profilePic.setFitWidth(100);
+
+        Circle clip = new Circle(50, 50, 50);
+        profilePic.setClip(clip);
+        profilePic.getStyleClass().add("profile-pic");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        profilePic.setOnMouseClicked(_ -> {
+            File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                Image newImage = new Image(selectedFile.toURI().toString());
+                profilePic.setImage(newImage);
+            }
+        });
+
+        return profilePic;
+    }
+
+    // إنشاء قسم الموقع
+    private VBox createLocationSection() {
+        VBox section = new VBox(10);
+        section.setPadding(new Insets(10));
+        section.getStyleClass().add("info-section");
+
+        Label sectionTitle = new Label("الموقع");
+        sectionTitle.getStyleClass().add("section-title");
+
+        TextField locationField = new TextField("Evergreen Meadows 12345");
+        locationField.getStyleClass().add("location-field");
+
+        section.getChildren().addAll(sectionTitle, locationField);
+        return section;
+    }
+    private VBox createAboutYouSection() {
+        VBox section = new VBox(10);
+        section.getStyleClass().add("info-section");
+
+        Label sectionTitle = new Label("نبذة عني");
+        sectionTitle.getStyleClass().add("section-title");
+
+        TextArea aboutYouArea = new TextArea();
+
+        // Enable word wrapping
+        aboutYouArea.setWrapText(true);
+
+        // Set a preferred size for the text area
+        aboutYouArea.setPrefColumnCount(6);
+        aboutYouArea.setPrefRowCount(5);
+
+        aboutYouArea.getStyleClass().add("about-you-area");
+
+        // Limit the input to 250 characters
+        aboutYouArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 100) {
+                aboutYouArea.setText(newValue.substring(0, 100)); // Trim text to 250 characters
+            }
+        });
+
+        section.getChildren().addAll(sectionTitle, aboutYouArea);
+        return section;
+    }
+
+
+    // إضافة حقل إلى شبكة المعلومات
+    private void addField(GridPane grid, int rowIndex, String label, TextField fieldValue) {
+        // Create a label for the field
         Label fieldLabel = new Label(label);
         fieldLabel.getStyleClass().add("field-label");
-        Label fieldValue = new Label(value);
+
+        // Set default properties for the TextField (editable is handled outside)
         fieldValue.getStyleClass().add("field-value");
 
-        grid.add(fieldLabel, 0, row);
-        grid.add(fieldValue, 1, row);
+        // Add the label and field to the grid
+        grid.add(fieldLabel, 0, rowIndex);
+        grid.add(fieldValue, 1, rowIndex);
     }
+
 }

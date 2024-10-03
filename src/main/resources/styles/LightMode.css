@@ -297,116 +297,125 @@
     -fx-padding: 10 0 10 0 ;
 }
 
-/* MyProfile.css */
-
+/* Main Profile Pane */
 #myProfilePane {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #f9f9f9;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
 }
 
-.topHeader-title{
+/* Top Header */
+.top-header {
+    -fx-background-color: #f0f4fa;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 18px;
+}
+/*right-panel*/
+.right-panel{
+    -fx-background-color: linear-gradient(#5c5c5c, #2e2e2e);
+    -fx-background-radius: 15;
+}
+.about-you-area {
+    -fx-border-color: #f9f9f9;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-background-color: #f9f9f9;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+    -fx-wrap-text: true;
+}
+.about-you-area:focused{
+    -fx-border-color: black;
+}
+
+/* Profile Card */
+.profile-card {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+/* Profile Name */
+.profile-name {
+    -fx-font-family: 'Poppins', sans-serif;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
-    -fx-text-fill: #000000;
-    -fx-padding: 10 800 0 0;
+    -fx-text-fill: #333333;
 }
 
-.edit-button {
-    -fx-background-color: transparent;
-    -fx-text-fill: black;
-    -fx-border-color: linear-gradient(to bottom right, #98fa04, #ff6e00, #f5f100);
-    -fx-border-radius: 30px;
-    -fx-border-width: 2px;
-    -fx-padding: 8px 16px;
-    -fx-font-size: 14px;
-    -fx-font-family: 'Segoe UI', sans-serif;
-    -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.2), 10, 0.3, 0, 5);
-    -fx-cursor: hand;
-    -fx-transition: all 0.3s ease;
+/* Role Tags */
+.role-tag {
+    -fx-background-color: #f0f4fa;
+    -fx-border-radius: 20;
+    -fx-text-fill: #6a6a6a;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 12px;
 }
 
-.edit-button:hover {
-    -fx-background-color: transparent;
-    -fx-text-fill: #000000;
-    -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.45), 15, 0.4, 0, 7);
-}
-
-.edit-button:pressed {
-    -fx-background-color: transparent;
-    -fx-text-fill: #000000;
-    -fx-effect: dropshadow(gaussian, rgba(68, 68, 68, 0.7), 15, 0.6, 0, 5);
-}
-
-
+/* Info Sections */
 .info-section {
-    -fx-background-color: #ffffff;
-    -fx-padding: 20px;
-    -fx-border-radius: 15px;
+    -fx-background-color: white;
+    -fx-border-radius: 15;
     -fx-background-radius: 15;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-    -fx-spacing: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 10, 0, 0, 5);
 }
 
+/* Section Titles */
 .section-title {
-    -fx-font-size: 18px;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-padding: 0 0 10 0;
+    -fx-text-fill: #333333;
 }
 
+/* Field Labels */
 .field-label {
-    -fx-font-weight: bold;
-    -fx-text-fill: #6c757d;
-}
-
-.field-value {
-    -fx-text-fill: #212529;
-}
-
-/* Profile header styles */
-.profile-header {
-    -fx-background-color: #ffffff;
-    -fx-padding: 20px;
-    -fx-border-radius: 15px;
-    -fx-background-radius: 15;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-    -fx-spacing: 20;
-}
-.top-header{
-    -fx-background-color: #ffffff;
-    -fx-padding: 20px;
-    -fx-border-radius: 15px;
-    -fx-background-radius: 15;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
-    -fx-spacing: 10;
-
-}
-
-
-
-.profile-pic {
-    -fx-fit-height: 80px;
-    -fx-fit-width: 80px;
-    -fx-clip: "circle(20px at center)";
-}
-
-.profile-info {
-    -fx-spacing: 5;
-}
-
-.profile-name {
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-}
-
- .profile-location {
+    -fx-font-family: 'Poppins', sans-serif;
     -fx-font-size: 14px;
-    -fx-text-fill: #6c757d;
+    -fx-text-fill: #6a6a6a;
+
 }
 
-/* GridPane styles */
-.info-grid {
-    -fx-hgap: 20;
-    -fx-vgap: 10;
+/* Text Fields */
+.field-value {
+    -fx-background-color: #f0f4fa;
+    -fx-border-radius: 10;
+    -fx-padding: 8 10;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-text-fill: #333333;
 }
-.grid{
-    -fx-font-weight: bold;-fx-font-size: 16px;-fx-background-radius: 15;-fx-font-family: Arial;
+
+/* Edit Button */
+.edit-button {
+    -fx-background-color: #673ab7;
+    -fx-text-fill: white;
+    -fx-border-radius: 20;
+    -fx-padding: 8 16;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-weight: bold;
+}
+
+/* Location Section */
+.location-field {
+    -fx-background-color: #f0f4fa;
+    -fx-border-radius: 10;
+    -fx-padding: 8 10;
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-text-fill: #333333;
+}
+.field-value:disabled {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #a0a0a0;
+    -fx-border-color: #d0d0d0;
+}
+
+/* When hovering over the blocked fields, show a not-allowed cursor */
+.field-value:hover:disabled {
+    -fx-cursor: not-allowed;
 }
