@@ -41,7 +41,8 @@ public class FileBasedAuthenticationSystem {
                 if (storedEmail.equals(email) && storedPassword.equals(password)) {
                     // إنشاء كائن User بناءً على المعلومات المخزنة
                     currentUser = new User(storedUsername, storedPassword, storedEmail, storedUserType, storedNumPhone);
-                    return currentUser;                }
+                    return currentUser;
+                }
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());

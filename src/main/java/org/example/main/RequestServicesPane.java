@@ -63,6 +63,10 @@ public class RequestServicesPane {
         content.prefWidthProperty().bind(topButtons.widthProperty());
 
         Button goToProfile = goToProfile();
+        goToProfile.setOnAction(_ ->{
+            MyProfile myProfile = new MyProfile();
+            myProfile.showMyProfilePage(leftSidePane);
+        });
         HBox profileBox = new HBox();
         profileBox.setAlignment(Pos.TOP_RIGHT);
         profileBox.getChildren().addAll(goToProfile);
@@ -224,8 +228,7 @@ public class RequestServicesPane {
     }
 
     private void filterServices(String category) {
-        // من هنا يمكنك إضافة الكود الخاص بتصفية الخدمات حسب الفئة المحددة
-        // مثال: عرض الخدمات المتعلقة بالتصنيف "تنظيف" فقط
+
         System.out.println(category);
     }
 
