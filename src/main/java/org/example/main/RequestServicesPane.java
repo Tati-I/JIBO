@@ -185,7 +185,7 @@ public class RequestServicesPane {
         servicesBox.prefWidthProperty().bind(scrollPane.widthProperty());
         //وضعهم في Vbox
         for (String[] service : services) {
-            Pane servicePane = createServicesPane(service[0], service[1], service[2], rightSideBar, service[3]);
+            Pane servicePane = createServicesPane(service[0], service[1], service[2], rightSideBar, service[3],leftSidePane);
             servicePane.prefWidthProperty().bind(servicesBox.widthProperty());
 
             servicesBox.getChildren().add(servicePane);
@@ -248,7 +248,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء لوحة خدمة معينة
-    private Pane createServicesPane(String title, String price, String imagePath, RightSideBar rightSideBar,String idName) {
+    private Pane createServicesPane(String title, String price, String imagePath, RightSideBar rightSideBar,String idName,Pane leftSidePane) {
         // إنشاء صورة الخدمة ووضعها على أقصى اليمين
         HBox pane = new HBox(20);
 
@@ -294,7 +294,7 @@ public class RequestServicesPane {
         titlePriceBox.getChildren().addAll(titleContainer, priceLabel, ratingLabel, serviceDescription);
 
         // زر الطلب ووضعه على أقصى اليسار مع Tooltip
-        Button requestButton = createRequestButton();
+        Button requestButton = createRequestButton(leftSidePane);
         Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
 
         // إضافة Tagline تحت معلومات إضافية
@@ -330,12 +330,17 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء زر الطلب
-    private Button createRequestButton() {
+    private Button createRequestButton(Pane leftSidePane) {
         Button requestButton = new Button("أطلب الاَن");
         requestButton.setId("requestButton");
         requestButton.setPrefSize(130, 110);
         requestButton.setOnMouseEntered(_ -> createUpAnimateButton(requestButton));
         requestButton.setOnMouseExited(_ -> createDownAnimateButton(requestButton));
+        requestButton.setOnAction(_ ->{
+            ServiceDetailPage serviceDetailPage = new ServiceDetailPage();
+            serviceDetailPage.serviceDetailPage(leftSidePane);
+
+        });
 
         return requestButton;
     }

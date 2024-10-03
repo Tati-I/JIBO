@@ -5,6 +5,7 @@ module org.example.main {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.desktop;
 
     opens org.example.main to javafx.fxml;
     exports org.example.main;

@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import javax.swing.text.IconView;
 import java.util.Objects;
 
 public class MyServices {
@@ -29,8 +30,6 @@ public class MyServices {
         imageView.setLayoutX(500);
         imageView.setLayoutY(300);
         ServicePane.getChildren().add(imageView);
-
-
 
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500),ServicePane);
         fadeIn.setFromValue(0.0);
