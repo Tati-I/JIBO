@@ -315,7 +315,7 @@
 }
 /*right-panel*/
 .right-panel{
-    -fx-background-color: rgba(155, 113, 248, 0.5);
+    -fx-background-color: rgb(7, 15, 58);
     -fx-background-radius: 15;
 
 }
@@ -365,13 +365,14 @@
     -fx-background-color: white;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
+    -fx-border-color: linear-gradient(#3c57f3, #9c72f5);
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 10, 0, 0, 5);
 }
 
 /* Section Titles */
 .section-title {
     -fx-font-family: 'Poppins', sans-serif;
-    -fx-font-size: 16px;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
 }
@@ -379,8 +380,9 @@
 /* Field Labels */
 .field-label {
     -fx-font-family: 'Poppins', sans-serif;
-    -fx-font-size: 14px;
+    -fx-font-size: 15px;
     -fx-text-fill: #6a6a6a;
+
 
 }
 

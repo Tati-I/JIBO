@@ -142,17 +142,17 @@ public class MyProfile {
     // إنشاء قسم المعلومات الشخصية
     private VBox createPersonalInfoSection() {
         VBox section = new VBox(10);
-        section.setPadding(new Insets(10));
+        section.setPadding(new Insets(10,10,10,10));
         section.getStyleClass().add("info-section");
 
         Label sectionTitle = new Label("معلومات شخصية");
         sectionTitle.getStyleClass().add("section-title");
 
         GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(10);
+        grid.setHgap(25);
+        grid.setVgap(30);
 
-        // Create the text fields (assuming these are defined elsewhere in your class)
+        // Create the text fields
         TextField nameField = new TextField(name);
         TextField emailField = new TextField(email);
         TextField phoneNumField = new TextField(phoneNum);
@@ -164,17 +164,17 @@ public class MyProfile {
         phoneNumField.setEditable(false);
         typeField.setEditable(false);
 
-        // Add a 'blocked' style class for hover effect (defined in CSS)
+        // Add a 'blocked' style class for hover effect
         nameField.getStyleClass().add("field-value");
         emailField.getStyleClass().add("field-value");
         phoneNumField.getStyleClass().add("field-value");
         typeField.getStyleClass().add("field-value");
 
-        // Add fields to the grid
-        addField(grid, 0, "الأسم", nameField);
-        addField(grid, 1, "البريد الألكتروني", emailField);
-        addField(grid, 2, "رقم الهاتف", phoneNumField);
-        addField(grid, 3, "نوع الحساب", typeField);
+        // Add fields to the grid in the desired layout
+        addField(grid, 0, "الأسم", nameField, 0);         // First row, first column
+        addField(grid, 0, "البريد الألكتروني", emailField, 2); // First row, second column
+        addField(grid, 1, "رقم الهاتف", phoneNumField, 0); // Second row, first column
+        addField(grid, 1, "نوع الحساب", typeField, 2);     // Second row, second column
 
         // Create the edit button
         Button editButton = new Button("تعديل");
@@ -206,6 +206,7 @@ public class MyProfile {
     }
 
 
+
     // إنشاء قسم المعلومات المهنية
     private VBox createProfessionalInfoSection() {
         VBox section = new VBox(10);
@@ -216,27 +217,33 @@ public class MyProfile {
         sectionTitle.getStyleClass().add("section-title");
 
         GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(10);
+        grid.setHgap(25);
+        grid.setVgap(30);
 
         // Create the text fields (initially non-editable)
         TextField departmentField = new TextField(); // empty field for "القسم"
+        departmentField.getStyleClass().add("field-value");
         departmentField.setEditable(false);
 
         TextField teamField = new TextField("Product hunt");
+        teamField.getStyleClass().add("field-value");
+
         teamField.setEditable(false);
 
         TextField roleField = new TextField("UX UI Designer");
+        roleField.getStyleClass().add("field-value");
+
         roleField.setEditable(false);
 
         TextField startDateField = new TextField("Aug 15, 2018");
+        startDateField.getStyleClass().add("field-value");
         startDateField.setEditable(false);
 
         // Add fields to the grid using the updated addField method
-        addField(grid, 0, "القسم", departmentField);
-        addField(grid, 1, "الفريق", teamField);
-        addField(grid, 2, "الدور", roleField);
-        addField(grid, 3, "تاريخ البدء", startDateField);
+        addField(grid, 0, "القسم", departmentField,0);
+        addField(grid, 0, "الفريق", teamField,2);
+        addField(grid, 1, "الدور", roleField,0);
+        addField(grid, 1, "تاريخ البدء", startDateField,2);
 
         // Create the edit button
         Button editButton = new Button("تعديل");
@@ -365,17 +372,14 @@ public class MyProfile {
 
 
     // إضافة حقل إلى شبكة المعلومات
-    private void addField(GridPane grid, int rowIndex, String label, TextField fieldValue) {
+    private void addField(GridPane grid, int rowIndex, String label, TextField fieldValue, int columnIndex) {
         // Create a label for the field
         Label fieldLabel = new Label(label);
         fieldLabel.getStyleClass().add("field-label");
 
-        // Set default properties for the TextField (editable is handled outside)
-        fieldValue.getStyleClass().add("field-value");
-
         // Add the label and field to the grid
-        grid.add(fieldLabel, 0, rowIndex);
-        grid.add(fieldValue, 1, rowIndex);
+        grid.add(fieldLabel, columnIndex, rowIndex);  // Dynamic column for the label
+        grid.add(fieldValue, columnIndex + 1, rowIndex);  // Dynamic column for the field
     }
 
 }
