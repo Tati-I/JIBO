@@ -64,7 +64,7 @@
 
 /* الشريط الجانبي الأيمن */
 #rightSideBar {
-    -fx-background-color: linear-gradient(#838383, #494949);
+    -fx-background-color: linear-gradient(#606060, #3d3d3d);
     -fx-background-radius: 20 0 0 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
 }
@@ -315,12 +315,14 @@
 }
 /*right-panel*/
 .right-panel{
-    -fx-background-color: rgb(7, 15, 58);
+    -fx-background-color: linear-gradient(#E0E0E0
+    , #E0E0E0
+    );
     -fx-background-radius: 15;
 
 }
 .about-you-area {
-    -fx-border-color: #f9f9f9;
+    -fx-border-color: #c0c0c0;
     -fx-border-width: 2px;
     -fx-padding: 10px;
     -fx-font-family: "Arial";
@@ -331,7 +333,7 @@
     -fx-wrap-text: true;
 }
 .about-you-area:focused{
-    -fx-border-color: black;
+    -fx-border-color: linear-gradient(#3c57f3, #9c72f5);
 }
 
 /* Profile Card */
@@ -343,29 +345,36 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
 }
 
+
+
+
 /* Profile Name */
 .profile-name {
     -fx-font-family: 'Poppins', sans-serif;
-    -fx-font-size: 20px;
+    -fx-font-size: 22px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0, 0, 3);
 }
 
 /* Role Tags */
 .role-tag {
     -fx-background-color: #f0f4fa;
-    -fx-border-radius: 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10;
     -fx-text-fill: #6a6a6a;
     -fx-font-family: 'Poppins', sans-serif;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 5, 0, 0, 3);
 }
-
 /* Info Sections */
 .info-section {
     -fx-background-color: white;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
-    -fx-border-color: linear-gradient(#3c57f3, #9c72f5);
+
+    -fx-border-color: linear-gradient(#b0b0b0, #b0b0b0);
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.05), 10, 0, 0, 5);
 }
 
@@ -388,31 +397,34 @@
 
 /* Text Fields */
 .field-value {
-    -fx-background-color: #f0f4fa;
+    -fx-background-color: rgba(231, 231, 231, 0.41);
     -fx-border-radius: 10;
-    -fx-padding: 8 10;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 1;
+    -fx-padding: 10 12;
     -fx-font-family: 'Poppins', sans-serif;
+    -fx-font-size: 14px;
     -fx-text-fill: #333333;
 }
-
+.field-value:focused {
+    -fx-border-color: linear-gradient(to right, #6a11cb, #2575fc);
+}
 /* Edit Button */
 .edit-button {
-    -fx-background-color: #673ab7;
+    -fx-background-color: rgb(9, 110, 229);
     -fx-text-fill: white;
-    -fx-border-radius: 20;
-    -fx-padding: 8 16;
     -fx-font-family: 'Poppins', sans-serif;
-    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+    -fx-padding: 8 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+}
+.edit-button:hover {
+    -fx-background-color: linear-gradient(to right, #2575fc, #6a11cb);
 }
 
 /* Location Section */
-.location-field {
-    -fx-background-color: #f0f4fa;
-    -fx-border-radius: 10;
-    -fx-padding: 8 10;
-    -fx-font-family: 'Poppins', sans-serif;
-    -fx-text-fill: #333333;
-}
+
 .field-value:disabled {
     -fx-background-color: #f0f0f0;
     -fx-text-fill: #a0a0a0;

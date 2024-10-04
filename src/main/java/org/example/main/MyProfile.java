@@ -58,12 +58,14 @@ public class MyProfile {
     // إنشاء شريط العنوان العلوي
     private Pane createTopHeader() {
         Pane topHeaderPane = new Pane();
-        HBox topHeader = new HBox();
+        StackPane topHeader = new StackPane();  // تغيير إلى StackPane
 
-        ImageView topHeaderImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/topHeaderBg.png"))));
+        // إضافة صورة الخلفية
+        ImageView topHeaderImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/ta.png"))));
         topHeaderImageView.fitHeightProperty().bind(topHeaderPane.heightProperty());
         topHeaderImageView.fitWidthProperty().bind(topHeaderPane.widthProperty());
 
+        // إعداد الـ clip لجعل الحواف مستديرة
         Rectangle clip = new Rectangle();
         clip.setArcWidth(30);
         clip.setArcHeight(30);
@@ -71,13 +73,26 @@ public class MyProfile {
         clip.widthProperty().bind(topHeaderImageView.fitWidthProperty());
         topHeaderImageView.setClip(clip);
 
+        // إضافة كلمة "ملفي الشخصي"
+        Label profileLabel = new Label("ملفي الشخصي");
+        profileLabel.getStyleClass().add("section-title");
+        profileLabel.setPadding(new Insets(10));
+
+        // إعداد StackPane ووضع النص فوق الصورة
+        topHeader.getChildren().addAll(topHeaderImageView, profileLabel);
+        StackPane.setAlignment(profileLabel, Pos.CENTER_LEFT);
+
+
         topHeader.getStyleClass().add("top-header");
         topHeader.prefHeightProperty().bind(topHeaderPane.heightProperty());
         topHeader.prefWidthProperty().bind(topHeaderPane.widthProperty());
 
-        topHeaderPane.getChildren().addAll(topHeader, topHeaderImageView);
+
+        topHeaderPane.getChildren().add(topHeader);
         return topHeaderPane;
     }
+
+
 
     // إنشاء لوحة الملف الشخصي
     private VBox createProfilePane() {
@@ -275,31 +290,35 @@ public class MyProfile {
 
 
     // إنشاء بطاقة الملف الشخصي
+
     private VBox createProfileCard() {
         VBox card = new VBox(10);
         card.setPadding(new Insets(10));
         card.getStyleClass().add("profile-card");
 
+        StackPane imageContainer = new StackPane();
         ImageView profilePic = createProfilePicture();
+        Button changeImageButton = createChangeImageButton(profilePic);
+
+        imageContainer.getChildren().addAll(profilePic, changeImageButton);
+        StackPane.setAlignment(changeImageButton, Pos.BOTTOM_LEFT);
+        StackPane.setMargin(changeImageButton, new Insets(0, 0, 0, 60));
+
         Label nameLabel = new Label(name);
         nameLabel.getStyleClass().add("profile-name");
 
         HBox roleTags = new HBox(10);
         Label studentTag = new Label("طالب");
-        Label freelancerTag = new Label("مستقل");
+        Label freelancerTag = new Label("مصمم");
         studentTag.getStyleClass().add("role-tag");
         freelancerTag.getStyleClass().add("role-tag");
 
         roleTags.getChildren().addAll(studentTag, freelancerTag);
 
-
-
-
-        card.getChildren().addAll(profilePic, nameLabel, roleTags);
+        card.getChildren().addAll(imageContainer, nameLabel, roleTags);
         return card;
     }
 
-    // إنشاء صورة الملف الشخصي
     private ImageView createProfilePicture() {
         ImageView profilePic = new ImageView(new Image(Objects.requireNonNull(getClass().getResource("/Pictures/aaa.jpg")).toExternalForm()));
         profilePic.setFitHeight(100);
@@ -309,12 +328,36 @@ public class MyProfile {
         profilePic.setClip(clip);
         profilePic.getStyleClass().add("profile-pic");
 
+        return profilePic;
+    }
+
+    private Button createChangeImageButton(ImageView profilePic) {
+        Button changeImageButton = new Button("+");
+        changeImageButton.getStyleClass().add("change-image-button");
+
+        // Set button size
+        changeImageButton.setPrefSize(40, 40);
+        changeImageButton.setMinSize(30, 30);
+        changeImageButton.setMaxSize(50, 50);
+
+        // Make the button circular
+        changeImageButton.setShape(new Circle(40));
+
+        // Style the button
+        changeImageButton.setStyle(
+                "      -fx-background-color: rgb(9,110,229);" +
+                        "-fx-text-fill: #ffffff;" +
+                        "-fx-font-weight: bold;" +
+                        "-fx-font-size: 18px;" +
+                        "-fx-padding: 0;"
+        );
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
         );
 
-        profilePic.setOnMouseClicked(_ -> {
+        changeImageButton.setOnAction(event -> {
             File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 Image newImage = new Image(selectedFile.toURI().toString());
@@ -322,9 +365,8 @@ public class MyProfile {
             }
         });
 
-        return profilePic;
+        return changeImageButton;
     }
-
     // إنشاء قسم الموقع
     private VBox createLocationSection() {
         VBox section = new VBox(10);
@@ -335,7 +377,7 @@ public class MyProfile {
         sectionTitle.getStyleClass().add("section-title");
 
         TextField locationField = new TextField("Evergreen Meadows 12345");
-        locationField.getStyleClass().add("location-field");
+        locationField.getStyleClass().add("field-value");
 
         section.getChildren().addAll(sectionTitle, locationField);
         return section;
