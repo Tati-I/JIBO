@@ -23,24 +23,28 @@ public class RequestServicesPane {
 
     // دالة لإنشاء وعرض صفحة الخدمات
     public Pane showServicesPage(Pane leftSidePane) {
-
         leftSidePane.getChildren().clear();
         VBox mainContainer = new VBox();
+        mainContainer.setSpacing(20);
+        mainContainer.setAlignment(Pos.TOP_CENTER);
+        mainContainer.setPadding(new Insets(15, 15, 0, 15));
+        mainContainer.prefWidthProperty().bind(leftSidePane.widthProperty());
+        mainContainer.prefHeightProperty().bind(leftSidePane.heightProperty());
 
         //انشاء كائن لأستخدام بعض الأشياء
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
 
-        // إنشاء لوحة المحتوى الرئيسية
-        VBox requestServicePane = new VBox(30);
-        requestServicePane.setId("requestServicePane");
-        requestServicePane.prefWidthProperty().bind(leftSidePane.widthProperty());
-        requestServicePane.prefHeightProperty().bind(leftSidePane.heightProperty());
+        // Top Header (20% of mainContainer height)
+        VBox topHeader = new VBox();
+        topHeader.prefHeightProperty().bind(mainContainer.heightProperty().multiply(0.215));
+        topHeader.prefWidthProperty().bind(mainContainer.widthProperty());
 
         HBox topButtons = new HBox();
         topButtons.setAlignment(Pos.CENTER);
-        topButtons.setPadding(new Insets(30, 80, 30, 80));
-        topButtons.prefWidthProperty().bind(requestServicePane.widthProperty());
-        topButtons.setStyle("-fx-background-color: rgba(255,255,255,0.98) ;-fx-background-radius: 0 15 15 0;-fx-border-radius: 15px");
+        topButtons.setPadding(new Insets(0, 80, 0, 80));
+        topButtons.prefWidthProperty().bind(topHeader.widthProperty());
+        topButtons.prefHeightProperty().bind(topHeader.heightProperty());
+        topButtons.setStyle("-fx-background-color: rgba(255,255,255,0.98); -fx-background-radius: 20; -fx-border-radius: 30");
 
         DropShadow shadow = new DropShadow();
         shadow.setRadius(5.0);
@@ -58,17 +62,17 @@ public class RequestServicesPane {
         logoView.setFitWidth(46);
 
         HBox content = new HBox();
-        content.setAlignment(Pos.TOP_LEFT);
+        content.setAlignment(Pos.CENTER_LEFT);
         content.getChildren().addAll(logoView, welcomeLabel);
         content.prefWidthProperty().bind(topButtons.widthProperty());
 
         Button goToProfile = goToProfile();
-        goToProfile.setOnAction(_ ->{
+        goToProfile.setOnAction(_ -> {
             MyProfile myProfile = new MyProfile();
             myProfile.showMyProfilePage(leftSidePane);
         });
         HBox profileBox = new HBox();
-        profileBox.setAlignment(Pos.TOP_RIGHT);
+        profileBox.setAlignment(Pos.CENTER_RIGHT);
         profileBox.getChildren().addAll(goToProfile);
 
         // إنشاء أزرار الخدمات
@@ -79,42 +83,43 @@ public class RequestServicesPane {
         };
 
         HBox topRightButtonBox = new HBox(10);
-        topRightButtonBox.setAlignment(Pos.TOP_RIGHT);
+        topRightButtonBox.setAlignment(Pos.CENTER_RIGHT);
 
         for (String[] topRightButton : topRightButtons) {
-         Button topButton = createServicesButton(topRightButton[0],topRightButton[1]);
-         topRightButtonBox.getChildren().add(topButton);
+            Button topButton = createServicesButton(topRightButton[0], topRightButton[1]);
+            topRightButtonBox.getChildren().add(topButton);
         }
 
         HBox rightBox = new HBox(10);
-        rightBox.setAlignment(Pos.TOP_RIGHT);
+        rightBox.setAlignment(Pos.CENTER_RIGHT);
         rightBox.prefWidthProperty().bind(topButtons.widthProperty());
-        rightBox.getChildren().addAll(topRightButtonBox,profileBox);
+        rightBox.getChildren().addAll(topRightButtonBox, profileBox);
 
-        topButtons.getChildren().addAll(content,rightBox);
+        topButtons.getChildren().addAll(content, rightBox);
+        topHeader.getChildren().add(topButtons);
 
-        //نص
+        // Middle Section (40% of mainContainer height)
+        VBox middleSection = new VBox(15);
+        middleSection.prefHeightProperty().bind(mainContainer.heightProperty().multiply(0.4));
+        middleSection.prefWidthProperty().bind(mainContainer.widthProperty());
+        middleSection.setStyle("-fx-background-color: #dfdfdf;-fx-background-radius: 15");
+
+
         Label shortCuts = new Label("اختصارات");
         shortCuts.setId("shortCuts");
-        shortCuts.setAlignment(Pos.CENTER_RIGHT);
-
-        HBox shortCutsBox = new HBox();
+        HBox shortCutsBox = new HBox(shortCuts);
         shortCutsBox.setAlignment(Pos.CENTER_RIGHT);
-        shortCutsBox.getChildren().add(shortCuts);
-        shortCutsBox.setPadding(new Insets(0, 30, 0, 30));
-        shortCutsBox.prefWidthProperty().bind(mainContainer.widthProperty());
+        shortCutsBox.prefWidthProperty().bind(middleSection.widthProperty());
+        shortCutsBox.prefHeightProperty().bind(middleSection.heightProperty().multiply(0.2));
+        shortCutsBox.setPadding(new Insets(0, 30, 0, 0));
 
-        Line line1 = new Line();
-        line1.setId("line");
-        line1.setStartY(360);
-        line1.setEndX(915);
-        line1.setEndY(360);
-        // إضافة أزرار الاختصار
         HBox categoryButtonsBox = new HBox(10);
         categoryButtonsBox.setAlignment(Pos.CENTER);
         categoryButtonsBox.setPadding(new Insets(0, 50, 0, 50));
-        categoryButtonsBox.prefWidthProperty().bind(mainContainer.widthProperty());
-        categoryButtonsBox.prefHeightProperty().bind(mainContainer.heightProperty());
+        categoryButtonsBox.prefWidthProperty().bind(middleSection.widthProperty());
+        categoryButtonsBox.prefHeightProperty().bind(middleSection.heightProperty().multiply(0.7));
+
+        middleSection.getChildren().addAll(shortCutsBox, categoryButtonsBox);
 
         String[][] shortcuts = {
                 {"خدماتي", "services.png", "servicesButton"},
@@ -124,13 +129,18 @@ public class RequestServicesPane {
         };
 
         for (String[] shortcut : shortcuts) {
-            Button shortcutButton = createShortcutButton(shortcut[0], shortcut[1], shortcut[2], requestServicePane, rightSideBar);
+            Button shortcutButton = createShortcutButton(shortcut[0], shortcut[1], shortcut[2], leftSidePane, rightSideBar);
+            shortcutButton.prefHeightProperty().bind(categoryButtonsBox.heightProperty());
+            shortcutButton.prefWidthProperty().bind(categoryButtonsBox.widthProperty().divide(shortcuts.length));
             shortcutButton.setEffect(shadow);
             categoryButtonsBox.getChildren().add(shortcutButton);
         }
+
         HBox topFields = new HBox();
-        topFields.setPadding(new Insets(0,30,0,30));
-        // إنشاء عنوان "الخدمات الشائعة"
+        topFields.setPadding(new Insets(0, 30, 0, 30));
+        topFields.prefWidthProperty().bind(middleSection.widthProperty());
+        topFields.prefHeightProperty().bind(middleSection.heightProperty().multiply(0.2));
+
         Label trendService = new Label("الخدمات الشائعة");
         trendService.setAlignment(Pos.TOP_RIGHT);
         trendService.setId("trendService");
@@ -139,11 +149,12 @@ public class RequestServicesPane {
         trendServiceBox.setAlignment(Pos.TOP_RIGHT);
         trendServiceBox.getChildren().add(trendService);
         trendServiceBox.prefWidthProperty().bind(topFields.widthProperty());
+        trendServiceBox.prefHeightProperty().bind(topFields.heightProperty());
 
         // إنشاء حقل البحث عن الخدمات
         TextField serviceSearch = new TextField();
         serviceSearch.setPromptText("البحث عن خدمة...");
-        serviceSearch.setAlignment(Pos.TOP_LEFT);
+        serviceSearch.setAlignment(Pos.TOP_RIGHT);
         serviceSearch.setPrefSize(230, 30);
         serviceSearch.setId("serviceSearch");
 
@@ -151,19 +162,25 @@ public class RequestServicesPane {
         serviceSearchBox.setAlignment(Pos.TOP_LEFT);
         serviceSearchBox.getChildren().add(serviceSearch);
         serviceSearchBox.prefWidthProperty().bind(topFields.widthProperty());
+        serviceSearchBox.prefHeightProperty().bind(topFields.heightProperty());
 
-        //وضع البحث والنص في box
-        topFields.prefWidthProperty().bind(mainContainer.widthProperty());
         topFields.getChildren().addAll(serviceSearchBox, trendServiceBox);
+        HBox.setHgrow(trendService, Priority.ALWAYS);
 
-        // خط يفصل
-        Line line = new Line();
-        line.setId("line");
-        line.setStartY(360);
-        line.setEndX(915);
-        line.setEndY(360);
+        // Bottom Section with ScrollPane (40% of mainContainer height)
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        scrollPane.setFitToWidth(true);
+        scrollPane.prefHeightProperty().bind(mainContainer.heightProperty().multiply(0.4));
+        scrollPane.prefWidthProperty().bind(mainContainer.widthProperty());
+        scrollPane.setPadding(new Insets(0, 30, 0, 30));
 
-        // إنشاء لوحات الخدمات المختلفة
+        VBox servicesBox = new VBox(10);
+
+        servicesBox.prefWidthProperty().bind(scrollPane.widthProperty());
+        servicesBox.prefHeightProperty().bind(scrollPane.heightProperty());
+        servicesBox.setStyle("-fx-background-color: #dfdfdf;-fx-background-radius: 15");
+
         String[][] services = {
                 {"كهربائي", "15$", "electrical.png", "electricPane"},
                 {"سبّاك", "30$", "water_pane.png", "waterPane"},
@@ -174,40 +191,24 @@ public class RequestServicesPane {
                 {"صيانة أجهزة كهربائية", "40$", "repair.png", "applianceRepairPane"}
         };
 
-        // إنشاء ScrollPane لتغليف لوحات الخدمات
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setStyle("-fx-background-color: transparent;");
-        scrollPane.setFitToWidth(true);
-        scrollPane.prefWidthProperty().bind(mainContainer.widthProperty());
-        scrollPane.setPadding(new Insets(0, 30, 0, 30));
-
-        VBox servicesBox = new VBox(10);
-        servicesBox.prefWidthProperty().bind(scrollPane.widthProperty());
-        //وضعهم في Vbox
         for (String[] service : services) {
-            Pane servicePane = createServicesPane(service[0], service[1], service[2], rightSideBar, service[3],leftSidePane);
+            Pane servicePane = createServicesPane(service[0], service[1], service[2], rightSideBar, service[3], leftSidePane);
             servicePane.prefWidthProperty().bind(servicesBox.widthProperty());
-
             servicesBox.getChildren().add(servicePane);
         }
+
         scrollPane.setContent(servicesBox);
 
-        //انشاء حاوية الصفحة لوضع جميع القطع
-        mainContainer.setSpacing(30);
-        mainContainer.setAlignment(Pos.CENTER);
-        mainContainer.setPadding(new Insets(0, 50, 0, 50)); // إضافة الفراغ 50px من الجانبين
-        mainContainer.prefWidthProperty().bind(requestServicePane.widthProperty());
-        mainContainer.prefHeightProperty().bind(requestServicePane.heightProperty());
-        mainContainer.getChildren().addAll(shortCutsBox,categoryButtonsBox, topFields,scrollPane);//اضافتهم بالترتيب
+        // Add all sections to mainContainer
+        mainContainer.getChildren().addAll(topHeader, middleSection,topFields, scrollPane);
 
-        //تأثير عند فتح الصفحة
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), requestServicePane);
+        // Fade-in effect
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(500), mainContainer);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
         fadeIn.play();
 
-        requestServicePane.getChildren().addAll(topButtons,mainContainer);
-        leftSidePane.getChildren().add(requestServicePane);
+        leftSidePane.getChildren().add(mainContainer);
         return leftSidePane;
     }
 
