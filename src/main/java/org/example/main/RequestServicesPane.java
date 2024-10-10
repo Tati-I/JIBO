@@ -5,16 +5,22 @@ import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.util.Objects;
@@ -76,10 +82,10 @@ public class RequestServicesPane {
         profileBox.getChildren().addAll(goToProfile);
 
         // إنشاء أزرار الخدمات
-        String [][] topRightButtons = {
-                {"خدماتي الحالية","nowService"},
-                {"خدماتي السابقة","previousService"},
-                {"تقييماتي","myRate"}
+        String[][] topRightButtons = {
+                {"خدماتي الحالية", "nowService"},
+                {"خدماتي السابقة", "previousService"},
+                {"تقييماتي", "myRate"}
         };
 
         HBox topRightButtonBox = new HBox(10);
@@ -102,7 +108,7 @@ public class RequestServicesPane {
         VBox middleSection = new VBox(15);
         middleSection.prefHeightProperty().bind(mainContainer.heightProperty().multiply(0.4));
         middleSection.prefWidthProperty().bind(mainContainer.widthProperty());
-        middleSection.setStyle("-fx-background-color: #dfdfdf;-fx-background-radius: 15");
+        middleSection.setStyle("-fx-background-color: linear-gradient(#E0E0E0,#E0E0E0);-fx-background-radius: 15");
 
 
         Label shortCuts = new Label("اختصارات");
@@ -115,7 +121,7 @@ public class RequestServicesPane {
 
         HBox categoryButtonsBox = new HBox(10);
         categoryButtonsBox.setAlignment(Pos.CENTER);
-        categoryButtonsBox.setPadding(new Insets(0, 50, 0, 50));
+        categoryButtonsBox.setPadding(new Insets(15, 50, 15, 50));
         categoryButtonsBox.prefWidthProperty().bind(middleSection.widthProperty());
         categoryButtonsBox.prefHeightProperty().bind(middleSection.heightProperty().multiply(0.7));
 
@@ -179,7 +185,8 @@ public class RequestServicesPane {
 
         servicesBox.prefWidthProperty().bind(scrollPane.widthProperty());
         servicesBox.prefHeightProperty().bind(scrollPane.heightProperty());
-        servicesBox.setStyle("-fx-background-color: #dfdfdf;-fx-background-radius: 15");
+        servicesBox.setPadding(new Insets(15, 15, 15, 15));
+        servicesBox.setStyle("-fx-background-color: linear-gradient(#e4e4e4,#E0E0E0);-fx-background-radius: 15");
 
         String[][] services = {
                 {"كهربائي", "15$", "electrical.png", "electricPane"},
@@ -200,7 +207,7 @@ public class RequestServicesPane {
         scrollPane.setContent(servicesBox);
 
         // Add all sections to mainContainer
-        mainContainer.getChildren().addAll(topHeader, middleSection,topFields, scrollPane);
+        mainContainer.getChildren().addAll(topHeader, middleSection, topFields, scrollPane);
 
         // Fade-in effect
         FadeTransition fadeIn = new FadeTransition(Duration.millis(500), mainContainer);
@@ -217,11 +224,11 @@ public class RequestServicesPane {
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
 
+
         Button button = new Button(text, imageView);
         button.setOnAction(_ -> filterServices(category));
         button.setContentDisplay(ContentDisplay.TOP);
         button.setAlignment(Pos.CENTER);
-        button.setPrefHeight(350);
         button.prefWidthProperty().bind(requestServicePane.widthProperty());
         button.setId(category);
 
@@ -241,7 +248,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء أزرار الخدمات
-    private Button createServicesButton(String name,String idName) {
+    private Button createServicesButton(String name, String idName) {
         Button servicesButton = new Button(name);
         servicesButton.setId(idName);
         servicesButton.setPrefWidth(1220);
@@ -249,7 +256,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء لوحة خدمة معينة
-    private Pane createServicesPane(String title, String price, String imagePath, RightSideBar rightSideBar,String idName,Pane leftSidePane) {
+    private Pane createServicesPane(String title, String price, String imagePath, RightSideBar rightSideBar, String idName, Pane leftSidePane) {
         // إنشاء صورة الخدمة ووضعها على أقصى اليمين
         HBox pane = new HBox(20);
 
@@ -295,7 +302,7 @@ public class RequestServicesPane {
         titlePriceBox.getChildren().addAll(titleContainer, priceLabel, ratingLabel, serviceDescription);
 
         // زر الطلب ووضعه على أقصى اليسار مع Tooltip
-        Button requestButton = createRequestButton(leftSidePane);
+        Button requestButton = createRequestButton(leftSidePane, title, price, imagePath);
         Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
 
         // إضافة Tagline تحت معلومات إضافية
@@ -331,16 +338,43 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء زر الطلب
-    private Button createRequestButton(Pane leftSidePane) {
+    private Button createRequestButton(Pane leftSidePane, String title, String price, String imagePath) {
         Button requestButton = new Button("أطلب الاَن");
         requestButton.setId("requestButton");
         requestButton.setPrefSize(130, 110);
         requestButton.setOnMouseEntered(_ -> createUpAnimateButton(requestButton));
         requestButton.setOnMouseExited(_ -> createDownAnimateButton(requestButton));
-        requestButton.setOnAction(_ ->{
-            ServiceDetailPage serviceDetailPage = new ServiceDetailPage();
-            serviceDetailPage.serviceDetailPage(leftSidePane);
+        requestButton.setOnAction(_ -> {
+            // Apply blur effect to the main pane
+            leftSidePane.setEffect(new GaussianBlur(10));
 
+            // Center the new stage on the screen
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            double width = screenBounds.getWidth() * 0.4;
+            double height = screenBounds.getHeight() * 0.6;
+
+            // Create and show the service detail page with service-specific information
+            ServiceDetailPage serviceDetailPage = new ServiceDetailPage(title, price, imagePath);
+            Stage detailStage = new Stage();
+            Scene detailScene = new Scene(serviceDetailPage, width, height);
+
+            // Add CSS for rounded corners
+            detailScene.getStylesheets().add(getClass().getResource("/styles/detailStage/detailStage.css").toExternalForm());
+            detailStage.setScene(detailScene);
+
+            // Make the new stage modal and undecorated
+            detailStage.initModality(Modality.APPLICATION_MODAL);
+            detailStage.initOwner(leftSidePane.getScene().getWindow());
+            detailStage.initStyle(StageStyle.TRANSPARENT);
+
+            detailStage.setWidth(width);
+            detailStage.setHeight(height);
+
+            // Show the detail stage and wait for it to be closed
+            detailStage.showAndWait();
+
+            // Remove blur when the detail stage is closed
+            leftSidePane.setEffect(null);
         });
 
         return requestButton;
