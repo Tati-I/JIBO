@@ -1,6 +1,6 @@
 /* الخلفية العامة */
 .root {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #f9f9f9;
 }
 
 /* مربع البحث */
@@ -209,7 +209,7 @@
 }
 
 #requestServicePane,#homePane,#myProfilePane,#ServicePane,#settingPane {
-    -fx-background-color: rgba(187, 234, 255, 0.13);
+    -fx-background-color: rgb(249, 249, 249);
     -fx-background-radius: 0 20 20 0;
 }
 #servicesButton {
@@ -333,7 +333,7 @@
     -fx-wrap-text: true;
 }
 .about-you-area:focused{
-    -fx-border-color: linear-gradient(#3c57f3, #9c72f5);
+    -fx-border-color: #c0c0c0;
 }
 
 /* Profile Card */

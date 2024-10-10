@@ -164,6 +164,7 @@ public class MyProfile {
         sectionTitle.getStyleClass().add("section-title");
 
         GridPane grid = new GridPane();
+        grid.prefHeightProperty().bind(section.heightProperty());
         grid.setHgap(25);
         grid.setVgap(30);
 
@@ -232,6 +233,7 @@ public class MyProfile {
         sectionTitle.getStyleClass().add("section-title");
 
         GridPane grid = new GridPane();
+        grid.prefHeightProperty().bind(section.heightProperty());
         grid.setHgap(25);
         grid.setVgap(30);
 
@@ -419,9 +421,11 @@ public class MyProfile {
         Label fieldLabel = new Label(label);
         fieldLabel.getStyleClass().add("field-label");
 
+
         // Add the label and field to the grid
         grid.add(fieldLabel, columnIndex, rowIndex);  // Dynamic column for the label
         grid.add(fieldValue, columnIndex + 1, rowIndex);  // Dynamic column for the field
+        grid.setAlignment(Pos.CENTER_LEFT);
     }
 
 }
