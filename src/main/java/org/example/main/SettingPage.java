@@ -1,27 +1,51 @@
 package org.example.main;
 
-import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class SettingPage {
-    private static boolean isNightMode = false;
     private Scene scene;
+    private Map<String, Color> themes;
+
+    public SettingPage() {
+        initializeThemes();
+    }
+
+    private void initializeThemes() {
+        themes = new HashMap<>();
+        themes.put("Default", Color.WHITE);
+        themes.put("Sunset", Color.web("#FFA07A"));
+        themes.put("Abstract", Color.web("#87CEEB"));
+        themes.put("Dotted Indigo", Color.web("#4B0082"));
+        themes.put("Super Gradient", Color.web("#FF1493"));
+        themes.put("Dotted Purple", Color.web("#8A2BE2"));
+        themes.put("Oranger", Color.web("#FFA500"));
+        themes.put("Simple Pink", Color.web("#FFC0CB"));
+        themes.put("Lagoon", Color.web("#20B2AA"));
+        themes.put("Dark Nature", Color.web("#2F4F4F"));
+        themes.put("Fall Gradient", Color.web("#D2691E"));
+        themes.put("Sea Glass", Color.web("#5F9EA0"));
+        themes.put("Blue Horizon", Color.web("#4169E1"));
+        themes.put("Sunrise", Color.web("#FF4500"));
+        themes.put("Aubergine", Color.web("#4B0082"));
+        themes.put("Barbie", Color.web("#FF69B4"));
+    }
 
     public Pane SettingPane(Pane leftSidePane) {
         leftSidePane.getChildren().clear();
@@ -33,11 +57,8 @@ public class SettingPage {
 
         settingPane.getChildren().add(topHeaderPane);
 
-        // إضافة زر التبديل بين وضع الليل والنهار
-        addNightModeToggleButton(settingPane);
-
-        // إضافة ColorPicker لتغيير لون الواجهة
-        addColorPicker(settingPane);
+        addPresetThemesSection(settingPane);
+        addAppsIntegrationSection(settingPane);
 
         leftSidePane.getChildren().add(settingPane);
 
@@ -46,11 +67,8 @@ public class SettingPage {
             leftSidePane.sceneProperty().addListener((_, _, newValue) -> {
                 if (newValue != null) {
                     scene = newValue;
-                    updateStyles(isNightMode);
                 }
             });
-        } else {
-            updateStyles(isNightMode);
         }
 
         return leftSidePane;
@@ -58,14 +76,12 @@ public class SettingPage {
 
     private Pane createTopHeader() {
         Pane topHeaderPane = new Pane();
-        StackPane topHeader = new StackPane();  // تغيير إلى StackPane
+        StackPane topHeader = new StackPane();
 
-        // إضافة صورة الخلفية
         ImageView topHeaderImageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/ta.png"))));
         topHeaderImageView.fitHeightProperty().bind(topHeaderPane.heightProperty());
         topHeaderImageView.fitWidthProperty().bind(topHeaderPane.widthProperty());
 
-        // إعداد الـ clip لجعل الحواف مستديرة
         Rectangle clip = new Rectangle();
         clip.setArcWidth(30);
         clip.setArcHeight(30);
@@ -73,12 +89,10 @@ public class SettingPage {
         clip.widthProperty().bind(topHeaderImageView.fitWidthProperty());
         topHeaderImageView.setClip(clip);
 
-        // إضافة كلمة "الاعدادات"
         Label profileLabel = new Label("الاعدادات");
         profileLabel.getStyleClass().add("section-title");
         profileLabel.setPadding(new Insets(10));
 
-        // إعداد StackPane ووضع النص فوق الصورة
         topHeader.getChildren().addAll(topHeaderImageView, profileLabel);
         StackPane.setAlignment(profileLabel, Pos.CENTER_LEFT);
 
@@ -98,95 +112,87 @@ public class SettingPage {
         return profilePane;
     }
 
-    // ميثود لإضافة زر التبديل بين وضع الليل والنهار
-    private void addNightModeToggleButton(VBox settingPane) {
-        ToggleButton toggleButton = new ToggleButton();
+    private void addPresetThemesSection(VBox settingPane) {
+        Label presetThemesLabel = new Label("سمات خاصة");
+        presetThemesLabel.getStyleClass().add("section-title");
 
-        // Binding width and height of the button
-        toggleButton.prefWidthProperty().bind(settingPane.widthProperty().multiply(0.1));  // 10% of parent width
-        toggleButton.prefHeightProperty().bind(settingPane.heightProperty().multiply(0.05));  // 5% of parent height
+        Label presetThemesDescription = new Label("اختر لونك بعناية فصحة عيونك تهمنا");
+        presetThemesDescription.getStyleClass().add("section-description");
 
-        toggleButton.getStyleClass().add("mode-toggle-button");
+        FlowPane themeButtonsPane = new FlowPane();
+        themeButtonsPane.prefWidthProperty().bind(settingPane.widthProperty().subtract(30));
+        themeButtonsPane.setHgap(10);
+        themeButtonsPane.setVgap(10);
 
-        Image sunImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/Sun.png")));
-        Image moonImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/Moon.png")));
-
-        ImageView imageView = new ImageView(sunImage);
-
-        // Binding the image size to the button size
-        imageView.fitWidthProperty().bind(toggleButton.prefWidthProperty().multiply(0.6)); // 60% of button width
-        imageView.fitHeightProperty().bind(toggleButton.prefHeightProperty().multiply(0.6)); // 60% of button height
-
-        toggleButton.setGraphic(imageView);
-
-        // تعيين الصورة المناسبة بناءً على وضع الليل الحالي
-        if (isNightMode) {
-            imageView.setImage(moonImage);
-        } else {
-            imageView.setImage(sunImage);
+        for (Map.Entry<String, Color> theme : themes.entrySet()) {
+            Button themeButton = createThemeButton(theme.getKey(), theme.getValue());
+            themeButtonsPane.getChildren().add(themeButton);
         }
 
-        toggleButton.setSelected(isNightMode);
-
-        toggleButton.setOnAction(_ -> {
-            isNightMode = !isNightMode;
-            if (isNightMode) {
-                imageView.setImage(moonImage);
-            } else {
-                imageView.setImage(sunImage);
-            }
-            updateStyles(isNightMode);
-        });
-
-        settingPane.getChildren().add(toggleButton);
+        VBox presetThemesSection = new VBox(10, presetThemesLabel, presetThemesDescription, themeButtonsPane);
+        settingPane.getChildren().add(presetThemesSection);
     }
 
-    // ميثود لإضافة ColorPicker لتغيير لون الواجهة
-    private void addColorPicker(VBox settingPane) {
-        ColorPicker colorPicker = new ColorPicker();
-
-        // Bind the width of the ColorPicker to the parent width (e.g., 15% of the parent VBox width)
-        colorPicker.prefWidthProperty().bind(settingPane.widthProperty().multiply(0.15));
-
-        // Adjust the ColorPicker to stay proportionally in place, no fixed layout coordinates
-        VBox.setMargin(colorPicker, new Insets(20, 0, 0, 0)); // Add some top margin for spacing
-
-        colorPicker.setValue(Color.WHITE); // Default color
-
-        colorPicker.setOnAction(event -> {
-            Color selectedColor = colorPicker.getValue();
-            updateBackgroundColor(selectedColor);
-        });
-
-        settingPane.getChildren().add(colorPicker);
+    private Button createThemeButton(String themeName, Color color) {
+        Button button = new Button(themeName);
+        button.setStyle("-fx-background-color: " + toHexString(color) + ";");
+        button.setOnAction(e -> updateBackgroundColor(color));
+        return button;
     }
 
-    // تحديث لون الخلفية بناءً على اللون المختار
     private void updateBackgroundColor(Color color) {
-        String colorHex = String.format("#%02X%02X%02X",
+        if (scene != null) {
+            scene.lookup("#rightSideBar").setStyle("-fx-background-color: " + toHexString(color) + ";");
+        }
+    }
+
+    private String toHexString(Color color) {
+        return String.format("#%02X%02X%02X",
                 (int)(color.getRed()*255),
                 (int)(color.getGreen()*255),
                 (int)(color.getBlue()*255));
-
-        if (scene != null) {
-            scene.lookup("#rightSideBar").setStyle("-fx-background-color: " + colorHex + ";");
-        }
     }
 
-    // تحديث الأنماط بناءً على وضع الليل أو النهار
-    private void updateStyles(boolean isNightMode) {
-        String nightMode = "/styles/NightMode.css";
-        String lightMode = "/styles/LightMode.css";
-        if (scene != null) {
-            scene.getStylesheets().clear();
-            String mode;
-            if (isNightMode) {
-                mode = nightMode;
-            } else {
-                mode = lightMode;
-            }
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(mode)).toExternalForm());
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/toggleSwitch.css")).toExternalForm());
-        }
+    private void addAppsIntegrationSection(VBox settingPane) {
+        Label appsIntegrationLabel = new Label("ربط حسابك على التواصل الاجتماعي");
+        appsIntegrationLabel.getStyleClass().add("section-title");
+
+        Label appsIntegrationDescription = new Label("قم بالضغط على الحساب الذي تريد ربطه");
+        appsIntegrationDescription.getStyleClass().add("section-description");
+
+        VBox socialMediaBox = new VBox(10);
+        socialMediaBox.getStyleClass().add("social-media-box");
+
+        Label socialMediaLabel = new Label("التواصل الاجتماعي");
+        socialMediaLabel.getStyleClass().add("subsection-title");
+
+        Button linkedInButton = createSocialMediaButton("تسجيل دخول LinkedIn", "Clock.png");
+        Button indeedButton = createSocialMediaButton("تسجيل دخول Facebook", "Clock.png");
+        Button twitterButton = createSocialMediaButton("تسجيل دخول X", "Clock.png");
+        linkedInButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+        indeedButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+        twitterButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+
+
+
+
+        socialMediaBox.getChildren().addAll(socialMediaLabel, linkedInButton, indeedButton, twitterButton);
+
+        VBox appsIntegrationSection = new VBox(10, appsIntegrationLabel, appsIntegrationDescription, socialMediaBox);
+        settingPane.getChildren().add(appsIntegrationSection);
+    }
+
+    private Button createSocialMediaButton(String text, String iconPath) {
+        Button button = new Button(text);
+        button.getStyleClass().add("social-media-button");
+
+        ImageView icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/" + iconPath))));
+        icon.setFitHeight(20);
+        icon.setFitWidth(20);
+
+        button.setGraphic(icon);
+        button.setGraphicTextGap(10);
+
+        return button;
     }
 }
