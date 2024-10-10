@@ -7,7 +7,31 @@
     -fx-padding: 15;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
 }
+#electricPane{
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 0);
+    -fx-padding: 25 20 25 20;
+}
+#requestButton {
+    -fx-background-color: #006605;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-font-size: 14px;
+    -fx-padding: 25 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
+}
 
+#requestButton:hover {
+    -fx-background-color: #ac1818;
+    -fx-text-fill: white;
+
+}
+#requestButton:pressed{
+    -fx-background-color: #035507;
+}
 .title-label {
     -fx-font-size: 24;
     -fx-font-weight: bold;

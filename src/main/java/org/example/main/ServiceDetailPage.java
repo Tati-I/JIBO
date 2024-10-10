@@ -1,5 +1,9 @@
 package org.example.main;
 
+import auth.FileBasedAuthenticationSystem;
+import auth.User;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
@@ -8,11 +12,12 @@ import javafx.scene.image.Image;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.scene.text.TextAlignment;
-
 import java.util.Objects;
 
 public class ServiceDetailPage extends VBox {
+
     public ServiceDetailPage(String serviceTitle, String price, String imagePath) {
+        FileBasedAuthenticationSystem.loadUsers();
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(20);
         this.setPadding(new Insets(20));
@@ -41,11 +46,7 @@ public class ServiceDetailPage extends VBox {
         Label titleLabel = new Label("خدمة " + serviceTitle);
         titleLabel.getStyleClass().add("title-label");
 
-        // Price label with specific styling
-        Label priceLabel = new Label("السعر: " + price);
-        priceLabel.getStyleClass().add("price-label");
-
-        leftSide.getChildren().addAll(serviceImage, titleLabel, priceLabel);
+        leftSide.getChildren().addAll(serviceImage, titleLabel);
 
         // Left side (Description and Features)
         VBox rightSide = new VBox(15);
@@ -88,8 +89,69 @@ public class ServiceDetailPage extends VBox {
 
         buttonsBox.getChildren().addAll(closeButton);
 
+        // إنشاء VBox و ScrollPane لعرض قائمة الخدمات
+        VBox servicesBox = new VBox();
+        servicesBox.setSpacing(10); // وضع مسافة بين الـ Panes
+
+        ScrollPane scrollPane = new ScrollPane(servicesBox);
+        scrollPane.setFitToWidth(true);
+        scrollPane.prefHeightProperty().bind(this.heightProperty());
+        scrollPane.prefWidthProperty().bind(this.widthProperty());
+
+        for (User user : FileBasedAuthenticationSystem.getUsers().values()) {
+            if (user.getUserType().equalsIgnoreCase(serviceTitle)) {
+                Pane userPane = createUserPane(user);
+                servicesBox.getChildren().add(userPane);
+                userPane.prefWidthProperty().bind(this.widthProperty());
+            }
+        }
         // Add all components to the main VBox
-        this.getChildren().addAll(topBox, buttonsBox);
+        this.getChildren().addAll(topBox, scrollPane, buttonsBox);
+    }
+
+    private Pane createUserPane(User user) {
+        HBox pane = new HBox();
+        pane.setId("electricPane");
+
+        // زر الطلب ووضعه على أقصى اليسار مع Tooltip
+        Button requestButton = new Button("أحجز الاَن");
+        requestButton.setId("requestButton");
+        requestButton.setPrefSize(90, 70);
+        Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
+
+        // إضافة Tagline تحت معلومات إضافية
+        Label tagline = new Label("أفضل الخدمات بأقل الأسعار!");
+        tagline.setStyle("-fx-text-fill: #0076a3; -fx-font-size: 12px;");
+
+        VBox buttonInfoBox = new VBox(5);
+        buttonInfoBox.setAlignment(Pos.CENTER_LEFT);
+        buttonInfoBox.getChildren().addAll(requestButton, tagline);
+        buttonInfoBox.prefWidthProperty().bind(pane.prefWidthProperty());
+
+        Label nameLabel = new Label("الاسم: " + user.getUsername());
+        nameLabel.setTextAlignment(TextAlignment.RIGHT);
+        nameLabel.setLayoutX(10);
+        nameLabel.setLayoutY(10);
+
+        Label emailLabel = new Label("البريد الإلكتروني: " + user.getEmail());
+        emailLabel.setTextAlignment(TextAlignment.RIGHT);
+        emailLabel.setLayoutX(10);
+        emailLabel.setLayoutY(30);
+
+        Label phoneLabel = new Label("رقم الهاتف: " + user.getNumPhone());
+        phoneLabel.setTextAlignment(TextAlignment.RIGHT);
+        phoneLabel.setLayoutX(10);
+        phoneLabel.setLayoutY(50);
+
+        VBox contactBox = new VBox(5);
+        contactBox.setAlignment(Pos.CENTER_RIGHT);
+        contactBox.getChildren().addAll(nameLabel, emailLabel, phoneLabel);
+        contactBox.prefWidthProperty().bind(pane.prefWidthProperty());
+
+
+        pane.getChildren().addAll(buttonInfoBox,contactBox);
+
+        return pane;
     }
 
     private String getServiceDescription(String serviceTitle) {

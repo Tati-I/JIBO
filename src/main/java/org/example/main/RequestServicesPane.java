@@ -189,13 +189,13 @@ public class RequestServicesPane {
         servicesBox.setStyle("-fx-background-color: linear-gradient(#e4e4e4,#E0E0E0);-fx-background-radius: 15");
 
         String[][] services = {
-                {"كهربائي", "15$", "electrical.png", "electricPane"},
-                {"سبّاك", "30$", "water_pane.png", "waterPane"},
-                {"خياط", "45$", "tailor.png", "tailorPane"},
-                {"نجار", "28$", "wood_man.png", "woodmenPane"},
-                {"تنظيف", "20$", "clean.png", "cleaningPane"},
-                {"تركيب أنظمة أمان", "50$", "security.png", "securityPane"},
-                {"صيانة أجهزة كهربائية", "40$", "repair.png", "applianceRepairPane"}
+                {"كهربائي", "15$", "electrical.png", "electrical"},
+                {"سبّاك", "30$", "water_pane.png", "plumber"},
+                {"خياط", "45$", "tailor.png", "tailor"},
+                {"نجار", "28$", "wood_man.png", "carpenter"},
+                {"تنظيف", "20$", "clean.png", "cleaner"},
+                {"تركيب أنظمة أمان", "50$", "security.png", "security"},
+                {"صيانة أجهزة كهربائية", "40$", "repair.png", "appliance"}
         };
 
         for (String[] service : services) {
@@ -302,7 +302,7 @@ public class RequestServicesPane {
         titlePriceBox.getChildren().addAll(titleContainer, priceLabel, ratingLabel, serviceDescription);
 
         // زر الطلب ووضعه على أقصى اليسار مع Tooltip
-        Button requestButton = createRequestButton(leftSidePane, title, price, imagePath);
+        Button requestButton = createRequestButton(leftSidePane, idName, price, imagePath);
         Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
 
         // إضافة Tagline تحت معلومات إضافية
@@ -330,7 +330,7 @@ public class RequestServicesPane {
 
         // إضافة العناصر إلى اللوحة
         pane.getChildren().addAll(buttonInfoBox, titlePriceBox, imageBox);
-        pane.setId(idName);
+        pane.setId("electricPane");
 
         // لضمان توسيع VBox وفقاً للمساحة المتاح
 
