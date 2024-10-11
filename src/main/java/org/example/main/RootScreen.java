@@ -19,6 +19,7 @@ public class RootScreen {
     private Pane rightSideBarPane;
     private Pane smallRightSideBarPane;
 
+
     public void start() {
         initializeLayout();
         setupSidebars();
@@ -69,7 +70,7 @@ public class RootScreen {
         homePane.prefHeightProperty().bind(contentArea.heightProperty());
     }
 
-    private void setupScene() {
+    public void setupScene() {
         // الحصول على أبعاد الشاشة الحالية
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 

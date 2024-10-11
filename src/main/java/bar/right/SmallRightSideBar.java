@@ -1,9 +1,11 @@
 package bar.right;
 
+import auth.LogOut;
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -55,6 +57,17 @@ public class SmallRightSideBar {
         VBox logoutContainer = new VBox(logoutBtn);
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
         logoutContainer.prefHeightProperty().bind(mainContainer.heightProperty());
+
+        LogOut logOut = new LogOut();
+
+
+        logoutBtn.setOnAction(e -> {
+            leftSidePane.setEffect(new GaussianBlur(10));
+
+            logOut.handleLogout();
+            leftSidePane.setEffect(null);
+
+        });
         // إضافة جميع العناصر إلى الحاوية الرئيسية
 
         mainContainer.getChildren().addAll(smallRightBarContainer,menuContainer, logoutContainer);
