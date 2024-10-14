@@ -302,7 +302,7 @@ public class RequestServicesPane {
         titlePriceBox.getChildren().addAll(titleContainer, priceLabel, ratingLabel, serviceDescription);
 
         // زر الطلب ووضعه على أقصى اليسار مع Tooltip
-        Button requestButton = createRequestButton(leftSidePane, idName, price, imagePath);
+        Button requestButton = createRequestButton(leftSidePane, idName, imagePath);
         Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
 
         // إضافة Tagline تحت معلومات إضافية
@@ -338,7 +338,7 @@ public class RequestServicesPane {
     }
 
     // دالة لإنشاء زر الطلب
-    private Button createRequestButton(Pane leftSidePane, String title, String price, String imagePath) {
+    private Button createRequestButton(Pane leftSidePane, String title, String imagePath) {
         Button requestButton = new Button("أطلب الاَن");
         requestButton.setId("requestButton");
         requestButton.setPrefSize(130, 110);
@@ -354,7 +354,7 @@ public class RequestServicesPane {
             double height = screenBounds.getHeight() * 0.6;
 
             // Create and show the service detail page with service-specific information
-            ServiceDetailPage serviceDetailPage = new ServiceDetailPage(title, price, imagePath);
+            ServiceDetailPage serviceDetailPage = new ServiceDetailPage(title, imagePath);
             Stage detailStage = new Stage();
             Scene detailScene = new Scene(serviceDetailPage, width, height);
 

@@ -7,7 +7,7 @@ import java.util.Map;
 public class FileBasedAuthenticationSystem {
     private static final String USER_FILE = "users.txt";
     private static final Map<String, String> userCredentials = new HashMap<>();
-    private static final Map<String, User> users = new HashMap<>(); // تخزين بيانات المستخدمين الكاملة
+    private static final Map<String, User> users = new HashMap<>();
     private static User currentUser = null;
 
 
@@ -72,6 +72,10 @@ public class FileBasedAuthenticationSystem {
         }
         return null;
     }
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
     public static Map<String, User> getUsers() {
         return users;
     }

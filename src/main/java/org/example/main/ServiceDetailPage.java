@@ -15,8 +15,12 @@ import javafx.scene.text.TextAlignment;
 import java.util.Objects;
 
 public class ServiceDetailPage extends VBox {
+    private int currentPage = 0; // الصفحة الحالية
+    private int itemsPerPage = 10;
+    private String serviceTitle;
 
-    public ServiceDetailPage(String serviceTitle, String price, String imagePath) {
+    public ServiceDetailPage(String serviceTitle, String imagePath) {
+        this.serviceTitle = serviceTitle;
         FileBasedAuthenticationSystem.loadUsers();
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(20);
@@ -85,7 +89,7 @@ public class ServiceDetailPage extends VBox {
         // Close button
         Button closeButton = new Button("إغلاق");
         closeButton.getStyleClass().add("close-button");
-        closeButton.setOnAction(e -> getScene().getWindow().hide());
+        closeButton.setOnAction(_ -> getScene().getWindow().hide());
 
         buttonsBox.getChildren().addAll(closeButton);
 
@@ -98,28 +102,47 @@ public class ServiceDetailPage extends VBox {
         scrollPane.prefHeightProperty().bind(this.heightProperty());
         scrollPane.prefWidthProperty().bind(this.widthProperty());
 
+        loadUserPanes(servicesBox, serviceTitle); // تحميل الـ Panes الأولية
+
+        Button showMoreButton = new Button("عرض المزيد");
+        showMoreButton.setOnAction(_ -> {
+            loadUserPanes(servicesBox, serviceTitle); // تحميل المزيد من الـ Panes
+        });
+
+        // إضافة جميع المكونات إلى VBox الرئيسي
+        this.getChildren().addAll(topBox, scrollPane,showMoreButton,buttonsBox);
+    }
+
+    private void loadUserPanes(VBox servicesBox, String serviceTitle) {
+        int count = 0; // عدد العناصر المحملة
+        int startIndex = currentPage * itemsPerPage; // تحديد بداية التحميل
+
         for (User user : FileBasedAuthenticationSystem.getUsers().values()) {
             if (user.getUserType().equalsIgnoreCase(serviceTitle)) {
-                Pane userPane = createUserPane(user);
-                servicesBox.getChildren().add(userPane);
-                userPane.prefWidthProperty().bind(this.widthProperty());
+                if (count >= startIndex && count < startIndex + itemsPerPage) {
+                    Pane userPane = createUserPane(user);
+                    servicesBox.getChildren().add(userPane);
+                    userPane.prefWidthProperty().bind(this.widthProperty());
+                }
+                count++;
             }
         }
-        // Add all components to the main VBox
-        this.getChildren().addAll(topBox, scrollPane, buttonsBox);
+        currentPage++; // زيادة الصفحة الحالية
     }
 
     private Pane createUserPane(User user) {
         HBox pane = new HBox();
         pane.setId("electricPane");
 
-        // زر الطلب ووضعه على أقصى اليسار مع Tooltip
         Button requestButton = new Button("أحجز الاَن");
         requestButton.setId("requestButton");
         requestButton.setPrefSize(90, 70);
         Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
 
-        // إضافة Tagline تحت معلومات إضافية
+        // Add action to the request button
+        requestButton.setOnAction(e ->
+                System.out.println("s"));
+
         Label tagline = new Label("أفضل الخدمات بأقل الأسعار!");
         tagline.setStyle("-fx-text-fill: #0076a3; -fx-font-size: 12px;");
 
@@ -130,26 +153,19 @@ public class ServiceDetailPage extends VBox {
 
         Label nameLabel = new Label("الاسم: " + user.getUsername());
         nameLabel.setTextAlignment(TextAlignment.RIGHT);
-        nameLabel.setLayoutX(10);
-        nameLabel.setLayoutY(10);
 
         Label emailLabel = new Label("البريد الإلكتروني: " + user.getEmail());
         emailLabel.setTextAlignment(TextAlignment.RIGHT);
-        emailLabel.setLayoutX(10);
-        emailLabel.setLayoutY(30);
 
         Label phoneLabel = new Label("رقم الهاتف: " + user.getNumPhone());
         phoneLabel.setTextAlignment(TextAlignment.RIGHT);
-        phoneLabel.setLayoutX(10);
-        phoneLabel.setLayoutY(50);
 
         VBox contactBox = new VBox(5);
         contactBox.setAlignment(Pos.CENTER_RIGHT);
         contactBox.getChildren().addAll(nameLabel, emailLabel, phoneLabel);
         contactBox.prefWidthProperty().bind(pane.prefWidthProperty());
 
-
-        pane.getChildren().addAll(buttonInfoBox,contactBox);
+        pane.getChildren().addAll(buttonInfoBox, contactBox);
 
         return pane;
     }
