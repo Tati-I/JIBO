@@ -1,15 +1,20 @@
 package bar.right;
 
+import auth.LogOut;
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.main.*;
 
@@ -59,6 +64,16 @@ public class RightSideBar {
         logoutContainer.setAlignment(Pos.BOTTOM_CENTER);
 
         logoutContainer.prefHeightProperty().bind(mainContainer.heightProperty());
+        LogOut logOut = new LogOut();
+
+
+        logoutBtn.setOnAction(e -> {
+            leftSidePane.setEffect(new GaussianBlur(10));
+
+            logOut.handleLogout();
+            leftSidePane.setEffect(null);
+
+        });
 
         // إضافة جميع العناصر إلى الحاوية الرئيسية
         VBox smallRightBarContainer = menu();
@@ -135,6 +150,8 @@ public class RightSideBar {
         logoutBtn.setOnMouseExited(_ -> createDownAnimateButton(logoutBtn));
         return logoutBtn;
     }
+
+
 
     // دالة إنشاء حركة تكبير الزر عند تمرير الماوس
     private void createUpAnimateButton(Button button) {
@@ -221,4 +238,7 @@ public class RightSideBar {
             btn.setStyle("");
         }
     }
+
+
+
 }

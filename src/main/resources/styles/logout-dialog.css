@@ -1,0 +1,46 @@
+.dialog-pane {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #ffffff); /* خلفية متدرجة */
+    -fx-border-radius: 15px; /* حواف مستديرة */
+    -fx-background-radius: 15px; /* حواف مستديرة للخلفية */
+    -fx-padding: 20px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: transparent; /* اجعل ترويسة النافذة شفافة */
+    -fx-text-fill: white; /* لون نص الترويسة */
+    -fx-font-size: 18px; /* تكبير حجم النص */
+    -fx-font-weight: bold; /* جعل النص عريض */
+}
+
+.dialog-pane .content-panel {
+    -fx-text-fill: white; /* لون نص المحتوى */
+    -fx-font-size: 14px; /* حجم النص العادي */
+    -fx-font-family: "Segoe UI", sans-serif; /* استخدام خط مميز */
+}
+
+.dialog-pane .button-bar {
+    -fx-background-color: transparent; /* اجعل خلفية شريط الأزرار شفافة */
+}
+
+.button {
+    -fx-background-color: #db3434; /* لون أزرق للأزرار */
+    -fx-text-fill: white; /* لون نص الأزرار */
+    -fx-font-weight: bold; /* نص عريض */
+    -fx-background-radius: 30px; /* حواف مستديرة للأزرار */
+    -fx-padding: 8px 20px; /* تعديل الحشو الداخلي للأزرار */
+    -fx-cursor: hand; /* تغيير مؤشر الفأرة عند المرور على الزر */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0); /* إضافة ظل خلف الأزرار */
+}
+
+.button:hover {
+    -fx-background-color: #2980b9; /* لون أغمق عند تمرير الفأرة */
+}
+
+.button:pressed {
+    -fx-background-color: #1f6391; /* لون أغمق عند الضغط */
+}
+
+.dialog-pane .graphic-container {
+    -fx-padding: 0 0 10px 0; /* تعديل الحشو الداخلي للأيقونات */
+}
+
