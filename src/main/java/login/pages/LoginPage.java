@@ -34,7 +34,6 @@ import java.util.Objects;
 
 public class LoginPage extends Application {
     private Stage primaryStage;
-
     private static Pane pane;
     private static Button loginButton;
     private static Button signUpButton;
@@ -52,10 +51,18 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage stage) {
-        showSplashScreen();
-
+        User previousUser = FileBasedAuthenticationSystem.checkPreviousLogin();
+        if (previousUser != null) {
+            // إذا وجد تسجيل دخول سابق، قم بتسجيل الدخول تلقائياً وافتح الشاشة الرئيسية
+            LoginPage.loggedInUser = previousUser;
+            RootScreen rootScreen = new RootScreen();
+            rootScreen.start();
+        } else {
+            // إذا لم يوجد تسجيل دخول سابق، اعرض شاشة تسجيل الدخول
+            showSplashScreen();
+        }
     }
-    private void showSplashScreen() {
+    public void showSplashScreen() {
         Stage splashStage = new Stage();
         splashStage.initStyle(StageStyle.TRANSPARENT);
 
@@ -399,7 +406,6 @@ public class LoginPage extends Application {
             String password = passwordField.getText();
 
             loggedInUser = FileBasedAuthenticationSystem.loginUser(email, password);
-
 
             if (loggedInUser != null) {
                 System.out.println("تم تسجيل الدخول بنجاح");

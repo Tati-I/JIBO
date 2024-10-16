@@ -39,6 +39,7 @@ public class LogOut {
         alert.showAndWait().ifPresent(buttonType -> {
             if (buttonType == logoutButton) {
                 System.out.println("Logging out...");
+                FileBasedAuthenticationSystem.logout();
                 Platform.exit();
             }
 

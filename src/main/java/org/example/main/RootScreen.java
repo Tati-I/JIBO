@@ -37,7 +37,7 @@ public class RootScreen {
     private void setupSidebars() {
         RightSideBar rightSideBar = new RightSideBar(leftSidePane);
         rightSideBarPane = rightSideBar.getRightSideBar();
-        rightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.35));
+        rightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.42));
         rightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
@@ -66,7 +66,7 @@ public class RootScreen {
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
         contentArea.getChildren().addFirst(homePane);
 
-        homePane.prefWidthProperty().bind(contentArea.widthProperty().subtract(smallRightSideBarPane.widthProperty()));
+        homePane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.935));
         homePane.prefHeightProperty().bind(contentArea.heightProperty());
     }
 

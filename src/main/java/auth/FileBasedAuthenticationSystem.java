@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class FileBasedAuthenticationSystem {
     private static final String USER_FILE = "users.txt";
+    private static final String LOGIN_FILE = "login.txt";
     private static final Map<String, String> userCredentials = new HashMap<>();
     private static final Map<String, User> users = new HashMap<>();
     private static User currentUser = null;
@@ -64,6 +65,7 @@ public class FileBasedAuthenticationSystem {
                 if (storedEmail.equals(email) && storedPassword.equals(password)) {
                     // إنشاء كائن User بناءً على المعلومات المخزنة
                     currentUser = new User(storedUsername, storedPassword, storedEmail, storedUserType, storedNumPhone);
+                    saveLoginInfo(email);
                     return currentUser;
                 }
             }
@@ -72,6 +74,7 @@ public class FileBasedAuthenticationSystem {
         }
         return null;
     }
+
     public static User getCurrentUser() {
         return currentUser;
     }
@@ -80,4 +83,42 @@ public class FileBasedAuthenticationSystem {
         return users;
     }
 
+    // حفظ معلومات تسجيل الدخول
+    private static void saveLoginInfo(String email) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOGIN_FILE))) {
+            writer.write(email);
+        } catch (IOException e) {
+            System.out.println("Error saving login info: " + e.getMessage());
+        }
+    }
+
+    // التحقق من وجود تسجيل دخول سابق
+    public static User checkPreviousLogin() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(LOGIN_FILE))) {
+            String email = reader.readLine();
+            if (email != null && !email.isEmpty()) {
+                loadUsers();
+                System.out.println("Read email: [" + email + "]");
+                if (users.containsKey(email)) {
+                    System.out.println("User found: " + email);
+                    return users.get(email);
+                } else {
+                    System.out.println("User not found in the map.");
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("No previous login found.");
+        }
+        return null;
+    }
+
+    // تسجيل الخروج
+    public static void logout() {
+        currentUser = null;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOGIN_FILE))) {
+            writer.write("");
+        } catch (IOException e) {
+            System.out.println("Error clearing login info: " + e.getMessage());
+        }
+    }
 }

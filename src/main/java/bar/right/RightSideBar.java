@@ -238,7 +238,4 @@ public class RightSideBar {
             btn.setStyle("");
         }
     }
-
-
-
 }
