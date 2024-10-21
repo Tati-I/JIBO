@@ -348,10 +348,12 @@ public class RequestServicesPane {
             // Apply blur effect to the main pane
             leftSidePane.setEffect(new GaussianBlur(10));
 
-            // Center the new stage on the screen
-            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-            double width = screenBounds.getWidth() * 0.4;
-            double height = screenBounds.getHeight() * 0.6;
+            // Get the main application window
+            Stage mainStage = (Stage) leftSidePane.getScene().getWindow();
+
+            // Calculate the size for the ServiceDetailPage
+            double width = mainStage.getWidth() * 0.8;
+            double height = mainStage.getHeight() * 0.9;
 
             // Create and show the service detail page with service-specific information
             ServiceDetailPage serviceDetailPage = new ServiceDetailPage(title, imagePath);
@@ -364,11 +366,16 @@ public class RequestServicesPane {
 
             // Make the new stage modal and undecorated
             detailStage.initModality(Modality.APPLICATION_MODAL);
-            detailStage.initOwner(leftSidePane.getScene().getWindow());
+            detailStage.initOwner(mainStage);
             detailStage.initStyle(StageStyle.TRANSPARENT);
 
+            // Set the size of the detail stage
             detailStage.setWidth(width);
             detailStage.setHeight(height);
+
+            // Position the detail stage in the center of the main stage
+            detailStage.setX(mainStage.getX() + (mainStage.getWidth() - width) / 2);
+            detailStage.setY(mainStage.getY() + (mainStage.getHeight() - height) / 2);
 
             // Show the detail stage and wait for it to be closed
             detailStage.showAndWait();

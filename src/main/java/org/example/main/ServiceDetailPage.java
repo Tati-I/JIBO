@@ -2,73 +2,122 @@ package org.example.main;
 
 import auth.FileBasedAuthenticationSystem;
 import auth.User;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.scene.text.TextAlignment;
 import java.util.Objects;
+import javafx.stage.Stage;
+import login.pages.LoginPage;
 
 public class ServiceDetailPage extends VBox {
-    private int currentPage = 0; // الصفحة الحالية
-    private int itemsPerPage = 10;
-    private String serviceTitle;
+    private int currentPage = 0;
+    private final int itemsPerPage = 10;
+    private final String serviceTitle;
 
     public ServiceDetailPage(String serviceTitle, String imagePath) {
         this.serviceTitle = serviceTitle;
         FileBasedAuthenticationSystem.loadUsers();
+
+        // إعدادات VBox الرئيسية
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(20);
         this.setPadding(new Insets(20));
         this.getStyleClass().add("detail-pane");
 
-        // Main top container
-        HBox topBox = new HBox(20);
-        topBox.setPrefHeight(100);  // تحديد ارتفاع ثابت للقسم العلوي
+        addCurrentUserInfo();
+
+        // الحاوية العلوية
+        HBox topBox = createTopBox(imagePath);
+
+        // صندوق قائمة الخدمات داخل ScrollPane
+        VBox servicesBox = new VBox(10);
+        servicesBox.setPadding(new Insets(15));
+        servicesBox.setStyle("-fx-background-color: linear-gradient(#e4e4e4,#E0E0E0);-fx-background-radius: 15");
+        ScrollPane scrollPane = new ScrollPane(servicesBox);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        scrollPane.prefHeightProperty().bind(this.heightProperty().subtract(100));
+        scrollPane.prefWidthProperty().bind(this.widthProperty().subtract(20));
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        loadServiceProviders(servicesBox);
+
+        Button showMoreButton = new Button("عرض المزيد");
+        showMoreButton.setOnAction(_ -> loadServiceProviders(servicesBox));
+
+
+        this.getChildren().addAll(topBox, scrollPane, showMoreButton);
+    }
+
+    private void addCurrentUserInfo() {
+        User currentUser = FileBasedAuthenticationSystem.getCurrentUser();
+        if (currentUser != null) {
+            VBox userInfoBox = new VBox(5);
+            userInfoBox.setAlignment(Pos.TOP_RIGHT);
+            userInfoBox.setPadding(new Insets(10));
+            userInfoBox.setStyle("-fx-background-color: #e8e8e8; -fx-border-color: #cccccc; -fx-border-radius: 5;");
+
+            Label welcomeLabel = new Label("مرحبًا، " + currentUser.getUsername());
+            welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+            Label userTypeLabel = new Label("نوع الحساب: " + currentUser.getUserType());
+
+            userInfoBox.getChildren().addAll(welcomeLabel, userTypeLabel);
+
+            this.getChildren().add(userInfoBox);
+        }
+    }
+
+    private HBox createTopBox(String imagePath) {
+        HBox topBox = new HBox();
+        topBox.setSpacing(10);
         topBox.setAlignment(Pos.TOP_CENTER);
+        topBox.prefWidthProperty().bind(this.widthProperty());
 
-        // Right side (Image and Title)
-        VBox leftSide = new VBox(15);
-        leftSide.setAlignment(Pos.TOP_LEFT);
-        leftSide.setPrefWidth(200);  // عرض ثابت للجانب الأيمن
-        leftSide.getStyleClass().add("right-side");
+        // القسم الأيمن: الصورة والعنوان
+        VBox leftSide = new VBox(10);
+        leftSide.setAlignment(Pos.TOP_CENTER);
+        leftSide.prefWidthProperty().bind(topBox.widthProperty().multiply(0.4));
+        leftSide.getStyleClass().add("left-side");
 
-        // Service image
         ImageView serviceImage = new ImageView(
                 new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/" + imagePath)))
         );
-        serviceImage.setFitHeight(100);
-        serviceImage.setFitWidth(100);
-        serviceImage.getStyleClass().add("service-image");
+        serviceImage.setPreserveRatio(true);
+        serviceImage.fitWidthProperty().bind(leftSide.widthProperty().multiply(0.5));
 
-        // Title with service name
         Label titleLabel = new Label("خدمة " + serviceTitle);
         titleLabel.getStyleClass().add("title-label");
 
         leftSide.getChildren().addAll(serviceImage, titleLabel);
 
-        // Left side (Description and Features)
+        // القسم الأيسر: الوصف والميزات
         VBox rightSide = new VBox(15);
         rightSide.setAlignment(Pos.TOP_RIGHT);
-        rightSide.setPrefWidth(400);  // عرض ثابت للجانب الأيسر
-        rightSide.getStyleClass().add("left-side");
+        rightSide.prefWidthProperty().bind(topBox.widthProperty().multiply(0.6));
+        rightSide.getStyleClass().add("right-side");
 
-        // Description
-        String description = getServiceDescription(serviceTitle);
-        Label descriptionLabel = new Label(description);
-        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
+        Label descriptionLabel = new Label(getServiceDescription(serviceTitle));
         descriptionLabel.setWrapText(true);
+        descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
         descriptionLabel.getStyleClass().add("description-label");
 
-        // Features box
+        VBox featuresBox = createFeaturesBox();
+
+        rightSide.getChildren().addAll(descriptionLabel, featuresBox);
+
+        topBox.getChildren().addAll(leftSide, rightSide);
+        return topBox;
+    }
+
+    private VBox createFeaturesBox() {
         VBox featuresBox = new VBox(10);
         featuresBox.setAlignment(Pos.TOP_RIGHT);
-        featuresBox.getStyleClass().add("features-box");
         featuresBox.getChildren().addAll(
                 new Label("مميزات الخدمة:"),
                 new Label("✓ خدمة متوفرة على مدار 24 ساعة"),
@@ -76,110 +125,93 @@ public class ServiceDetailPage extends VBox {
                 new Label("✓ ضمان على جميع الأعمال"),
                 new Label("✓ أسعار تنافسية")
         );
-
-        rightSide.getChildren().addAll(descriptionLabel, featuresBox);
-
-        // Add right and left sides to top box
-        topBox.getChildren().addAll(leftSide, rightSide);
-
-        // Buttons container
-        HBox buttonsBox = new HBox(10);
-        buttonsBox.setAlignment(Pos.CENTER);
-
-        // Close button
-        Button closeButton = new Button("إغلاق");
-        closeButton.getStyleClass().add("close-button");
-        closeButton.setOnAction(_ -> getScene().getWindow().hide());
-
-        buttonsBox.getChildren().addAll(closeButton);
-
-        // إنشاء VBox و ScrollPane لعرض قائمة الخدمات
-        VBox servicesBox = new VBox();
-        servicesBox.setSpacing(10); // وضع مسافة بين الـ Panes
-
-        ScrollPane scrollPane = new ScrollPane(servicesBox);
-        scrollPane.setFitToWidth(true);
-        scrollPane.prefHeightProperty().bind(this.heightProperty());
-        scrollPane.prefWidthProperty().bind(this.widthProperty());
-
-        loadUserPanes(servicesBox, serviceTitle); // تحميل الـ Panes الأولية
-
-        Button showMoreButton = new Button("عرض المزيد");
-        showMoreButton.setOnAction(_ -> {
-            loadUserPanes(servicesBox, serviceTitle); // تحميل المزيد من الـ Panes
-        });
-
-        // إضافة جميع المكونات إلى VBox الرئيسي
-        this.getChildren().addAll(topBox, scrollPane,showMoreButton,buttonsBox);
+        return featuresBox;
     }
 
-    private void loadUserPanes(VBox servicesBox, String serviceTitle) {
-        int count = 0; // عدد العناصر المحملة
-        int startIndex = currentPage * itemsPerPage; // تحديد بداية التحميل
+    private void loadServiceProviders(VBox servicesBox) {
+        int startIndex = currentPage * itemsPerPage;
+        int count = 0;
 
         for (User user : FileBasedAuthenticationSystem.getUsers().values()) {
             if (user.getUserType().equalsIgnoreCase(serviceTitle)) {
                 if (count >= startIndex && count < startIndex + itemsPerPage) {
                     Pane userPane = createUserPane(user);
                     servicesBox.getChildren().add(userPane);
-                    userPane.prefWidthProperty().bind(this.widthProperty());
                 }
                 count++;
             }
         }
-        currentPage++; // زيادة الصفحة الحالية
+        currentPage++;
     }
 
     private Pane createUserPane(User user) {
-        HBox pane = new HBox();
-        pane.setId("electricPane");
+        HBox pane = new HBox(10);
+        pane.setId("serviceProviderPane");
+        pane.setPadding(new Insets(10));
+        pane.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-radius: 5;");
 
-        Button requestButton = new Button("أحجز الاَن");
-        requestButton.setId("requestButton");
-        requestButton.setPrefSize(90, 70);
-        Tooltip.install(requestButton, new Tooltip("أطلب الخدمة الآن!"));
-
-        // Add action to the request button
-        requestButton.setOnAction(e ->
-                System.out.println("s"));
-
-        Label tagline = new Label("أفضل الخدمات بأقل الأسعار!");
-        tagline.setStyle("-fx-text-fill: #0076a3; -fx-font-size: 12px;");
-
-        VBox buttonInfoBox = new VBox(5);
-        buttonInfoBox.setAlignment(Pos.CENTER_LEFT);
-        buttonInfoBox.getChildren().addAll(requestButton, tagline);
-        buttonInfoBox.prefWidthProperty().bind(pane.prefWidthProperty());
+        VBox infoBox = new VBox(5);
+        infoBox.setAlignment(Pos.CENTER_RIGHT);
 
         Label nameLabel = new Label("الاسم: " + user.getUsername());
-        nameLabel.setTextAlignment(TextAlignment.RIGHT);
-
         Label emailLabel = new Label("البريد الإلكتروني: " + user.getEmail());
-        emailLabel.setTextAlignment(TextAlignment.RIGHT);
-
         Label phoneLabel = new Label("رقم الهاتف: " + user.getNumPhone());
-        phoneLabel.setTextAlignment(TextAlignment.RIGHT);
 
-        VBox contactBox = new VBox(5);
-        contactBox.setAlignment(Pos.CENTER_RIGHT);
-        contactBox.getChildren().addAll(nameLabel, emailLabel, phoneLabel);
-        contactBox.prefWidthProperty().bind(pane.prefWidthProperty());
+        infoBox.getChildren().addAll(nameLabel, emailLabel, phoneLabel);
 
-        pane.getChildren().addAll(buttonInfoBox, contactBox);
+        Button requestButton = new Button("أحجز الآن");
+        requestButton.getStyleClass().add("request-button");
+        requestButton.setOnAction(e -> showServiceRequestDialog(user));
+
+        pane.getChildren().addAll(infoBox, requestButton);
+        HBox.setHgrow(infoBox, Priority.ALWAYS);
 
         return pane;
     }
 
+    private void showServiceRequestDialog(User serviceProvider) {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("طلب خدمة");
+        dialog.setHeaderText("طلب خدمة من " + serviceProvider.getUsername());
+
+        ButtonType confirmButtonType = new ButtonType("تأكيد الطلب", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(confirmButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField address = new TextField();
+        address.setPromptText("العنوان");
+        DatePicker datePicker = new DatePicker();
+
+        grid.add(new Label("العنوان:"), 0, 0);
+        grid.add(address, 1, 0);
+        grid.add(new Label("التاريخ:"), 0, 1);
+        grid.add(datePicker, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == confirmButtonType) {
+                return address.getText() + "," + datePicker.getValue();
+            }
+            return null;
+        });
+
+        dialog.showAndWait().ifPresent(result -> {
+            // هنا يمكنك إضافة الكود لحفظ طلب الخدمة
+            System.out.println("تم تقديم طلب الخدمة: " + result);
+        });
+    }
+
     private String getServiceDescription(String serviceTitle) {
         return switch (serviceTitle) {
-            case "كهربائي" -> "خدمات كهربائية احترافية تشمل التركيب والصيانة والإصلاح لجميع التمديدات الكهربائية المنزلية والتجارية.";
-            case "سبّاك" -> "خدمات السباكة الشاملة لحل جميع مشاكل المياه والصرف الصحي، مع ضمان جودة العمل والمواد المستخدمة.";
-            case "خياط" -> "خدمات خياطة وتعديل الملابس بدقة واحترافية، مع إمكانية التفصيل حسب الطلب وتقديم النصائح المتخصصة.";
-            case "نجار" -> "خدمات نجارة متكاملة تشمل تصنيع وإصلاح الأثاث الخشبي، مع التركيز على الجودة والدقة في التنفيذ.";
-            case "تنظيف" -> "خدمات تنظيف شاملة للمنازل والمكاتب، باستخدام أحدث المعدات ومواد التنظيف الآمنة والفعالة.";
-            case "تركيب أنظمة أمان" -> "تركيب وصيانة أنظمة الأمان والمراقبة، مع توفير أحدث التقنيات لحماية ممتلكاتك.";
-            case "صيانة أجهزة كهربائية" -> "خدمات صيانة وإصلاح جميع الأجهزة الكهربائية المنزلية، مع توفير قطع الغيار الأصلية.";
-            default -> "خدمة احترافية لتلبية احتياجاتك بأعلى معايير الجودة.";
+            case "كهربائي" -> "خدمات كهربائية احترافية تشمل التركيب والصيانة والإصلاح.";
+            case "سبّاك" -> "حل جميع مشاكل المياه والصرف الصحي.";
+            case "خياط" -> "خياطة وتعديل الملابس بدقة.";
+            default -> "خدمة احترافية لتلبية احتياجاتك.";
         };
     }
 }

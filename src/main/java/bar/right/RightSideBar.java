@@ -104,7 +104,6 @@ public class RightSideBar {
         VBox menuContainer = new VBox();
         menuButton = createRightSideBarButton("homeBtn","","menu-bar.png");
 
-        menuButton.setStyle("-fx-background-color: transparent;");
         menuButton.setPrefSize(24, 24);
         menuContainer.getChildren().addAll(menuButton);
         return menuContainer;

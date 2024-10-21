@@ -1,3 +1,20 @@
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: linear-gradient(#5c5c5c, #2e2e2e);
+    -fx-background-radius: 5;
+}
+
 .detail-pane {
     -fx-background-color: white;
     -fx-background-radius: 20;
