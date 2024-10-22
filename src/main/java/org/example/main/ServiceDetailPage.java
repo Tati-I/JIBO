@@ -29,8 +29,6 @@ public class ServiceDetailPage extends VBox {
         this.setPadding(new Insets(20));
         this.getStyleClass().add("detail-pane");
 
-        addCurrentUserInfo();
-
         // الحاوية العلوية
         HBox topBox = createTopBox(imagePath);
 
@@ -51,26 +49,20 @@ public class ServiceDetailPage extends VBox {
         Button showMoreButton = new Button("عرض المزيد");
         showMoreButton.setOnAction(_ -> loadServiceProviders(servicesBox));
 
+        Button stageCloseBtn = new Button("اغلاق");
+        stageCloseBtn.setOnAction(_ ->{
+            Stage currentStage = (Stage) stageCloseBtn.getScene().getWindow();
+            // Close the current Stage
+            currentStage.close();
+        });
 
-        this.getChildren().addAll(topBox, scrollPane, showMoreButton);
-    }
+        HBox bottomBox = new HBox(10);
+        bottomBox.setAlignment(Pos.TOP_CENTER);
+        bottomBox.setSpacing(20);
+        bottomBox.setStyle("-fx-background-color: transparent;");
+        bottomBox.getChildren().addAll(showMoreButton, stageCloseBtn);
 
-    private void addCurrentUserInfo() {
-        User currentUser = FileBasedAuthenticationSystem.getCurrentUser();
-        if (currentUser != null) {
-            VBox userInfoBox = new VBox(5);
-            userInfoBox.setAlignment(Pos.TOP_RIGHT);
-            userInfoBox.setPadding(new Insets(10));
-            userInfoBox.setStyle("-fx-background-color: #e8e8e8; -fx-border-color: #cccccc; -fx-border-radius: 5;");
-
-            Label welcomeLabel = new Label("مرحبًا، " + currentUser.getUsername());
-            welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-            Label userTypeLabel = new Label("نوع الحساب: " + currentUser.getUserType());
-
-            userInfoBox.getChildren().addAll(welcomeLabel, userTypeLabel);
-
-            this.getChildren().add(userInfoBox);
-        }
+        this.getChildren().addAll(topBox, scrollPane, bottomBox);
     }
 
     private HBox createTopBox(String imagePath) {
@@ -81,35 +73,39 @@ public class ServiceDetailPage extends VBox {
 
         // القسم الأيمن: الصورة والعنوان
         VBox leftSide = new VBox(10);
-        leftSide.setAlignment(Pos.TOP_CENTER);
-        leftSide.prefWidthProperty().bind(topBox.widthProperty().multiply(0.4));
-        leftSide.getStyleClass().add("left-side");
+        leftSide.setAlignment(Pos.TOP_LEFT);
+        //leftSide.prefWidthProperty().bind(this.widthProperty());
+
+        leftSide.setId("leftSide");
 
         ImageView serviceImage = new ImageView(
                 new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/" + imagePath)))
         );
         serviceImage.setPreserveRatio(true);
-        serviceImage.fitWidthProperty().bind(leftSide.widthProperty().multiply(0.5));
+        serviceImage.setFitHeight(160);
+        serviceImage.setFitWidth(160);
 
         Label titleLabel = new Label("خدمة " + serviceTitle);
-        titleLabel.getStyleClass().add("title-label");
+        titleLabel.setId("titleLabel");
 
-        leftSide.getChildren().addAll(serviceImage, titleLabel);
+        leftSide.getChildren().addAll(serviceImage);
 
         // القسم الأيسر: الوصف والميزات
         VBox rightSide = new VBox(15);
+        rightSide.setId("rightSide");
         rightSide.setAlignment(Pos.TOP_RIGHT);
-        rightSide.prefWidthProperty().bind(topBox.widthProperty().multiply(0.6));
-        rightSide.getStyleClass().add("right-side");
+        //rightSide.prefWidthProperty().bind(this.widthProperty());
 
         Label descriptionLabel = new Label(getServiceDescription(serviceTitle));
         descriptionLabel.setWrapText(true);
         descriptionLabel.setTextAlignment(TextAlignment.RIGHT);
-        descriptionLabel.getStyleClass().add("description-label");
+        descriptionLabel.setId("descriptionLabel");
 
         VBox featuresBox = createFeaturesBox();
 
         rightSide.getChildren().addAll(descriptionLabel, featuresBox);
+        HBox.setHgrow(leftSide, Priority.ALWAYS);
+        HBox.setHgrow(rightSide, Priority.ALWAYS);
 
         topBox.getChildren().addAll(leftSide, rightSide);
         return topBox;
@@ -146,9 +142,8 @@ public class ServiceDetailPage extends VBox {
 
     private Pane createUserPane(User user) {
         HBox pane = new HBox(10);
-        pane.setId("serviceProviderPane");
+        pane.setId("electricPane");
         pane.setPadding(new Insets(10));
-        pane.setStyle("-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-radius: 5;");
 
         VBox infoBox = new VBox(5);
         infoBox.setAlignment(Pos.CENTER_RIGHT);
@@ -160,11 +155,12 @@ public class ServiceDetailPage extends VBox {
         infoBox.getChildren().addAll(nameLabel, emailLabel, phoneLabel);
 
         Button requestButton = new Button("أحجز الآن");
-        requestButton.getStyleClass().add("request-button");
+        requestButton.setId("requestButton");
         requestButton.setOnAction(e -> showServiceRequestDialog(user));
 
-        pane.getChildren().addAll(infoBox, requestButton);
+        pane.getChildren().addAll(requestButton,infoBox);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
+        HBox.setHgrow(requestButton, Priority.ALWAYS);
 
         return pane;
     }
@@ -201,7 +197,6 @@ public class ServiceDetailPage extends VBox {
         });
 
         dialog.showAndWait().ifPresent(result -> {
-            // هنا يمكنك إضافة الكود لحفظ طلب الخدمة
             System.out.println("تم تقديم طلب الخدمة: " + result);
         });
     }
