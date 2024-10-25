@@ -455,17 +455,18 @@
 }
 
 .theme-button {
-    -fx-pref-width: 100px;
-    -fx-pref-height: 40px;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 3);
+    -fx-padding: 10;
+    -fx-border-color: white;
     -fx-border-width: 2;
-    -fx-border-color: #bdc3c7;
-    -fx-cursor: hand;
 }
 
+/* Hover effect for theme buttons */
 .theme-button:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 0);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0.2, 0, 4);
 }
 
 /* Apps & Integration section */
@@ -485,23 +486,34 @@
     -fx-padding: 10;
     -fx-background-color: white;
     -fx-background-radius: 5;
+    -fx-border-radius:5 ;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);
 }
 
 .social-media-button {
     -fx-background-color: white;
-    -fx-text-fill: #34495e;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
     -fx-padding: 10 15;
-    -fx-border-color: #bdc3c7;
+
     -fx-border-radius: 5;
     -fx-cursor: hand;
 }
 
 .social-media-button:hover {
     -fx-background-color: #ecf0f1;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0.2, 0, 4);
+
 }
 
+.theme-button2:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0.2, 0, 4);
+
+}
 
 
 
