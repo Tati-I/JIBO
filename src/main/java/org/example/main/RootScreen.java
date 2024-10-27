@@ -1,7 +1,6 @@
 package org.example.main;
 
 import bar.right.RightSideBar;
-import bar.right.SmallRightSideBar;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -14,11 +13,8 @@ import java.util.Objects;
 
 public class RootScreen {
     private BorderPane root;
-    private HBox contentArea;
+    public HBox contentArea;
     private Pane leftSidePane;
-    private Pane rightSideBarPane;
-    private Pane smallRightSideBarPane;
-
 
     public void start() {
         initializeLayout();
@@ -35,40 +31,22 @@ public class RootScreen {
     }
 
     private void setupSidebars() {
-    //    RightSideBar rightSideBar = new RightSideBar(leftSidePane);
-     //   rightSideBarPane = rightSideBar.getRightSideBar();
-     //   rightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.4));
-     //   rightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
-        SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
-        smallRightSideBarPane = smallRightSideBar.getSmallRightBar();
+        RightSideBar rightSideBar = new RightSideBar(leftSidePane);
+        Pane smallRightSideBarPane = rightSideBar.getSmallRightBar();
         smallRightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.075));
         smallRightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         contentArea.getChildren().add(smallRightSideBarPane);
 
-      //  smallRightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
-      //  rightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
     }
-
-/*    private void toggleSidebar() {
-        if (contentArea.getChildren().contains(smallRightSideBarPane)) {
-            contentArea.getChildren().remove(smallRightSideBarPane);
-            contentArea.getChildren().add(rightSideBarPane);
-        } else {
-            contentArea.getChildren().remove(rightSideBarPane);
-            contentArea.getChildren().add(smallRightSideBarPane);
-        }
-    }
-
- */
 
     private void setupHomeScreen() {
         HomeScreen homeScreen = new HomeScreen();
         Pane homePane = homeScreen.RequestHomePane(leftSidePane);
         contentArea.getChildren().addFirst(homePane);
 
-        homePane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.935));
+        homePane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.925));
         homePane.prefHeightProperty().bind(contentArea.heightProperty());
     }
 

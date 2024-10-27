@@ -62,32 +62,6 @@
 
 }
 
-/* الشريط الجانبي الأيمن */
-#rightSideBar {
-    -fx-background-color: linear-gradient(#606060, #3d3d3d);
-    -fx-background-radius: 20 0 0 20;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
-}
-
-/* أزرار القائمة */
-#homeBtn, #requestServiceBtn, #myServicesBtn, #profileBtn, #settingsBtn {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-padding: 15 15 15 15;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-cursor: hand;
-}
-
-
-#homeBtn:hover, #requestServiceBtn:hover, #myServicesBtn:hover, #profileBtn:hover, #settingsBtn:hover {
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-    -fx-background-color: rgba(0, 0, 0, 0.07);
-}
-
 #servicesButton:hover, #myLocationsButton:hover, #categoryButton:hover, #favoriteButton:hover {
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 0);
     -fx-translate-y: -2;
@@ -112,21 +86,6 @@
 /* تأثير hover */
 #nowService:hover, #previousService:hover, #myRate:hover {
     -fx-background-color: rgba(80, 80, 80, 0.5);
-}
-
-/* زر تسجيل الخروج */
-#logoutBtn {
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-padding: 10 15;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-cursor: hand;
-}
-
-#logoutBtn:hover {
-    -fx-background-color: #dc334a;
 }
 
 /* عنوان الخدمات الشائعة */

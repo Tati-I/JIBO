@@ -1,0 +1,36 @@
+#rightSideBar {
+    -fx-background-color: linear-gradient(#606060, #3d3d3d);
+    -fx-background-radius: 20 0 0 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0, 0, 0);
+}
+
+/* أزرار القائمة */
+#homeBtn, #requestServiceBtn, #myServicesBtn, #profileBtn, #settingsBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 15 15 15 15;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+}
+
+#homeBtn:hover, #requestServiceBtn:hover, #myServicesBtn:hover, #profileBtn:hover, #settingsBtn:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-background-color: rgba(0, 0, 0, 0.07);
+}
+#logoutBtn {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 15;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+}
+
+#logoutBtn:hover {
+    -fx-background-color: #dc334a;
+}

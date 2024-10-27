@@ -3,6 +3,7 @@ package login.pages;
 import auth.FileBasedAuthenticationSystem;
 
 import auth.User;
+import bar.right.RightSideBar;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.application.Application;
@@ -27,7 +28,6 @@ import javafx.stage.Stage;
 import javafx.animation.TranslateTransition;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import bar.right.RightSideBar;
 import org.example.main.RootScreen;
 
 import java.util.Objects;
