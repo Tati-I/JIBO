@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -21,7 +22,7 @@ import java.util.Objects;
 
 public class SettingPage {
     private Scene scene;
-    private Map<String, Color> themes;
+    private Map<String, Color[]> themes;
 
     public SettingPage() {
         initializeThemes();
@@ -29,23 +30,36 @@ public class SettingPage {
 
     private void initializeThemes() {
         themes = new HashMap<>();
-        themes.put("Default", Color.WHITE);
-        themes.put("Sunset", Color.web("#FFA07A"));
-        themes.put("Abstract", Color.web("#87CEEB"));
-        themes.put("Dotted Indigo", Color.web("#4B0082"));
-        themes.put("Super Gradient", Color.web("#FF1493"));
-        themes.put("Dotted Purple", Color.web("#8A2BE2"));
-        themes.put("Oranger", Color.web("#FFA500"));
-        themes.put("Simple Pink", Color.web("#FFC0CB"));
-        themes.put("Lagoon", Color.web("#20B2AA"));
-        themes.put("Dark Nature", Color.web("#2F4F4F"));
-        themes.put("Fall Gradient", Color.web("#D2691E"));
-        themes.put("Sea Glass", Color.web("#5F9EA0"));
-        themes.put("Blue Horizon", Color.web("#4169E1"));
-        themes.put("Sunrise", Color.web("#FF4500"));
-        themes.put("Aubergine", Color.web("#4B0082"));
-        themes.put("Barbie", Color.web("#FF69B4"));
+        themes.put("Default", new Color[]{Color.WHITE, Color.LIGHTGRAY});
+        themes.put("Sunset", new Color[]{Color.web("#FFA07A"), Color.web("#FF4500")});
+        themes.put("Abstract", new Color[]{Color.web("#87CEEB"), Color.web("#4682B4")});
+        themes.put("Dotted Indigo", new Color[]{Color.web("#4B0082"), Color.web("#8A2BE2")});
+        themes.put("Super Gradient", new Color[]{Color.web("#FF1493"), Color.web("#FF69B4")});
+        themes.put("Dotted Purple", new Color[]{Color.web("#8A2BE2"), Color.web("#9370DB")});
+        themes.put("Oranger", new Color[]{Color.web("#FFA500"), Color.web("#FF6347")});
+        themes.put("Simple Pink", new Color[]{Color.web("#FFC0CB"), Color.web("#FFB6C1")});
+        themes.put("Lagoon", new Color[]{Color.web("#20B2AA"), Color.web("#008080")});
+        themes.put("Dark Nature", new Color[]{Color.web("#2F4F4F"), Color.web("#556B2F")});
+        themes.put("Fall Gradient", new Color[]{Color.web("#D2691E"), Color.web("#8B4513")});
+        themes.put("Sea Glass", new Color[]{Color.web("#5F9EA0"), Color.web("#2E8B57")});
+        themes.put("Blue Horizon", new Color[]{Color.web("#4169E1"), Color.web("#1E90FF")});
+        themes.put("Sunrise", new Color[]{Color.web("#FF4500"), Color.web("#FFA07A")});
+        themes.put("Aubergine", new Color[]{Color.web("#4B0082"), Color.web("#483D8B")});
+        themes.put("Barbie", new Color[]{Color.web("#FF69B4"), Color.web("#FF1493")});
+        themes.put("Mystic Ocean", new Color[]{Color.web("#00B4DB"), Color.web("#0083B0")});
+        themes.put("Blush Pink", new Color[]{Color.web("#FFAFBD"), Color.web("#ffc3a0")});
+        themes.put("Golden Sunset", new Color[]{Color.web("#FFD700"), Color.web("#FFA500")});
+        themes.put("Cool Breeze", new Color[]{Color.web("#1f4037"), Color.web("#99f2c8")});
+        themes.put("Lavender Skies", new Color[]{Color.web("#3a1c71"), Color.web("#d76d77")});
+        themes.put("Pink Dream", new Color[]{Color.web("#de6262"), Color.web("#ffb88c")});
+        themes.put("Emerald Sea", new Color[]{Color.web("#34e89e"), Color.web("#0f3443")});
+        themes.put("Berry Purple", new Color[]{Color.web("#a18cd1"), Color.web("#fbc2eb")});
+        themes.put("Solar Flare", new Color[]{Color.web("#f12711"), Color.web("#f5af19")});
+        themes.put("Nightfall", new Color[]{Color.web("#141E30"), Color.web("#243B55")});
+
     }
+
+
 
     public Pane SettingPane(Pane leftSidePane) {
         leftSidePane.getChildren().clear();
@@ -123,8 +137,7 @@ public class SettingPage {
         themeButtonsPane.prefWidthProperty().bind(settingPane.widthProperty().subtract(30));
         themeButtonsPane.setHgap(10);
         themeButtonsPane.setVgap(10);
-
-        for (Map.Entry<String, Color> theme : themes.entrySet()) {
+        for (Map.Entry<String, Color[]> theme : themes.entrySet()) {
             Button themeButton = createThemeButton(theme.getKey(), theme.getValue());
             themeButtonsPane.getChildren().add(themeButton);
         }
@@ -133,18 +146,43 @@ public class SettingPage {
         settingPane.getChildren().add(presetThemesSection);
     }
 
-    private Button createThemeButton(String themeName, Color color) {
-        Button button = new Button(themeName);
-        button.setStyle("-fx-background-color: " + toHexString(color) + ";");
-        button.setOnAction(e -> updateBackgroundColor(color));
+    private Button createThemeButton(String themeName, Color[] colors) {
+        Button button = new Button();
+        button.getStyleClass().add("theme-button2");
+
+        Color startColor = colors[0];
+        Color endColor = colors[1];
+
+        button.setStyle("-fx-background-color: radial-gradient( center 60% 20%, radius 50%, "
+                + toHexString(startColor) + ", " + toHexString(endColor) + ");"
+                + "-fx-background-radius: 50%;"
+                + "-fx-min-width: 50px;"
+                + "-fx-min-height: 50px;"
+                + "-fx-max-width: 50px;"
+                + "-fx-max-height: 50px;"
+                + "-fx-border-color: #ffffff;"
+                + "-fx-border-width: 2px;"
+                + "-fx-border-radius: 50%;"
+                + "-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);");
+
+        button.setOnAction(e -> updateBackgroundColor(colors)); // تمرير مصفوفة الألوان
+        button.setTooltip(new Tooltip(themeName));
         return button;
     }
 
-    private void updateBackgroundColor(Color color) {
-        if (scene != null) {
-            scene.lookup("#rightSideBar").setStyle("-fx-background-color: " + toHexString(color) + ";");
+
+
+
+    private void updateBackgroundColor(Color[] colors) {
+        if (scene != null && colors.length >= 2) {
+            String gradientStyle = String.format(
+                    "-fx-background-color: linear-gradient(from 0%% 0%% to 100%% 100%%, %s, %s);",
+                    toHexString(colors[0]), toHexString(colors[1])
+            );
+            scene.lookup("#rightSideBar").setStyle(gradientStyle);
         }
     }
+
 
     private String toHexString(Color color) {
         return String.format("#%02X%02X%02X",
@@ -166,17 +204,21 @@ public class SettingPage {
         Label socialMediaLabel = new Label("التواصل الاجتماعي");
         socialMediaLabel.getStyleClass().add("subsection-title");
 
-        Button linkedInButton = createSocialMediaButton("تسجيل دخول LinkedIn", "Clock.png");
-        Button indeedButton = createSocialMediaButton("تسجيل دخول Facebook", "Clock.png");
-        Button twitterButton = createSocialMediaButton("تسجيل دخول X", "Clock.png");
-        linkedInButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
-        indeedButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+        Button instagramButton = createSocialMediaButton("تسجيل دخول Instagram", "instagram.png");
+        Button facebookButton = createSocialMediaButton("تسجيل دخول Facebook", "facebook.png");
+        Button twitterButton = createSocialMediaButton("تسجيل دخول Twitter", "twitter.png");
+        instagramButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+        instagramButton.setStyle("-fx-background-color: linear-gradient( to right ,#515bcb,#be308f,#ea6145,#f8ca6b);");
+        facebookButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+        facebookButton.setStyle("-fx-background-color: linear-gradient( to right ,#0859da,#48a8f3);");
         twitterButton.prefWidthProperty().bind(socialMediaBox.widthProperty());
+        twitterButton.setStyle("-fx-background-color: linear-gradient( to right ,#000000,#343434);");
 
 
 
 
-        socialMediaBox.getChildren().addAll(socialMediaLabel, linkedInButton, indeedButton, twitterButton);
+
+        socialMediaBox.getChildren().addAll(socialMediaLabel, instagramButton, facebookButton, twitterButton);
 
         VBox appsIntegrationSection = new VBox(10, appsIntegrationLabel, appsIntegrationDescription, socialMediaBox);
         settingPane.getChildren().add(appsIntegrationSection);

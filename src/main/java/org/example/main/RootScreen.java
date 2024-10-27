@@ -35,23 +35,23 @@ public class RootScreen {
     }
 
     private void setupSidebars() {
-        RightSideBar rightSideBar = new RightSideBar(leftSidePane);
-        rightSideBarPane = rightSideBar.getRightSideBar();
-        rightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.4));
-        rightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
+    //    RightSideBar rightSideBar = new RightSideBar(leftSidePane);
+     //   rightSideBarPane = rightSideBar.getRightSideBar();
+     //   rightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.4));
+     //   rightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         SmallRightSideBar smallRightSideBar = new SmallRightSideBar(leftSidePane);
         smallRightSideBarPane = smallRightSideBar.getSmallRightBar();
-        smallRightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.065));
+        smallRightSideBarPane.prefWidthProperty().bind(contentArea.widthProperty().multiply(0.075));
         smallRightSideBarPane.prefHeightProperty().bind(contentArea.heightProperty());
 
         contentArea.getChildren().add(smallRightSideBarPane);
 
-        smallRightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
-        rightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
+      //  smallRightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
+      //  rightSideBar.getMenuButton().setOnAction(_ -> toggleSidebar());
     }
 
-    private void toggleSidebar() {
+/*    private void toggleSidebar() {
         if (contentArea.getChildren().contains(smallRightSideBarPane)) {
             contentArea.getChildren().remove(smallRightSideBarPane);
             contentArea.getChildren().add(rightSideBarPane);
@@ -60,6 +60,8 @@ public class RootScreen {
             contentArea.getChildren().add(smallRightSideBarPane);
         }
     }
+
+ */
 
     private void setupHomeScreen() {
         HomeScreen homeScreen = new HomeScreen();

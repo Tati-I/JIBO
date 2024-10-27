@@ -3,11 +3,15 @@ package bar.right;
 import auth.LogOut;
 import javafx.animation.ScaleTransition;
 import javafx.css.PseudoClass;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -21,6 +25,7 @@ public class SmallRightSideBar {
     private Pane smallRightBar;
 
     private Button menuButton;
+    private boolean smallSize = false;
 
     public Button getMenuButton() {
         return menuButton;
@@ -43,9 +48,39 @@ public class SmallRightSideBar {
         mainContainer.setId("mainContainer");
         mainContainer.setAlignment(Pos.CENTER);
 
-        VBox smallRightBarContainer = menu();
-        smallRightBarContainer.setAlignment(Pos.TOP_CENTER);
-        smallRightBarContainer.prefHeightProperty().bind(mainContainer.heightProperty());
+
+        VBox menuButtonContainer = new VBox();
+        menuButton = createsmallRightBarButton("homeBtn","menu-bar.png","");
+        menuButton.setAlignment(Pos.TOP_RIGHT);
+        mainContainer.setSpacing(100);
+        mainContainer.setPadding(new Insets(20, 0, 0, 0));
+
+        menuButton = createsmallRightBarButton("homeBtn","menu-bar.png","");
+        menuButton.setAlignment(Pos.TOP_RIGHT);
+
+        menuButton.setOnAction(_ -> {
+            if (smallSize) {
+                smallRightBar.prefWidthProperty().bind(leftSidePane.widthProperty().multiply(0.4));
+                smallSize = false;
+            } else {
+                smallRightBar.prefWidthProperty().bind(leftSidePane.widthProperty().multiply(0.075));
+                smallSize = true;
+            }
+
+
+            for (Node node : menuButtonContainer.getChildren()) {
+                if (node instanceof Button) {
+                    HBox content = (HBox) ((Button) node).getGraphic();
+                    if (content != null && content.getChildren().get(1) instanceof Label) {
+                        content.getChildren().get(1).setVisible(!smallSize);
+                    }
+                }
+            }
+        });
+
+        menuButtonContainer.getChildren().addAll(menuButton);
+
+
 
         // إنشاء حاوية لأزرار القائمة
         VBox menuContainer = createMenuContainer(leftSidePane);
@@ -70,7 +105,7 @@ public class SmallRightSideBar {
         });
         // إضافة جميع العناصر إلى الحاوية الرئيسية
 
-        mainContainer.getChildren().addAll(smallRightBarContainer,menuContainer, logoutContainer);
+        mainContainer.getChildren().addAll(menuButtonContainer,menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية
         mainContainer.prefWidthProperty().bind(smallRightBar.widthProperty());
@@ -80,22 +115,16 @@ public class SmallRightSideBar {
         smallRightBar.getChildren().add(mainContainer);
     }
 
-    private VBox menu() {
-        VBox menuContainer = new VBox();
-        menuButton = createsmallRightBarButton("homeBtn","menu-bar.png");
-        menuContainer.getChildren().addAll(menuButton);
-        return menuContainer;
-    }
+
 
     // دالة إنشاء حاوية أزرار القائمة
     private VBox createMenuContainer(Pane leftSidePane) {
         VBox menuContainer = new VBox(10);
-
-        Button homeBtn = createsmallRightBarButton("homeBtn","home-button.png");
-        Button requestServiceBtn = createsmallRightBarButton("requestServiceBtn","add.png");
-        Button myServicesBtn = createsmallRightBarButton("myServicesBtn","customer-service.png");
-        Button profileBtn = createsmallRightBarButton("profileBtn","user.png");
-        Button settingsBtn = createsmallRightBarButton("settingsBtn","settings.png");
+        Button homeBtn = createsmallRightBarButton("homeBtn", "home-button.png", "الصفحة الرئيسية");
+        Button requestServiceBtn = createsmallRightBarButton("requestServiceBtn", "add.png", "طلب خدمة");
+        Button myServicesBtn = createsmallRightBarButton("myServicesBtn", "customer-service.png", "خدماتي");
+        Button profileBtn = createsmallRightBarButton("profileBtn", "user.png", "ملفي الشخصي");
+        Button settingsBtn = createsmallRightBarButton("settingsBtn", "settings.png", "الإعدادت");
 
         menuContainer.getChildren().addAll(homeBtn, requestServiceBtn, myServicesBtn, profileBtn, settingsBtn);
         // ربط الأزرار بالوظائف المناسبة
@@ -106,15 +135,33 @@ public class SmallRightSideBar {
     }
 
     // دالة إنشاء زر في الشريط الجانبي الأيمن
-    private Button createsmallRightBarButton(String id ,String iconPath) {
+    private Button createsmallRightBarButton(String id, String iconPath, String labelText) {
         ImageView imageView = new ImageView(loadImage(iconPath));
-        Button smallRightBarButton = new Button("",imageView);
+
+
+        HBox buttonContent = new HBox(10);
+        buttonContent.setAlignment(Pos.CENTER_RIGHT);
+
+        Label label = new Label(labelText);
+        label.setStyle("-fx-text-fill: white;-fx-font-size: 14;");
+        label.setVisible(!smallSize);
+
+
+        buttonContent.getChildren().addAll(label, imageView);
+
+
+        Button smallRightBarButton = new Button("", buttonContent);
         smallRightBarButton.setId(id);
+        smallRightBarButton.setMaxWidth(Double.MAX_VALUE);
+        smallRightBarButton.setAlignment(Pos.CENTER_RIGHT);
+
+
         smallRightBarButton.setOnMouseEntered(_ -> createUpAnimateButton(smallRightBarButton));
+
         smallRightBarButton.setOnMouseExited(_ -> createDownAnimateButton(smallRightBarButton));
+
         return smallRightBarButton;
     }
-
     // دالة إنشاء زر تسجيل الخروج
     private Button createLogoutButton() {
         ImageView imageView = new ImageView(loadImage("logout.png"));
@@ -127,9 +174,9 @@ public class SmallRightSideBar {
 
     // دالة إنشاء حركة تكبير الزر عند تمرير الماوس
     public static void createUpAnimateButton(Button button) {
-        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(199), button);
-        scaleUp.setToX(1.1);
-        scaleUp.setToY(1.1);
+        ScaleTransition scaleUp = new ScaleTransition(Duration.millis(200), button);
+        scaleUp.setToX(0.9);
+        scaleUp.setToY(0.9);
         scaleUp.play();
     }
 
