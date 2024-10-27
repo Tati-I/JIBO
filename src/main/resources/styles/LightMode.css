@@ -502,8 +502,8 @@
 
 .social-media-button:hover {
     -fx-background-color: #ecf0f1;
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 12, 0.2, 0, 4);
 
 }

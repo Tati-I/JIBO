@@ -21,6 +21,7 @@ public class SmallRightSideBar {
     private Pane smallRightBar;
 
     private Button menuButton;
+    private boolean smallSize = false;
 
     public Button getMenuButton() {
         return menuButton;
@@ -43,9 +44,23 @@ public class SmallRightSideBar {
         mainContainer.setId("mainContainer");
         mainContainer.setAlignment(Pos.CENTER);
 
-        VBox smallRightBarContainer = menu();
-        smallRightBarContainer.setAlignment(Pos.TOP_CENTER);
-        smallRightBarContainer.prefHeightProperty().bind(mainContainer.heightProperty());
+
+        VBox menuButtonContainer = new VBox();
+        menuButton = createsmallRightBarButton("homeBtn","menu-bar.png");
+        menuButton.setAlignment(Pos.TOP_RIGHT);
+        menuButton.setOnAction(_ -> {
+            if (smallSize) {
+
+                smallRightBar.prefWidthProperty().bind(leftSidePane.widthProperty().multiply(0.4));
+                smallSize = false;
+            } else {
+                smallRightBar.prefWidthProperty().bind(leftSidePane.widthProperty().multiply(0.075));
+                smallSize = true;
+            }
+        });
+        menuButtonContainer.getChildren().addAll(menuButton);
+
+
 
         // إنشاء حاوية لأزرار القائمة
         VBox menuContainer = createMenuContainer(leftSidePane);
@@ -70,7 +85,7 @@ public class SmallRightSideBar {
         });
         // إضافة جميع العناصر إلى الحاوية الرئيسية
 
-        mainContainer.getChildren().addAll(smallRightBarContainer,menuContainer, logoutContainer);
+        mainContainer.getChildren().addAll(menuButtonContainer,menuContainer, logoutContainer);
 
         // جعل الحاوية الرئيسية
         mainContainer.prefWidthProperty().bind(smallRightBar.widthProperty());
@@ -80,12 +95,7 @@ public class SmallRightSideBar {
         smallRightBar.getChildren().add(mainContainer);
     }
 
-    private VBox menu() {
-        VBox menuContainer = new VBox();
-        menuButton = createsmallRightBarButton("homeBtn","menu-bar.png");
-        menuContainer.getChildren().addAll(menuButton);
-        return menuContainer;
-    }
+
 
     // دالة إنشاء حاوية أزرار القائمة
     private VBox createMenuContainer(Pane leftSidePane) {
