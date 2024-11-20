@@ -2,8 +2,10 @@ package login.pages;
 
 import auth.EmailCheck;
 import auth.PasswordCheck;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
@@ -12,9 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import auth.FileBasedAuthenticationSystem;
 import auth.User;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.example.main.RootScreen;
 
@@ -35,6 +39,89 @@ public class LoginPage extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        // Show splash screen first
+        showSplashScreen(primaryStage);
+
+    }
+
+    private void showSplashScreen(Stage primaryStage) {
+        // Create splash screen stage
+        Stage splashStage = new Stage();
+        splashStage.initStyle(StageStyle.UNDECORATED);
+        splashStage.initModality(Modality.APPLICATION_MODAL);
+
+        // Create splash screen layout
+        StackPane splashLayout = new StackPane();
+        splashLayout.getStyleClass().add("splash-root");
+        splashLayout.setAlignment(Pos.CENTER);
+
+        // Load logo
+        Image logoImage = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/logoBlack.png")).toExternalForm());
+        ImageView logoView = new ImageView(logoImage);
+        logoView.setFitWidth(250);
+        logoView.setFitHeight(250);
+        logoView.setPreserveRatio(true);
+        logoView.getStyleClass().add("splash-logo");
+
+        // Create app name label
+        Label appNameLabel = new Label("Jibo");
+        appNameLabel.getStyleClass().add("app-name");
+
+        // Create copyright label
+        Label copyrightLabel = new Label("© 2024 Jibo. All Rights Reserved.");
+        copyrightLabel.getStyleClass().add("copyright-label");
+
+        // Create loading progress bar
+        ProgressBar loadingBar = new ProgressBar();
+        loadingBar.setProgress(-1.0); // Indeterminate progress
+        loadingBar.getStyleClass().add("progress-bar");
+        loadingBar.setPrefWidth(300);
+
+        // Create layout for logo, app name, and loading
+        VBox contentBox = new VBox(20);
+        contentBox.setAlignment(Pos.CENTER);
+        contentBox.getChildren().addAll(logoView, appNameLabel, loadingBar, copyrightLabel);
+
+        splashLayout.getChildren().add(contentBox);
+
+        // Create splash scene and apply CSS
+        Scene splashScene = new Scene(splashLayout, 600, 400);
+        splashScene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/loginPage/login-splash-screen.css")).toExternalForm());
+
+        splashStage.setScene(splashScene);
+        splashStage.centerOnScreen();
+        splashStage.show();
+
+        // Create fade transition for splash screen
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(2), splashLayout);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        // After 2 seconds, close splash screen and show login page
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000); // 2 seconds splash screen display
+                Platform.runLater(() -> {
+                    splashStage.close();
+                    User previousUser = FileBasedAuthenticationSystem.checkPreviousLogin();
+                    if (previousUser != null) {
+                        // إذا وجد تسجيل دخول سابق، قم بتسجيل الدخول تلقائياً وافتح الشاشة الرئيسية
+                        LoginPage.loggedInUser = previousUser;
+                        RootScreen rootScreen = new RootScreen();
+                        rootScreen.start();
+                    } else {
+                        // إذا لم يوجد تسجيل دخول سابق، اعرض شاشة تسجيل الدخول
+                        showLoginPage(primaryStage);
+                    }
+                });
+            } catch (InterruptedException e) {
+                System.out.println(":)"+e.getMessage());
+            }
+        }).start();
+    }
+
+    private void showLoginPage(Stage primaryStage) {
+        // Your existing login page setup code
         FileBasedAuthenticationSystem.loadUsers();
 
         // Create main container
@@ -68,6 +155,7 @@ public class LoginPage extends Application {
         primaryStage.setMinHeight(500);
         primaryStage.show();
     }
+
 
     private VBox createWelcomePanel() {
         VBox panel = new VBox(20);
