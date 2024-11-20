@@ -1,0 +1,248 @@
+/* تنسيقات عامة */
+.root {
+    -fx-background-color: #ffffff;
+}
+
+.form-container1 {
+     -fx-background-color: #ffffff;
+     -fx-background-radius: 20;
+     -fx-padding: 40;
+
+ }
+.form-container {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 20;
+    -fx-padding: 40;
+    -fx-min-width: 370;
+}
+
+ /* تنسيق العناوين */
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* تنسيق حقول الإدخال */
+.text-field {
+    -fx-background-color: #eef0f3;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-pref-height: 40;
+}
+
+.text-field:focused {
+    -fx-border-color: #523aab;
+    -fx-background-color: #ffffff;
+    -fx-prompt-text-fill: #999999; /* تحديد اللون المناسب للنص التوضيحي */
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+}
+
+/* تنسيق الأزرار */
+.primary-button {
+    -fx-background-color: linear-gradient(#523aab, #5550b6);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-pref-width: 200;
+    -fx-cursor: hand;
+}
+
+.secondary-button {
+    -fx-background-color: #42b72a;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 5;
+    -fx-pref-width: 200;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover, .secondary-button:hover {
+    -fx-opacity: 0.9;
+}
+
+/* تنسيق زر إظهار/إخفاء كلمة المرور */
+.toggle-password-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.toggle-password-button:hover {
+    -fx-opacity: 0.8;
+}
+
+/* تنسيق مجموعة الحقول */
+.field-container {
+    -fx-background-color: #eef0f3;
+    -fx-background-radius: 5;
+    -fx-padding: 0 8 0 0;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+/* تنسيق Labels */
+.label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #717070;
+}
+
+/* تنسيق Radio Buttons */
+.radio-button {
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+
+.radio-button .radio {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 100;
+    -fx-border-width: 2;
+    -fx-background-radius: 100;
+    -fx-pref-width: 20;
+    -fx-pref-height: 20;
+}
+
+.radio-button:selected .radio {
+    -fx-border-color:#523aab
+
+}
+
+.radio-button .dot {
+    -fx-background-radius: 100;
+    -fx-padding: 4;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: linear-gradient(#523aab, #5550b6);
+}
+
+/* تنسيق التنبيهات */
+.alert {
+    -fx-background-color: white;
+}
+
+.alert .header-panel {
+    -fx-background-color: linear-gradient(#523aab, #5550b6);
+}
+
+.alert .header-panel .label {
+    -fx-text-fill: white;
+}
+
+.alert .content {
+    -fx-padding: 10;
+}
+/* Add these styles to your existing CSS file */
+
+.welcomePanel {
+    -fx-background-color: linear-gradient(#5550b6, #523aab);
+    -fx-background-radius: 15 15 15 15;
+    -fx-max-width: 550;
+    -fx-min-width: 180;
+    -fx-max-height: 450;
+
+}
+.sign-in-panel{
+    -fx-background-color: linear-gradient(#523aab, #5550b6);
+    -fx-background-radius: 15 15 15 15;
+    -fx-max-width: 550;
+    -fx-min-width: 180;
+    -fx-max-height: 450;
+
+
+}
+
+.welcome-title {
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.welcome-text {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+}
+
+.welcome-button {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-padding: 10 20;
+    -fx-cursor: hand;
+    -fx-border-radius: 15px;
+
+}
+
+.welcome-button:hover {
+    -fx-background-color: white;
+    -fx-text-fill: #5550b6;
+    -fx-background-radius: 15px;
+}
+.from-google {
+    -fx-border-color: #ccc ;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 20%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-image: url('/Pictures/personal.png');
+    -fx-cursor: hand;
+
+}
+
+.from-facebook {
+    -fx-border-color: #ccc ;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 20%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-image: url('/Pictures/personal.png');
+    -fx-cursor: hand;
+
+}
+
+.from-twitter {
+    -fx-border-color: #ccc ;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 20%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-image: url('/Pictures/personal.png');
+    -fx-cursor: hand;
+
+}
+
+.from-github {
+    -fx-border-color: #ccc ;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 20%;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-background-image: url('/Pictures/personal.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-cursor: hand;
+}
+.forget-password{
+    -fx-background-color: transparent;
+    -fx-text-fill: #717070;
+    -fx-font-size: 14px;
+}
+.forget-password:hover{
+    -fx-cursor: hand;
+    -fx-text-fill: #523aab;
+}

@@ -96,5 +96,5 @@ Ibraheem Mokhalalati:a:a:personal:05364990473
 عبدالغني العتيبي:Ghani456:ghani@gmail.com:appliance:0534567899
 حسين السلمي:Hussein789:hussein@gmail.com:appliance:0505678920
 عدنان الغامدي:Adnan123:adnan@gmail.com:appliance:0557894571
-مازن الشهري:Mazen456:mazen@gmail.com:appliance:0501237902
-zein:Zein_1956:zein1956@gmail.com:personal:1234567890
+مازن الشهري:Mazen456@:mazen@gmail.com:appliance:0501237902
+b:b:b:b:b

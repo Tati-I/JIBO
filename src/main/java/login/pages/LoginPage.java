@@ -1,444 +1,473 @@
 package login.pages;
 
-import auth.FileBasedAuthenticationSystem;
-
-import auth.User;
-import bar.right.RightSideBar;
-import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
+import auth.EmailCheck;
+import auth.PasswordCheck;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.animation.TranslateTransition;
-import javafx.stage.StageStyle;
+import auth.FileBasedAuthenticationSystem;
+import auth.User;
 import javafx.util.Duration;
 import org.example.main.RootScreen;
 
 import java.util.Objects;
 
 public class LoginPage extends Application {
-    private Stage primaryStage;
-    private static Pane pane;
-    private static Button loginButton;
-    private static Button signUpButton;
-    private static ImageView passwordIconView;
-    private static Image visibleIcon;
-    private static Image hiddenIcon;
-    private static boolean isPasswordVisible = false;
-    private static TextField visiblePasswordField;
-    private static PasswordField passwordField;
+    Image visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
+    Image hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
+    private VBox loginForm;
+    private VBox signupForm;
+    private VBox welcomePanel;
+    private VBox signInPanel;
+    private HBox root;
+    private HBox loginPage;
+    private HBox signPage;
+    private boolean isLoginView;
     public static User loggedInUser;
 
-    public static void main(String[] args) {
-        launch();
-    }
-
     @Override
-    public void start(Stage stage) {
-        User previousUser = FileBasedAuthenticationSystem.checkPreviousLogin();
-        if (previousUser != null) {
-            // إذا وجد تسجيل دخول سابق، قم بتسجيل الدخول تلقائياً وافتح الشاشة الرئيسية
-            LoginPage.loggedInUser = previousUser;
-            RootScreen rootScreen = new RootScreen();
-            rootScreen.start();
-        } else {
-            // إذا لم يوجد تسجيل دخول سابق، اعرض شاشة تسجيل الدخول
-            showSplashScreen();
-        }
-    }
-    public void showSplashScreen() {
-        Stage splashStage = new Stage();
-        splashStage.initStyle(StageStyle.TRANSPARENT);
+    public void start(Stage primaryStage) {
+        FileBasedAuthenticationSystem.loadUsers();
 
-        // Create a splash screen layout
-        StackPane splashLayout = new StackPane();
-        splashLayout.setStyle("-fx-background-color: transparent;");
+        // Create main container
+        root = new HBox();
+        root.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(root, 1000, 600);
 
-        // Create a background with gradient and rounded corners
-        Rectangle background = new Rectangle(1000, 700);
-        background.setArcWidth(30);
-        background.setArcHeight(30);
-        background.setFill(
-                new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#1a237e")), new Stop(1, Color.web("#4a148c")))
-        );
+        // Create forms and welcome panels
+        loginPage = new HBox();
+        loginPage.setAlignment(Pos.CENTER);
 
-        // Add a subtle pattern overlay
-        ImageView patternOverlay = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/spaceBackground.jpg"))));
-        patternOverlay.setOpacity(0.1);
-        patternOverlay.setFitWidth(1000);
-        patternOverlay.setFitHeight(700);
+        signPage = new HBox();
+        signPage.setAlignment(Pos.CENTER);
 
-        // Add logo
-        Image logoImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
-        ImageView logoView = new ImageView(logoImage);
-        logoView.setFitWidth(200);
-        logoView.setFitHeight(200);
+        welcomePanel = createWelcomePanel();
+        loginForm = createLoginForm();
+        loginPage.getChildren().addAll(loginForm, welcomePanel);
 
-        // Add app name with a modern font and drop shadow
-        Label appNameLabel = new Label("JIBO");
-        appNameLabel.setTextFill(Color.WHITE);
-        appNameLabel.setEffect(new DropShadow(10, Color.BLACK));
+        signupForm = createSignupForm();
+        signInPanel = createSignInPanel();
+        signPage.getChildren().addAll(signupForm, signInPanel);
+        signPage.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
 
-        // Add a stylish tagline
-        Label taglineLabel = new Label("Your Personal Craftsman");
+        root.getChildren().addAll(loginPage);
 
-        taglineLabel.setTextFill(Color.LIGHTGRAY);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/loginPage/login-page.css")).toExternalForm());
 
-        // Create a custom loading indicator
-        ProgressIndicator loadingIndicator = new ProgressIndicator();
-        loadingIndicator.setStyle("-fx-progress-color: white;");
-        loadingIndicator.setPrefSize(50, 50);
-
-        // Arrange elements in a VBox
-        VBox content = new VBox(20);
-        content.setAlignment(Pos.CENTER);
-        content.getChildren().addAll(logoView, appNameLabel, taglineLabel, loadingIndicator);
-
-        // Add all elements to the layout
-        splashLayout.getChildren().addAll(background, patternOverlay, content);
-
-        // Add a fade-in animation
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), splashLayout);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
-        fadeIn.setCycleCount(1);
-
-        // Add a subtle pulse animation to the logo
-        ScaleTransition pulse = new ScaleTransition(Duration.seconds(2), logoView);
-        pulse.setByX(0.1);
-        pulse.setByY(0.1);
-        pulse.setCycleCount(TranslateTransition.INDEFINITE);
-        pulse.setAutoReverse(true);
-
-        Scene splashScene = new Scene(splashLayout, 1000, 700);
-        splashScene.setFill(Color.TRANSPARENT);
-        splashStage.setScene(splashScene);
-        splashStage.show();
-
-        // Play animations
-        fadeIn.play();
-        pulse.play();
-
-        // Simulate loading process
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-                Platform.runLater(() -> {
-                    // Add fade-out animation
-                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), splashLayout);
-                    fadeOut.setFromValue(1);
-                    fadeOut.setToValue(0);
-                    fadeOut.setCycleCount(1);
-                    fadeOut.setOnFinished(_ -> {
-                        splashStage.close();
-                        showMainStage();
-                    });
-                    fadeOut.play();
-                });
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        }).start();
-    }
-
-    private void showMainStage() {
-        primaryStage = new Stage();
-
-        RightSideBar rightSideBar = new RightSideBar(null);
-        primaryStage.getIcons().add(rightSideBar.loadImage("icon.png"));
-
-        AnchorPane mainContainer = new AnchorPane();
-        mainContainer.setStyle("-fx-background-color: linear-gradient( #3675bd , #002750 )");
-
-        // إعداد الأيقونات
-        visibleIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/unlock.png")).toExternalForm());
-        hiddenIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/lock.png")).toExternalForm());
-
-        pane = new Pane();
-        createLoginView();
-
-        // ضبط العرض والارتفاع بشكل نسبي مع التباعد
-        HBox rightAndLeft = new HBox(50);
-        rightAndLeft.setAlignment(Pos.CENTER);
-        rightAndLeft.prefWidthProperty().bind(mainContainer.widthProperty());
-        rightAndLeft.prefHeightProperty().bind(mainContainer.heightProperty());
-        rightAndLeft.getChildren().addAll(leftView(), pane);
-
-        mainContainer.getChildren().addAll(rightAndLeft);
-
-        // الحصول على أبعاد الشاشة وتعيين حجم النافذة بشكل نسبي
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        double width = screenBounds.getWidth() * 0.7;  // نسبة 70% من عرض الشاشة
-        double height = screenBounds.getHeight() * 0.8;  // نسبة 80% من ارتفاع الشاشة
-
-        // إعداد المشهد وضبط الحجم مع الـ CSS
-        Scene scene = new Scene(mainContainer, width, height);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/LightMode.css")).toExternalForm());
-
-        // إعدادات المرحلة (Stage)
-        primaryStage.setTitle("Jibo");
-        primaryStage.setMinWidth(920);
-        primaryStage.setMinHeight(700);
-
-        // ضبط الحجم بناءً على الشاشة
-        primaryStage.setWidth(width);
-        primaryStage.setHeight(height);
-
-        // عرض النافذة
+        primaryStage.setTitle("Jibo Sign");
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(700);
+        primaryStage.setMinHeight(500);
         primaryStage.show();
     }
 
+    private VBox createWelcomePanel() {
+        VBox panel = new VBox(20);
+        panel.setMaxHeight(550);
+        panel.setAlignment(Pos.CENTER);
+        panel.setPadding(new Insets(40));
+        panel.getStyleClass().add("welcomePanel");
 
-    public Pane leftView() {
-        RightSideBar rightSideBar = new RightSideBar(null);
+        Label welcomeTitle = new Label("أهلاً بك");
+        welcomeTitle.getStyleClass().add("welcome-title");
 
-        Image logo = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Pictures/logo1.png")));
-        ImageView logoView = new ImageView(logo);
+        Label welcomeText = new Label("سجل حساباً جديداً للاستمتاع بجميع مزايا\n البرنامج");
+        welcomeText.getStyleClass().add("welcome-text");
+        welcomeText.setWrapText(true);
 
+        Button signUpButton = new Button("إنشاء حساب");
+        signUpButton.getStyleClass().add("welcome-button");
+        signUpButton.setOnAction(_ -> transition(loginForm, welcomePanel,signupForm,signInPanel));
 
-        ImageView clockView = new ImageView(rightSideBar.loadImage("Clock.png"));
-        clockView.setFitHeight(28);
-        clockView.setFitWidth(28);
-
-        ImageView eventsView = new ImageView(rightSideBar.loadImage("events.png"));
-        eventsView.setFitHeight(28);
-        eventsView.setFitWidth(28);
-
-        ImageView multiuserView = new ImageView(rightSideBar.loadImage("multiuser.png"));
-        multiuserView.setFitHeight(24);
-        multiuserView.setFitWidth(24);
-
-        ImageView serviceRequestView = new ImageView(rightSideBar.loadImage("services.png"));
-        serviceRequestView.setFitHeight(28);
-        serviceRequestView.setFitWidth(28);
-
-        Label mainText = new Label("كل ما تحتاجه لخدماتك، في مكان واحد");
-        mainText.setFont(Font.font("Arial", FontWeight.BOLD, 32));
-        mainText.setStyle("-fx-text-fill: #FFFFFF;");
-
-        Label secondaryText1 = new Label("إدارة الخدمات بكل سهولة ومرونة.", serviceRequestView);
-        Label secondaryText2 = new Label("الدعم متاح على مدار الساعة لضمان تجربة سلسة.", clockView);
-        Label secondaryText3 = new Label("استفد من أحدث الأدوات لتقديم أو طلب الخدمات.", eventsView);
-        Label secondaryText4 = new Label("انضم إلى مجتمع من المستخدمين المحترفين والمتخصصين.", multiuserView);
-
-        secondaryText1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        secondaryText2.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        secondaryText3.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        secondaryText4.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-
-        secondaryText1.setStyle("-fx-text-fill: #FFFFFF;");
-        secondaryText2.setStyle("-fx-text-fill: #FFFFFF;");
-        secondaryText3.setStyle("-fx-text-fill: #FFFFFF;");
-        secondaryText4.setStyle("-fx-text-fill: #FFFFFF;");
-
-        VBox textsvbox = new VBox(15);
-        textsvbox.getChildren().addAll(mainText,secondaryText1, secondaryText2, secondaryText3, secondaryText4);
-
-        VBox mainVbox = new VBox(30);
-        mainVbox.getChildren().addAll(logoView,textsvbox);
-        mainVbox.setAlignment(Pos.CENTER_LEFT);
-        return mainVbox;
+        panel.getChildren().addAll(welcomeTitle, welcomeText, signUpButton);
+        return panel;
     }
 
-    public void createLoginView() {
-        pane.getChildren().clear();
-        pane.setStyle("-fx-background-color: white; -fx-background-radius: 27px;");
-        pane.setPrefSize(525, 470);
-        pane.setMaxHeight(470);
+    private VBox createSignInPanel() {
+        VBox panel = new VBox(20);
+        panel.setMaxHeight(550);
+        panel.setAlignment(Pos.CENTER);
+        panel.setPadding(new Insets(40));
+        panel.getStyleClass().add("sign-in-panel");
 
-        Label WelcomeMsg = new Label("مرحبًا بك في تطبيق JIBO");
-        WelcomeMsg.setLayoutX(140);
-        WelcomeMsg.setLayoutY(30);
-        WelcomeMsg.setStyle("-fx-text-fill: #000000; -fx-font-weight: bold; -fx-font-size: 24;");
+        Label welcomeTitle = new Label("أهلاً مجدداً");
+        welcomeTitle.getStyleClass().add("welcome-title");
 
-        Label bioMsg = new Label("حِرفيُّكَ الخاص في جيبك ");
-        bioMsg.setLayoutX(175);
-        bioMsg.setLayoutY(60);
-        bioMsg.setStyle("-fx-text-fill: #6e6d6d; -fx-font-size: 17");
+        Label welcomeText = new Label("سجل دخول للاستمتاع بجميع مزايا البرنامج");
+        welcomeText.getStyleClass().add("welcome-text");
+        welcomeText.setWrapText(true);
 
-        Rectangle loginRect = new Rectangle();
-        loginRect.setHeight(43);
-        loginRect.setWidth(464);
-        loginRect.setX(30);
-        loginRect.setY(100);
-        loginRect.setFill(Color.web("F1F2F4FF"));
-        loginRect.setArcHeight(25);
-        loginRect.setArcWidth(25);
+        Button signInButton = new Button("تسجيل الدخول");
+        signInButton.getStyleClass().add("welcome-button");
+        signInButton.setOnAction(_ -> transition(loginForm, welcomePanel,signupForm,signInPanel));
 
-        loginButton = new Button("تسجيل الدخول");
-        loginButton.setLayoutX(35);
-        loginButton.setLayoutY(103.5);
-        loginButton.setPrefSize(225, 36);
-        loginButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 10px; -fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: white; -fx-background-radius: 10px; -fx-cursor: hand;");
+        panel.getChildren().addAll(welcomeTitle, welcomeText, signInButton);
+        return panel;
+    }
 
-        signUpButton = new Button("إنشاء حساب");
-        signUpButton.setLayoutX(262.5);
-        signUpButton.setLayoutY(103.5);
-        signUpButton.setPrefSize(225, 36);
-        signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 10px; -fx-cursor: hand;");
+    private VBox createLoginForm() {
+        VBox form = new VBox(20);
+        form.setAlignment(Pos.CENTER);
+        form.setPadding(new Insets(40));
 
-        TranslateTransition loginTransition = new TranslateTransition(Duration.millis(300), loginButton);
-        TranslateTransition signUpTransition = new TranslateTransition(Duration.millis(300), signUpButton);
+        form.getStyleClass().add("form-container");
 
-        signUpButton.setOnAction(_ -> {
-            signUpTransition.setToX(-228);
-            signUpTransition.play();
-            loginTransition.setToX(225);
-            loginTransition.play();
+        Label titleLabel = new Label("تسجيل الدخول");
+        titleLabel.getStyleClass().add("title-label");
 
-            signUpButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 10px; -fx-background-color: white; -fx-background-radius: 10px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
-            loginButton.setStyle("-fx-background-color: #f1f2f4; -fx-background-radius: 10px;-fx-border-radius: 10px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
-            SignUpPage signUpPage = new SignUpPage();
-            signUpPage.display(pane, loginButton, signUpButton, loginRect, WelcomeMsg, bioMsg,this);
-        });
+        HBox loginWays = new HBox(10);
+        loginWays.getStyleClass().add("login-ways");
+        loginWays.setAlignment(Pos.CENTER);
 
-        loginButton.setOnAction(_ -> {
-            loginTransition.setToX(0);
-            loginTransition.play();
-            signUpTransition.setToX(0);
-            signUpTransition.play();
+        Button fromGoogle = new Button();
+        fromGoogle.getStyleClass().add("from-google");
 
-            loginButton.setStyle("-fx-border-color: #e3e3e3; -fx-border-radius: 10px; -fx-background-color: #fdfdfd; -fx-background-radius: 10px; -fx-cursor: hand; -fx-text-fill: #000000; -fx-font-size: 15;");
-            signUpButton.setStyle("-fx-text-fill: #000000; -fx-font-size: 15; -fx-background-color: #f1f2f4; -fx-background-radius: 10px;-fx-border-radius: 10px; -fx-cursor: hand;");
-            createLoginView();
-        });
+        Button fromFacebook = new Button();
+        fromFacebook.getStyleClass().add("from-facebook");
 
+        Button fromTwitter = new Button();
+        fromTwitter.getStyleClass().add("from-twitter");
 
-        Label emailWord = new Label("البريد الإلكتروني");
-        emailWord.setLayoutX(390);
-        emailWord.setLayoutY(170);
-        emailWord.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
+        Button fromGitHub = new Button();
+        fromGitHub.getStyleClass().add("from-github");
+        loginWays.getChildren().addAll(fromGoogle, fromFacebook, fromTwitter, fromGitHub);
+
+        Label label = new Label();
+        label.getStyleClass().add("label");
+        label.setText("أو أستخدم الأيميل وكلمة المرور");
 
         TextField emailField = new TextField();
-        emailField.setPromptText("البريد الألكتروني");
-        emailField.setPrefSize(495, 40);
-        emailField.setLayoutX(15);
-        emailField.setLayoutY(210);
-        emailField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
+        emailField.setPromptText("البريد الإلكتروني");
+        emailField.getStyleClass().add("text-field");
 
-        Image emailIcon = new Image(Objects.requireNonNull(getClass().getResource("/Pictures/email.png")).toExternalForm());
-        ImageView emailIconView = new ImageView(emailIcon);
-        emailIconView.setFitWidth(20);
-        emailIconView.setFitHeight(20);
-        emailIconView.setLayoutX(480);
-        emailIconView.setLayoutY(220);
-
-        Label passwordWord = new Label("كلمة المرور");
-        passwordWord.setLayoutX(425);
-        passwordWord.setLayoutY(255);
-        passwordWord.setStyle("-fx-text-fill: #000000; -fx-font-size: 18; -fx-font-weight: bold;");
-
-        passwordField = new PasswordField();
+        // PasswordField
+        PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("كلمة المرور");
-        passwordField.setPrefSize(495, 40);
-        passwordField.setLayoutX(15);
-        passwordField.setLayoutY(290);
-        passwordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
+        passwordField.getStyleClass().add("text-field");
 
-        visiblePasswordField = new TextField();
-        visiblePasswordField.setPromptText("كلمة المرور");
-        visiblePasswordField.setPrefSize(495, 40);
-        visiblePasswordField.setLayoutX(15);
-        visiblePasswordField.setLayoutY(290);
-        visiblePasswordField.setStyle("-fx-prompt-text-fill: #6E6D6DFF;-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #01012a;");
-        visiblePasswordField.setVisible(false);
+        // Visible Password Field
+        TextField visiblePasswordField = new TextField();
+        visiblePasswordField.getStyleClass().add("text-field");
 
-        passwordIconView = new ImageView(hiddenIcon);
-        passwordIconView.setFitWidth(20);
-        passwordIconView.setFitHeight(20);
-        passwordIconView.setLayoutX(480);
-        passwordIconView.setLayoutY(300);
+        HBox passwordFieldContainer = new HBox(10);
+        passwordFieldContainer.getStyleClass().add("field-container");
+        passwordFieldContainer.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(passwordField, Priority.ALWAYS);
 
-        passwordIconView.setOnMouseEntered(_ -> passwordIconView.setStyle("-fx-cursor: hand;"));
+        Button forgetPassword = new Button();
+        forgetPassword.getStyleClass().add("forget-password");
+        forgetPassword.setText("هل نسيت كلمة المرور ?");
 
-        passwordIconView.setOnMouseClicked(_ -> showPassword());
+        // زر متغير الصور بكل ضغطة
+        Button togglePasswordVisibilityButton = createPasswordToggleButton(passwordField, visiblePasswordField, passwordFieldContainer);
+        togglePasswordVisibilityButton.getStyleClass().add("toggle-password-button");
 
-        Button Login = new Button("تسجيل الدخول");
-        Login.setLayoutX(15);
-        Login.setLayoutY(350);
-        Login.setPrefSize(495, 40);
-        Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;");
+        // HBox for PasswordField and button
+        passwordFieldContainer.getChildren().addAll(passwordField, togglePasswordVisibilityButton);
 
-        Label privacy = new Label("بالتسجيل، أنت توافق على الشروط والأحكام وسياسة الخصوصية");
-        privacy.setStyle("-fx-text-fill: #6e6d6d; -fx-font-size: 16");
-        privacy.setLayoutX(60);
-        privacy.setLayoutY(410);
+        Button loginButton = new Button("تسجيل الدخول");
+        loginButton.getStyleClass().add("primary-button");
 
-        Label errorLabelEmail = new Label("البريد الإلكتروني غير صالح");
-        errorLabelEmail.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
-        errorLabelEmail.setLayoutX(15);
-        errorLabelEmail.setLayoutY(250);
-        errorLabelEmail.setVisible(false);
+        loginButton.setOnAction(_ -> handleLogin(emailField.getText(), passwordField, visiblePasswordField));
 
-        Label errorLabelPassword = new Label("تحقق من كلمة المرور");
-        errorLabelPassword.setLayoutX(15);
-        errorLabelPassword.setLayoutY(330);
-        errorLabelPassword.setVisible(false);
-        errorLabelPassword.setStyle("-fx-text-fill: red; -fx-font-size: 12;");
+        form.getChildren().addAll(
+                titleLabel,
+                loginWays,
+                label,
+                emailField,
+                passwordFieldContainer,
+                forgetPassword,
+                loginButton
+        );
+
+        return form;
+    }
+
+    private VBox createSignupForm() {
+        VBox form = new VBox(20);
+        form.setAlignment(Pos.CENTER);
+        form.setPadding(new Insets(40));
+        form.getStyleClass().add("form-container1");
+
+        Label titleLabel = new Label("إنشاء حساب جديد");
+        titleLabel.getStyleClass().add("title-label");
+
+        HBox loginWays = new HBox(10);
+        loginWays.getStyleClass().add("login-ways");
+        loginWays.setAlignment(Pos.CENTER);
+
+        Button fromGoogle = new Button();
+        fromGoogle.getStyleClass().add("from-google");
+
+        Button fromFacebook = new Button();
+        fromFacebook.getStyleClass().add("from-facebook");
+
+        Button fromTwitter = new Button();
+        fromTwitter.getStyleClass().add("from-twitter");
+
+        Button fromGitHub = new Button();
+        fromGitHub.getStyleClass().add("from-github");
+        loginWays.getChildren().addAll(fromGoogle, fromFacebook, fromTwitter, fromGitHub);
 
 
-        Login.setOnMouseEntered(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #090942; -fx-text-fill: white; -fx-font-size: 16; -fx-cursor: hand;"));
+        // Name field
+        HBox nameBox = new HBox(10);
+        nameBox.getStyleClass().add("field-container");
+        Label nameLabel = new Label("الاسم الكامل:");
+        TextField nameField = new TextField();
+        nameField.setPromptText("الاسم الكامل");
+        nameField.getStyleClass().add("text-field");
+        nameBox.getChildren().addAll(nameField, nameLabel);
+        nameBox.setAlignment(Pos.CENTER_LEFT);
 
-        Login.setOnMouseExited(_ -> Login.setStyle("-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #01012a; -fx-text-fill: white; -fx-font-size: 16;"));
+        // Email field
+        HBox emailBox = new HBox(10);
+        emailBox.getStyleClass().add("field-container");
+        Label emailLabel = new Label("البريد الإلكتروني:");
+        TextField emailField = new TextField();
+        emailField.setPromptText("البريد الإلكتروني");
+        emailField.getStyleClass().add("text-field");
+        emailBox.getChildren().addAll(emailField, emailLabel);
+        emailBox.setAlignment(Pos.CENTER_LEFT);
 
-        Login.setOnMouseClicked(_ -> {
+        // Phone field
+        HBox phoneBox = new HBox(10);
+        phoneBox.getStyleClass().add("field-container");
+        Label phoneLabel = new Label("رقم الهاتف:");
+        TextField phoneField = new TextField();
+        phoneField.setPromptText("رقم الهاتف");
+        phoneField.getStyleClass().add("text-field");
+        phoneBox.getChildren().addAll(phoneField, phoneLabel);
+        phoneBox.setAlignment(Pos.CENTER_LEFT);
+
+        // Password fields
+        HBox passwordBox = new HBox(10);
+        passwordBox.getStyleClass().add("field-container");
+        Label passwordLabel = new Label("كلمة المرور:");
+        PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("كلمة المرور");
+        passwordField.getStyleClass().add("text-field");
+        passwordBox.getChildren().addAll(passwordField, passwordLabel);
+        passwordBox.setAlignment(Pos.CENTER_LEFT);
+
+        HBox confirmPasswordBox = new HBox(10);
+        confirmPasswordBox.getStyleClass().add("field-container");
+        Label confirmPasswordLabel = new Label("تأكيد كلمة المرور:");
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("تأكيد كلمة المرور");
+        confirmPasswordField.getStyleClass().add("text-field");
+        confirmPasswordBox.getChildren().addAll(confirmPasswordField, confirmPasswordLabel);
+        confirmPasswordBox.setAlignment(Pos.CENTER_LEFT);
+
+        // Set growth priorities
+        HBox.setHgrow(nameField, Priority.ALWAYS);
+        HBox.setHgrow(emailField, Priority.ALWAYS);
+        HBox.setHgrow(phoneField, Priority.ALWAYS);
+        HBox.setHgrow(passwordField, Priority.ALWAYS);
+        HBox.setHgrow(confirmPasswordField, Priority.ALWAYS);
+
+        // Account type selection
+
+        HBox toggleGroupBox = new HBox(10);
+        toggleGroupBox.getStyleClass().add("toggle-group");
+        ToggleGroup accountTypeGroup = new ToggleGroup();
+        RadioButton personalAccountButton = new RadioButton("حساب شخصي");
+        personalAccountButton.setToggleGroup(accountTypeGroup);
+        personalAccountButton.setSelected(true);
+        personalAccountButton.getStyleClass().add("radio-button");
+
+        RadioButton workerAccountButton = new RadioButton("حساب عامل");
+        workerAccountButton.setToggleGroup(accountTypeGroup);
+        workerAccountButton.getStyleClass().add("radio-button");
+
+        toggleGroupBox.getChildren().addAll(personalAccountButton, workerAccountButton);
+
+        // Buttons
+        Button signupButton = new Button("إنشاء الحساب");
+        signupButton.getStyleClass().add("primary-button");
 
 
-            String email = emailField.getText();
-            String password = passwordField.getText();
+        String userType = personalAccountButton.isSelected() ? "personal" : "worker";
+        signupButton.setOnAction(_ -> handleSignup(
+                nameField.getText(),
+                emailField.getText(),
+                passwordField.getText(),
+                confirmPasswordField.getText(),
+                phoneField.getText(),
+                userType
+        ));
 
-            loggedInUser = FileBasedAuthenticationSystem.loginUser(email, password);
+        form.getChildren().addAll(
+                titleLabel,
+                loginWays,
+                nameBox,
+                emailBox,
+                phoneBox,
+                passwordBox,
+                confirmPasswordBox,
+                toggleGroupBox,
+                signupButton
+        );
 
-            if (loggedInUser != null) {
-                System.out.println("تم تسجيل الدخول بنجاح");
-                primaryStage.close();
-                RootScreen rootScreen;
-                rootScreen = new RootScreen();
-                rootScreen.start();
+        return form;
+    }
+
+    private void transition(VBox loginForm, VBox welcomePanel, VBox signupForm, VBox signInPanel) {
+        isLoginView = !isLoginView;
+
+        TranslateTransition exitTransition1, exitTransition2, enterTransition1, enterTransition2;
+
+        if (isLoginView) {
+
+            exitTransition1 = new TranslateTransition(Duration.seconds(0.7), signupForm);
+            exitTransition1.setToX(0);
+
+            enterTransition1 = new TranslateTransition(Duration.seconds(0.7), signInPanel);
+            enterTransition1.setToX(0);
+
+            exitTransition2 = new TranslateTransition(Duration.seconds(0.7), loginForm);
+            exitTransition2.setToX(loginForm.getWidth());
+
+            enterTransition2 = new TranslateTransition(Duration.seconds(0.7), welcomePanel);
+            enterTransition2.setToX(-welcomePanel.getWidth());
+
+            exitTransition2.play();
+            exitTransition1.play();
+            enterTransition2.play();
+            enterTransition1.play();
+
+            exitTransition2.setOnFinished(_ -> {
+                root.getChildren().clear();
+                root.getChildren().add(signPage);
+            });
+        } else {
+            // Transition from signup to login
+            exitTransition1 = new TranslateTransition(Duration.seconds(0.7), signupForm);
+            exitTransition1.setToX(signupForm.getWidth());
+
+            enterTransition1 = new TranslateTransition(Duration.seconds(0.7), signInPanel);
+            enterTransition1.setToX(-signInPanel.getWidth());
+
+            exitTransition2 = new TranslateTransition(Duration.seconds(0.7), loginForm);
+            exitTransition2.setToX(0);
+
+            enterTransition2 = new TranslateTransition(Duration.seconds(0.7), welcomePanel);
+            enterTransition2.setToX(0);
+
+            exitTransition1.play();
+            exitTransition2.play();
+            enterTransition1.play();
+            enterTransition2.play();
+
+            exitTransition1.setOnFinished(_ -> {
+                root.getChildren().clear();
+                root.getChildren().add(loginPage);
+            });
+        }
+    }
+
+    private Button createPasswordToggleButton(PasswordField passwordField, TextField visiblePasswordField, HBox container) {
+        Button toggleButton = new Button();
+        toggleButton.setGraphic(new ImageView(hiddenIcon));
+
+        toggleButton.setOnAction(_ -> {
+            if (passwordField.isVisible()) {
+                // التبديل إلى الحقل المرئي
+                String currentPassword = passwordField.getText();
+                passwordField.setVisible(false);
+                visiblePasswordField.setText(currentPassword);
+                visiblePasswordField.setPromptText(passwordField.getPromptText());
+                HBox.setHgrow(visiblePasswordField, Priority.ALWAYS);
+                container.getChildren().set(0, visiblePasswordField);
+                toggleButton.setGraphic(new ImageView(visibleIcon));
             } else {
-                // تسجيل الدخول فشل
-                System.out.println("خطأ في الإيميل أو كلمة المرور");
-                errorLabelEmail.setVisible(true);
-                errorLabelPassword.setVisible(true);
+                // التبديل إلى حقل كلمة المرور
+                String currentPassword = visiblePasswordField.getText();
+                passwordField.setVisible(true);
+                passwordField.setText(currentPassword);
+                container.getChildren().set(0, passwordField);
+                toggleButton.setGraphic(new ImageView(hiddenIcon));
             }
         });
 
-
-        pane.getChildren().addAll(WelcomeMsg, bioMsg, loginRect, loginButton, signUpButton, emailWord, emailField, passwordWord, passwordField, visiblePasswordField, Login, privacy, emailIconView, passwordIconView, errorLabelEmail, errorLabelPassword);
+        return toggleButton;
     }
 
-    public static void showPassword() {
-        if (isPasswordVisible) {
-            passwordField.setText(visiblePasswordField.getText());
-            visiblePasswordField.setVisible(false);
-            passwordField.setVisible(true);
-            passwordIconView.setImage(hiddenIcon);
-            isPasswordVisible = false;
+
+
+    private void handleLogin(String email, PasswordField passwordField, TextField visiblePasswordField) {
+        String password = passwordField.isVisible() ? passwordField.getText() : visiblePasswordField.getText();
+
+        loggedInUser = FileBasedAuthenticationSystem.loginUser(email, password);
+        if (loggedInUser != null) {
+            System.out.println("سجلت بنجاج"+ loggedInUser.getUsername());
+
+            //اخذ اي عنصر لجلب ال stage الحالي
+            Stage currentStage = (Stage) root.getScene().getWindow();
+            currentStage.close();
+
+            RootScreen rootScreen;
+            rootScreen = new RootScreen();
+            rootScreen.start();
         } else {
-            visiblePasswordField.setText(passwordField.getText());
-            passwordField.setVisible(false);
-            visiblePasswordField.setVisible(true);
-            passwordIconView.setImage(visibleIcon);
-            isPasswordVisible = true;
+            showAlert(Alert.AlertType.ERROR, "خطأ", "فشل تسجيل الدخول",
+                    "البريد الإلكتروني أو كلمة المرور غير صحيحة");
+        }
+    }
+
+    private void handleSignup(String name, String email, String password, String confirmPassword,
+                              String phoneNumber, String userType) {
+        if (!password.equals(confirmPassword)) {
+            showAlert(Alert.AlertType.ERROR, "خطأ", "كلمات المرور غير متطابقة",
+                    "يرجى التأكد من تطابق كلمتي المرور");
+            return;
         }
 
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "خطأ", "بيانات غير مكتملة",
+                    "يرجى ملء جميع الحقول المطلوبة");
+            return;
+        }
+
+        if (!EmailCheck.isValidEmail(email)) {
+            showAlert(Alert.AlertType.ERROR, "خطأ", "البريد الألكتروني غير صالح",
+                    "يرجى التأكد من صحة البريد الألكتروني");
+            return;
+        }
+        if (!PasswordCheck.isValidPassword(password)){
+            showAlert(Alert.AlertType.ERROR, "خطأ", "كلمة المرور ضعيفة",
+                    "1 يجب ان تكون من 8 خانات على الأقل\n 2 تحتوي على حرف كبير و صغير على الأقل \n 3 تحتوي على رمز على الأقل");
+            return;
+        }
+
+        if (FileBasedAuthenticationSystem.registerUser(name, password, email, userType, phoneNumber)) {
+            showAlert(Alert.AlertType.INFORMATION, "نجاح", "تم إنشاء الحساب",
+                    "تم إنشاء الحساب بنجاح");
+            //
+        } else {
+            showAlert(Alert.AlertType.ERROR, "خطأ", "الحساب",
+                    "يرجى استخدام ايميل");
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.getDialogPane().getStyleClass().add("alert");
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

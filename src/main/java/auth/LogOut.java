@@ -6,8 +6,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import login.pages.LoginPage;
-import org.example.main.RootScreen;
 
 import java.util.Objects;
 

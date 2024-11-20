@@ -2,7 +2,6 @@ package org.example.main;
 
 import auth.FileBasedAuthenticationSystem;
 import auth.User;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
@@ -12,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.text.TextAlignment;
 import java.util.Objects;
 import javafx.stage.Stage;
-import login.pages.LoginPage;
 
 public class ServiceDetailPage extends VBox {
     private int currentPage = 0;
@@ -156,7 +154,7 @@ public class ServiceDetailPage extends VBox {
 
         Button requestButton = new Button("أحجز الآن");
         requestButton.setId("requestButton");
-        requestButton.setOnAction(e -> showServiceRequestDialog(user));
+        requestButton.setOnAction(_ -> showServiceRequestDialog(user));
 
         pane.getChildren().addAll(requestButton,infoBox);
         HBox.setHgrow(infoBox, Priority.ALWAYS);
@@ -196,9 +194,7 @@ public class ServiceDetailPage extends VBox {
             return null;
         });
 
-        dialog.showAndWait().ifPresent(result -> {
-            System.out.println("تم تقديم طلب الخدمة: " + result);
-        });
+        dialog.showAndWait().ifPresent(result -> System.out.println("تم تقديم طلب الخدمة: " + result));
     }
 
     private String getServiceDescription(String serviceTitle) {
